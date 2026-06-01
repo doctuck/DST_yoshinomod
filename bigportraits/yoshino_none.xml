@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<Atlas>
+	<Texture filename="yoshino_none.tex" />
+	<Elements>
+		<Element name="yoshino_none_oval.tex" u1="0.000976563" u2="0.87793" v1="0.414551" v2="0.999512" />
+	</Elements>
+</Atlas>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b5">
+    <folder id="0" name="yoshino_crystal">
+        <file id="0" name="yoshino_crystal/crystal-0.png" width="128" height="128" pivot_x="0.5" pivot_y="0"/>
+    </folder>
+    <folder id="1" name="yoshino_anticrystal">
+        <file id="0" name="yoshino_anticrystal/anticrystal-0.png" width="128" height="128" pivot_x="0.5" pivot_y="0"/>
+    </folder>
+    <entity id="0" name="yoshino_crystals">
+        <animation id="0" name="idle_crystal" length="3000">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" name="crystal-0" folder="0" file="0" abs_x="0" abs_y="0" abs_pivot_x="0.5" abs_pivot_y="0" abs_angle="360" abs_scale_x="0.75" abs_scale_y="0.75" abs_a="1" timeline="0" key="0" z_index="0"/>
+                </key>
+                <key id="1" time="1500">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                </key>
+                <key id="2" time="3000">
+                    <object_ref id="0" timeline="0" key="2" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="crystal-0">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" scale_x="0.75" scale_y="0.75"/>
+                </key>
+                <key id="1" time="1500" spin="0">
+                    <object folder="0" file="0" y="50" scale_x="0.75" scale_y="0.75"/>
+                </key>
+                <key id="2" time="3000" spin="0">
+                    <object folder="0" file="0" scale_x="0.75" scale_y="0.75"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="1" name="idle_anticrystal" length="3000">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" name="anticrystal-0" folder="1" file="0" abs_x="0" abs_y="0" abs_pivot_x="0.5" abs_pivot_y="0" abs_angle="360" abs_scale_x="0.75" abs_scale_y="0.75" abs_a="1" timeline="0" key="0" z_index="0"/>
+                </key>
+                <key id="1" time="1500">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="anticrystal-0">
+                <key id="0" spin="0">
+                    <object folder="1" file="0" scale_x="0.75" scale_y="0.75"/>
+                </key>
+                <key id="1" time="1500" spin="0">
+                    <object folder="1" file="0" y="50" scale_x="0.75" scale_y="0.75"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

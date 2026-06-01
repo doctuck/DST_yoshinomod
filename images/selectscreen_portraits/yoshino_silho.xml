@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<Atlas>
+	<Texture filename="yoshino_silho.tex" />
+	<Elements>
+		<Element name="yoshino_silho.tex" u1="0.00195313" u2="0.998047" v1="0.000976563" v2="0.999023" />
+	</Elements>
+</Atlas>

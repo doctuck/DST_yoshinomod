@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<Atlas>
+	<Texture filename="names_gold_yoshino.tex" />
+	<Elements>
+		<Element name="gold_yoshino.tex" u1="0.000488281" u2="0.85498" v1="0.15332" v2="0.999023" />
+	</Elements>
+</Atlas>
