@@ -76,9 +76,9 @@ Assets = {
     Asset("ANIM", "anim/yoshino_ELyonban.zip"),   --神威灵装·四番
     Asset("ATLAS", "images/inventoryimages/yoshino_ELyonban.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_ELyonban.tex"),
-    --Asset("ANIM", "anim/yoshino_fanzhuan.zip"),   --神威灵装·四番（反转）
-    --Asset("ATLAS", "images/inventoryimages/yoshino_elfz.xml"),
-    --Asset("IMAGE", "images/inventoryimages/yoshino_elfz.tex"),
+    Asset("ANIM", "anim/yoshino_fanzhuan.zip"),   --神威灵装·四番（反转）
+    Asset("ATLAS", "images/inventoryimages/yoshino_elfz.xml"),
+    Asset("IMAGE", "images/inventoryimages/yoshino_elfz.tex"),
 
     Asset("ANIM", "anim/yoshino_sirvon.zip"),   --冰结傀儡·冻铠
     Asset("ATLAS", "images/inventoryimages/yoshino_sirvon.xml"),
