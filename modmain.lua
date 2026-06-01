@@ -70,9 +70,9 @@ Assets = {
     Asset("ANIM", "anim/yoshino_crystals.zip"), --灵结晶和反灵结晶
     Asset("ATLAS", "images/inventoryimages/yoshino_crystal.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_crystal.tex"),
-    --Asset("ATLAS", "images/inventoryimages/yoshino_anticrystal.xml"),
-    --Asset("IMAGE", "images/inventoryimages/yoshino_anticrystal.tex"),
---
+    Asset("ATLAS", "images/inventoryimages/yoshino_anticrystal.xml"),
+    Asset("IMAGE", "images/inventoryimages/yoshino_anticrystal.tex"),
+
     Asset("ANIM", "anim/yoshino_ELyonban.zip"),   --神威灵装·四番
     Asset("ATLAS", "images/inventoryimages/yoshino_ELyonban.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_ELyonban.tex"),
