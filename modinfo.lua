@@ -8,9 +8,11 @@ description = [[
 （不过不用担心，只是显示bug(懒得改了)，数值显示正常就行，最大值在服务器那边也是正常的只是同步会延迟一点）
 2.空间震用了蚁狮地震的特效模拟，但四糸乃的识别名为"隐居者"，很少触发空间震，所以默认是关闭的。
 3.四糸乃首次进入永恒大陆必定下雨。
+
+反馈可加Q群303721628
 ]]
 author = "doctuckos"
-version = "0.9"
+version = "1.1.0"
 version_compatible = version
 forumthread = "" --不在单机版使用所以不管
 server_filter_tags = { "yoshino", "hermit", "四糸乃", "约会大作战", "doctuckos" }
@@ -20,7 +22,7 @@ icon = "modicon.tex"
 
 api_version = 6                    --单机版本号
 api_version = 10                   --联机版本号
-priority = 0                       --加载时的优先度，数字越大优先级越高，最多100
+priority = -12                       --加载时的优先度，数字越大优先级越高，最多100
 
 dst_compatible = true              --兼容联机
 dont_starve_compatible = false     --不兼容单机原版

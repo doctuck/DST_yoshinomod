@@ -55,7 +55,7 @@ local function onunequip(inst, owner)
     owner.AnimState:OverrideSymbol("hand", player_build, "hand")
     owner.AnimState:Show("ARM_normal")             --展示第二只手
     owner.AnimState:Hide("ARM_carry")              --隐藏第三只手
-    inst.components.equippable.dapperness = 0 / 60 --卸下时不恢复理智
+    inst.components.equippable.dapperness = 6 / 60 --卸下时常态
     inst.Light:Enable(false)                       --关闭光源
     if inst.components.container ~= nil then       --关闭容器
         inst.components.container:Close(owner)
@@ -179,6 +179,9 @@ local function fn()
             if data.prev_item.components.perishable ~= nil then data.prev_item.components.perishable:StartPerishing() end
         end
     end)
+
+    inst.yoshinonequip = onequip
+    inst.yoshinonunequip = onunequip
 
     inst.OnLoad = function(inst, data)
         inst:DoTaskInTime(0.5, function()   --延迟半秒，确保能获取到玩家

@@ -61,13 +61,13 @@ AddComponentAction("SCENE", "rideable",  --第一个参数是动作类型， 第
 local DETERIORATION = Action({mount_valid = true})
 DETERIORATION.id = "DETERIORATION"
 DETERIORATION.strfn = function(act)
-    return act.target.prefab == "yoshino_elyonban" and "REVERSE" or "HUFU"
+    return act.target.prefab == "yoshino_elyonban" and "REVERSE" or "HUIFU"
 end
 
 DETERIORATION.fn = function (act)
     local doer = act.doer
-    local obj = act.invobject
-    local target = act.target
+    local obj = act.invobject   --这里指要被消耗的物品
+    local target = act.target   --这里指要被翻转的灵装
 
     --装备中不能反转
     if target.components.equippable and target.components.equippable:IsEquipped() then
@@ -75,31 +75,32 @@ DETERIORATION.fn = function (act)
     end
 
     local item = target:HasTag("yoshino_elyonban") and DebugSpawn("yoshino_elfz") or DebugSpawn("yoshino_elyonban")
+
     if (target.components.stackable ~= nil and target.components.stackable:StackSize() >= 1) and
         (obj.components.stackable ~= nil and obj.components.stackable:StackSize() >= 1) then --如果是可堆叠物品
 
         target.components.stackable:Get():Remove()  --移除指定数量，默认为1
         obj.components.stackable:Get(1):Remove()
-        doer.components.inventory:GiveItem(item)    --给予反转形态的灵装
+        doer.components.inventory:GiveItem(item)    --给予对应形态的灵装
         return true
     elseif target.components.stackable == nil and  --如果不可堆叠，则该物品全部移除
         (obj.components.stackable ~= nil and obj.components.stackable:StackSize() >= 1) then
 
         target:Remove()
         obj.components.stackable:Get(1):Remove()
-        doer.components.inventory:GiveItem(item)    --给予反转形态的灵装
+        doer.components.inventory:GiveItem(item)    --给予对应形态的灵装
         return true
     elseif obj.components.stackable == nil and  --如果不可堆叠，则该物品全部移除
         (target.components.stackable ~= nil and target.components.stackable:StackSize() >= 1) then
 
         obj:Remove()
         target.components.stackable:Get(1):Remove()
-        doer.components.inventory:GiveItem(item)    --给予反转形态的灵装
+        doer.components.inventory:GiveItem(item)    --给予对应形态的灵装
         return true
     elseif obj.components.stackable == nil and target.components.stackable == nil then
         obj:Remove()
         target:Remove()
-        doer.components.inventory:GiveItem(item)    --给予反转形态的灵装
+        doer.components.inventory:GiveItem(item)    --给予对应形态的灵装
         return true
     else
         print("未知原因导致反转灵装动作失败")
@@ -119,7 +120,7 @@ AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS.DETERIORATION,
 AddComponentAction("USEITEM", "yoshino_savemoddata",
     function (inst, doer, target, actions, right)
         --例如：在USEITEM场景中，函数参数inst是手持物品，即要进行动作的物品；target是被进行动作的目标物品，doer是动作的执行者，就是玩家
-        if (inst.prefab == "yoshino_anticrystal" or inst.prefab == "yoshino_crystal") and target.prefab == "yoshino_elyonban" then
+        if (inst.prefab == "yoshino_anticrystal" and target.prefab == "yoshino_elyonban") or (inst.prefab == "yoshino_crystal" and target.prefab == "yoshino_elfz") then
             table.insert(actions, ACTIONS.DETERIORATION)
         end
     end

@@ -138,7 +138,8 @@ local function MakePreparedFood(data)
         end
 
         inst:AddComponent("stackable")  --可以堆叠
-        inst.components.stackable.maxsize = 40
+        --（要写的话一定要使用官方TUNING表里固定的几个堆叠数字，否则无法适配“防卡很多招 workshop-3050607025”<--修改官方全局变量的笨蛋，不推荐用！）
+        inst.components.stackable.maxsize = TUNING.STACK_SIZE_SMALLITEM
 
         if data.perishtime ~= nil and data.perishtime > 0 then
             inst:AddComponent("perishable") --有新鲜度

@@ -397,7 +397,7 @@ return {
 	ANNOUNCE_NONIGHTSIESTA_CAVE = "这里可以休息一下...",		--在洞穴里夜晚睡凉棚
 	ANNOUNCE_NOHUNGERSIESTA = "我想吃点东西再睡。",		--饱度不足无法午睡
 	ANNOUNCE_PECKED = "小家伙, 不要再咬了",		--被小高鸟啄
-	ANNOUNCE_QUAKE = "空间震?有其他精灵来了吗",		--地震
+	ANNOUNCE_QUAKE = "地震还是空间震?",		--地震
 	ANNOUNCE_RESEARCH = "我现在掌握了更多关于这个世界的知识。",  --(暂无注释)
 	ANNOUNCE_SHELTER = "谢谢你, 大树先生。",		--下雨天躲树下
 	ANNOUNCE_THORNS = "咿呀! 疼! ",		--玫瑰、仙人掌、荆棘扎手

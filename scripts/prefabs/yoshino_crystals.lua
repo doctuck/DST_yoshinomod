@@ -102,16 +102,18 @@ local function makecrystals(prefabname,animname)
         inst.components.edible:SetOnEatenFn(oneatenfn)
 
         inst:AddComponent("stackable")  --可堆叠
-        inst.components.stackable.maxsize = 20 --最大堆叠20个
+        --（备注：组件初始化默认就是堆叠20，所以就不用再写了，非要写的话一定要使用官方TUNING表里固定的几个堆叠数字，否则无法适配“防卡很多招 workshop-3050607025”<--修改官方全局变量的笨蛋，不要用！）
+        --inst.components.stackable.maxsize = TUNING.STACK_SIZE_MEDITEM --最大堆叠20个
 
         inst:AddComponent("tradable")   --可交易组件，有了这个就可以给猪人
+        
+        inst:AddComponent("yoshino_savemoddata")    --保存数据用的，但这里不使用其功能，仅作为动作所需组件
 
 
         if prefabname == "yoshino_crystal" then
             MakeHauntable(inst, TUNING.HAUNT_COOLDOWN_SMALL, TUNING.HAUNT_INSTANT_REZ) --可被鬼魂作祟
             inst.components.hauntable:SetOnHauntFn(onhuant) --作祟时触发的函数
         else
-            inst:AddComponent("yoshino_savemoddata")    --保存数据用的，但这里不使用其功能，仅作为动作所需组件
             MakeHauntableLaunch(inst) --可被鬼魂作祟并能够弹起来
         end
         return inst

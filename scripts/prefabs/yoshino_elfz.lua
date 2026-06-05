@@ -55,17 +55,16 @@ local function ownerunequip(owner, data)
             owner.AnimState:Hide("HAIR_NOHAT")         --隐藏无帽图层
         end)
     end
+    if data.eslot == EQUIPSLOTS.HANDS then
+        owner:DoTaskInTime(0,function ()
+            owner.AnimState:ClearOverrideSymbol("hand")
+            owner.AnimState:OverrideSymbol("hand", "yoshino_fanzhuan", "hand")
+        end)
+    end
 end
 
 --装备时调用
 local function onequip(inst, owner)
-
-    --如果有装备四糸奈，则替换四糸奈的皮肤（尚未实现）
-    for k, v in pairs(owner.components.inventory.equipslots) do
-        if v.prefab == "yoshinon" then
-            owner.components.inventory:Equip(v)
-        end
-    end
 
     owner.AnimState:ClearOverrideSymbol("arm_lower") --装备前清空通道
     --owner.AnimState:ClearOverrideSymbol("swap_object")
@@ -81,7 +80,8 @@ local function onequip(inst, owner)
     owner.AnimState:ClearOverrideSymbol("headbase_hat")
     owner.AnimState:ClearOverrideSymbol("leg")
     owner.AnimState:ClearOverrideSymbol("skirt")
-    owner.AnimState:ClearOverrideSymbol("swap_body")
+    --owner.AnimState:ClearOverrideSymbol("swap_body")
+    owner.AnimState:ClearOverrideSymbol("swap_body_tall")
     owner.AnimState:ClearOverrideSymbol("swap_hat")
     owner.AnimState:ClearOverrideSymbol("torso")
     owner.AnimState:ClearOverrideSymbol("tail")
@@ -100,9 +100,16 @@ local function onequip(inst, owner)
     owner.AnimState:OverrideSymbol("headbase_hat", "yoshino_fanzhuan", "headbase_hat")
     owner.AnimState:OverrideSymbol("leg", "yoshino_fanzhuan", "leg")
     owner.AnimState:OverrideSymbol("skirt", "yoshino_fanzhuan", "skirt")
-    owner.AnimState:OverrideSymbol("swap_body", "yoshino_fanzhuan", "swap_body")
+    owner.AnimState:OverrideSymbol("swap_body_tall", "yoshino_fanzhuan", "swap_body_tall")
     owner.AnimState:OverrideSymbol("swap_hat", "yoshino_fanzhuan", "swap_hat")
     owner.AnimState:OverrideSymbol("torso", "yoshino_fanzhuan", "torso")
+
+    --如果有装备四糸奈，则替换四糸奈的皮肤（尚未实现）
+    for k, v in pairs(owner.components.inventory.equipslots) do
+        if v.prefab == "yoshinon" and v.yoshinonequip ~= nil then
+            v.yoshinonequip(v,owner)    --恢复四糸奈的贴图
+        end
+    end
 
     owner.components.combat.damagemultiplier = 1.0    --伤害系数
 
@@ -131,7 +138,8 @@ local function onunequip(inst, owner)
     owner.AnimState:ClearOverrideSymbol("headbase_hat")
     owner.AnimState:ClearOverrideSymbol("leg")
     owner.AnimState:ClearOverrideSymbol("skirt")
-    owner.AnimState:ClearOverrideSymbol("swap_body")
+    --owner.AnimState:ClearOverrideSymbol("swap_body")
+    owner.AnimState:ClearOverrideSymbol("swap_body_tall")
     owner.AnimState:ClearOverrideSymbol("swap_hat")
     owner.AnimState:ClearOverrideSymbol("torso")
 
@@ -154,6 +162,13 @@ local function onunequip(inst, owner)
     owner.AnimState:OverrideSymbol("torso", player_build, "torso")
 
     owner.components.combat.damagemultiplier = TUNING.MOD_YOSHINO.yoshino.DAMAGE_DEAFULT_Ratio  --伤害系数恢复
+
+    --如果有装备四糸奈，则替换四糸奈的皮肤（尚未实现）
+    for k, v in pairs(owner.components.inventory.equipslots) do
+        if v.prefab == "yoshinon" and v.yoshinonequip ~= nil then
+            v.yoshinonequip(v,owner)    --恢复四糸奈的贴图
+        end
+    end
 
     owner:RemoveEventCallback("onhitother", frozenother)    --卸下时取消监听
     owner:RemoveEventCallback("equip", ownerequip)          --卸下时取消监听

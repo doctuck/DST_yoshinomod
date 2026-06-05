@@ -149,7 +149,7 @@ local function onunequip(inst, owner)
 
     owner:RemoveEventCallback("onhitother", frozenother)    --卸下时取消监听
     owner:RemoveEventCallback("equip", ownerequip)          --卸下时取消监听
-    owner:RemoveEventCallback("unquip", ownerunequip)         --卸下时取消监听
+    owner:RemoveEventCallback("unequip", ownerunequip)         --卸下时取消监听
 
     --if owner.temptask then
     --    owner.temptask:Cancel()

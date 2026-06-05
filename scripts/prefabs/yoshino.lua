@@ -97,6 +97,7 @@ local function OnBecameghost(inst)
     --inst.components.locomotor:RemoveExternalSpeedMultiplier(inst, "yoshino_speed_mod")
     inst.components.locomotor:SetExternalSpeedMultiplier(inst, "yoshino_speed", 1.1)
     inst.components.talker:Say(STRINGS.CHARACTERS.YOSHINO.ANNOUNCE_BECOMEGHOST)
+    
     if inst.deathdropprefab ~= nil then --生成提前预设好的掉落物
         local skel = SpawnPrefab(inst.deathdropprefab)
         local x, y, z = inst.Transform:GetWorldPosition()
