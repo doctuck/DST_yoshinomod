@@ -176,21 +176,23 @@ local function onload(inst, data)
 end
 
 --灵力紊乱时触发该函数
-local rainbyyoshino = 0
 local function chaosdebuff(inst, data)
+    if inst.components.yoshino_savemoddata and inst.components.yoshino_savemoddata.array_data.rainbyyoshino == nil then
+        inst.components.yoshino_savemoddata.array_data.rainbyyoshino = 0
+    end
     --进入灵力紊乱状态
     if data and data.hasbuff == true then
-        if not (TheWorld.state.israining or TheWorld.state.issnowing) and rainbyyoshino ~= 1 then
+        if not (TheWorld.state.israining or TheWorld.state.issnowing) and inst.components.yoshino_savemoddata.array_data.rainbyyoshino ~= 1 then
             TheWorld:PushEvent("ms_forceprecipitation", true)
         end
-        rainbyyoshino = 1
+        inst.components.yoshino_savemoddata.array_data.rainbyyoshino = 1
         inst.components.combat.damagemultiplier = 0
         --退出灵力紊乱状态
     elseif data and data.hasbuff == false then
-        if (TheWorld.state.israining or TheWorld.state.issnowing) and rainbyyoshino == 1 then
+        if (TheWorld.state.israining or TheWorld.state.issnowing) and inst.components.yoshino_savemoddata.array_data.rainbyyoshino == 1 then
             TheWorld:PushEvent("ms_forceprecipitation", false)
         end
-        rainbyyoshino = 0
+        inst.components.yoshino_savemoddata.array_data.rainbyyoshino = 0
         inst.components.combat.damagemultiplier = 0.8
     end
 end
@@ -255,6 +257,9 @@ local function onhittarget(inst, data)
             --目标脚下生成冰刺
             local icespike = SpawnPrefab("yoshino_atkspike")
             icespike.Transform:SetPosition(tx,0,tz)
+            if target:HasTag("largecreature") then  --如果目标是大型生物，则放大
+                icespike.AnimState:SetScale(2,2)
+            end
             icespike.owner = inst
             icespike:PushEvent("spawnbyyoshino", {target = target, attacker = inst})
         end

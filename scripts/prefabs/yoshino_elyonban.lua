@@ -11,7 +11,7 @@ local function IncreaseMoisture(owner, data)
     local target = data.target or nil
     --如果目标有潮湿度组件
     if target and target.components.moisture then
-        target.moisture:DoDelta(1,true) --是目标潮湿度 +1，不宣告
+        target.components.moisture:DoDelta(1,true) --是目标潮湿度 +1，不宣告
     end
 end
 

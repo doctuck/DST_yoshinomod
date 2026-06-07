@@ -12,7 +12,7 @@ description = [[
 反馈可加Q群303721628
 ]]
 author = "doctuckos"
-version = "1.1.0"
+version = "1.2.1"
 version_compatible = version
 forumthread = "" --不在单机版使用所以不管
 server_filter_tags = { "yoshino", "hermit", "四糸乃", "约会大作战", "doctuckos" }
