@@ -1,7 +1,7 @@
 --资源加载
 local assets = {
     Asset("ANIM", "anim/yoshino_zadkiel.zip"), --动画
-    Asset("ANIM", "anim/wilsonzadkiel.zip")
+    Asset("ANIM", "anim/wilsonzadkiel.zip"),
     --Asset("IMAGE", "images/map_icons/map_zadkiel.tex"), --小地图图标
     --Asset("ATLAS", "images/map_icons/map_zadkiel.xml"),
 }

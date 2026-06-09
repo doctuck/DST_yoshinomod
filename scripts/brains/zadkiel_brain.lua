@@ -3,9 +3,9 @@ require "behaviours/doaction"   --做动作行为节点
 require "behaviours/wander"     --徘徊行为节点
 require "behaviours/faceentity" --盯着你行为节点
 
-local MIN_FOLLOW_DIST = 0
-local MAX_FOLLOW_DIST = 10
-local TARGET_FOLLOW_DIST = 4
+local MIN_FOLLOW_DIST = 1   --最小跟随距离（小于这个距离会自行远离）
+local MAX_FOLLOW_DIST = 12  --最远距离
+local TARGET_FOLLOW_DIST = 2    --目标跟随距离（原理后直到这个距离会停下）
 
 local function ShouldGotoLeader(inst)
     if not inst.goto_leader then

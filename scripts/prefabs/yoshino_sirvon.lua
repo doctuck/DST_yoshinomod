@@ -109,6 +109,11 @@ local function onequip(inst, owner)
         owner.components.temperature.mintemp = 25
         owner.components.temperature.maxtemp = 25
     end
+
+    --反转疯狂光环，1 倍反转
+    if owner.components.sanity then
+        owner.components.sanity.neg_aura_absorb = 1
+    end
 end
 
 --卸下时调用
@@ -159,6 +164,11 @@ local function onunequip(inst, owner)
     if owner.components.temperature then
         owner.components.temperature.mintemp = TUNING.MIN_ENTITY_TEMP  --（-20℃）
         owner.components.temperature.maxtemp = TUNING.MAX_ENTITY_TEMP  --（90℃）
+    end
+
+    --取消反转疯狂光环
+    if owner.components.sanity then
+        owner.components.sanity.neg_aura_absorb = 0
     end
 end
 

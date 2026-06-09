@@ -179,7 +179,7 @@ AddPrefabPostInit("yoshino", function(inst)
             damage = 0  --物理伤害归0
             spdamage = nil
             inst.components.spiritual_energy:DoDelta(-TUNING.YOSHINOCONFIG.shield_cost)
-        --以下条件是为了免疫群伤，避免多个怪同时攻击时只免疫其中一个
+        --以下条件是为了免疫多段伤害，避免多个怪同时攻击时只免疫其中一个
         elseif inst.snowshield and inst.snowshield:IsValid() and inst.snowshield.components.timer:TimerExists("yoshino_snowshield") then
             damage = 0  --物理伤害归0
             spdamage = nil
@@ -371,7 +371,21 @@ for _, v in pairs(shadowtags) do
     AddPrefabPostInit(v, function(inst)
         if not TheWorld.ismastersim then return end    --主客机判断
         if not inst.components.lootdropper then inst:AddComponent("lootdropper") end --确保有掉落器组件
-        inst.components.lootdropper:AddChanceLoot("yoshino_anticrystal", TUNING.MOD_YOSHINO.ANTICRYSTAL_DROP)       --15% 概率掉落反灵结晶
+        local old_loot = inst.components.lootdropper.lootsetupfn
+        inst.components.lootdropper.lootsetupfn = function(self)
+            if old_loot then
+                old_loot(self)
+            end
+            --考虑到游戏崩溃重载时，可能存在已经添加在其中的情况，因此需要去除重复
+            if self.chanceloot then
+                for i = #self.chanceloot, 1, -1 do
+                    if self.chanceloot[i].prefab == "yoshino_anticrystal" then
+                        table.remove(self.chanceloot, i)
+                    end
+                end
+            end
+            self:AddChanceLoot("yoshino_anticrystal", TUNING.MOD_YOSHINO.ANTICRYSTAL_DROP)       --15% 概率掉落反灵结晶
+        end
     end)
 end
 -----------------------------
@@ -493,6 +507,8 @@ ACTIONS.MOUNT.fn = function(act)
             then  --如果是四糸乃且为召唤之人,当灵力需求足够时，可直接满足动作条件
             rider.components.rider:Mount(mount)
             return true
+        elseif rider.components.spiritual_energy and rider.components.spiritual_energy:GetCurrent() < (TUNING.YOSHINOCONFIG.zadkiel_ride_cost) then
+            return false, "SHORTAGE"
         elseif mount.components.rideable:IsBeingRidden() then
             return false, "INUSE"
         else
