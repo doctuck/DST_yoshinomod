@@ -204,15 +204,5 @@ AddStategraphPostInit("wilson", function(sg)
             return mount_onenter(inst, ...)
         end
     end
-    -- 骑乘待机状态（已废弃）
-    --local old_mounted_idle = sg.states.mounted_idle.onenter
-    --sg.states.mounted_idle.onenter = function(inst, ...)
-    --    local zadkiel = inst.components.rider.target_mount and inst.components.rider.target_mount:HasTag("yoshino_zadkiel")
-    --    if zadkiel then
-    --      inst.sg:GoToState("mount_zadkiel_idle")
-    --    else
-    --      return old_mounted_idle(inst, ...)
-    --    end
-    --end
 
 end)

@@ -121,7 +121,7 @@ AddClassPostConstruct("widgets/controls", function(self)
             local minute = math.floor(time / 60)
             local second = math.floor(time - minute * 60)
             local str = ""
-            if time == 0 then print("time = 0") end
+            --if time == 0 then print("time = 0") end   --调试时的输出
             -- 更新文本信息
             if self.owner.replica.spiritual_energy and self.owner.replica.spiritual_energy:GetCurrent() < TUNING.YOSHINOCONFIG.shield_cost then
                 str = STRINGS.CHARACTERS.YOSHINO.ANNOUNCE_REIRYOKU.SHORTAGE
@@ -223,6 +223,7 @@ AddPrefabPostInit("yoshino", function(inst)
     end
 end)
 --//////////////////////////////////////////////////////////////////////////////////////////////
+
 
 --/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 --能力值相关的配方(抄星璃mod的，太感谢了！)
@@ -389,8 +390,18 @@ for _, v in pairs(shadowtags) do
     end)
 end
 -----------------------------
---
----------------------------
+---可用于补充四糸乃的折扇的物品-
+local fueltags = {"sewing_kit","feather_robin"}
+for _,v in pairs(fueltags) do
+    AddPrefabPostInit(v, function(inst)
+        inst:AddTag("repair_yoshinofan")
+        if not TheWorld.ismastersim then return inst end    --主客机判断
+        if inst.components.yoshino_savemoddata == nil then
+            inst:AddComponent("yoshino_savemoddata")
+        end
+    end)
+end
+----------------------------
 --//////****************//////////////////////////*************/////////////
 
 --/////骑乘相关//////////////////////////
@@ -435,6 +446,32 @@ local function SGwilson(sg)
         inst.sg.GoToState = old_GoToState
     end
 
+    --hook使用折扇时的状态
+    local oldusefan = sg.states.use_fan.onenter
+    sg.states.use_fan.onenter = function(inst, ...)
+        local invobject = nil
+        if inst.bufferedaction ~= nil then
+            invobject = inst.bufferedaction.invobject
+            if invobject ~= nil and invobject.components.fan ~= nil and invobject.components.fan:IsChanneling() then
+                inst.sg.statemem.item = invobject
+                inst.sg.statemem.target = inst.bufferedaction.target or inst.bufferedaction.doer
+                inst.sg:AddStateTag("busy")
+            end
+        end
+        inst.components.locomotor:Stop()
+        inst.AnimState:PlayAnimation("action_uniqueitem_pre")
+        inst.AnimState:PushAnimation("fan", false)
+        local skin_build = invobject ~= nil and invobject:GetSkinBuild() or nil
+        local src_symbol = invobject ~= nil and invobject.components.fan ~= nil and invobject.components.fan.overridesymbol or "swap_fan"
+        if skin_build ~= nil then
+            inst.AnimState:OverrideItemSkinSymbol( "fan01", skin_build, src_symbol, invobject.GUID, "fan" )
+        else
+            inst.AnimState:OverrideSymbol( "fan01", invobject ~= nil and invobject.AnimState:GetBuild() or "fan", src_symbol)
+        --else  --原版用法纯傻，不让人换build内容
+        --    inst.AnimState:OverrideSymbol( "fan01", "fan", src_symbol )
+        end
+        inst.components.inventory:ReturnActiveActionItem(invobject)
+    end
 end
 AddComponentPostInit("rider", function(self)
     local old_mount = self.Mount
@@ -583,3 +620,56 @@ AddPlayerPostInit(function(inst)    --这块抄骑行龙蝇的，做了一些修
 end)
 
 --/////以上/骑乘相关/////////////////////
+
+
+--*******************************************
+--屏幕显示相关
+local Yoshino_Itemdir = require("widgets/yoshino_itemdir")
+local ImageButton = require "widgets/imagebutton"
+
+AddClassPostConstruct("screens/playerhud", function(self)
+    -- 在屏幕中添加一个按钮，用来触发面板的显示与关闭
+    if ThePlayer ~= nil and ThePlayer:HasTag("yoshino") then --仅四糸乃可以拥有
+        self.openbutton = self:AddChild(ImageButton("images/inventoryimages/yoshino_dir.xml","yoshino_dir.tex"))
+        self.openbutton:SetOnClick(function()
+            self:ChangeDirState()
+        end)
+
+        self.openbutton:SetHAnchor(2)    -- 设置原点x坐标位置，0、1、2分别对应屏幕中、左、右
+        self.openbutton:SetVAnchor(1)    -- 设置原点y坐标位置，0、1、2分别对应屏幕中、上、下
+        self.openbutton:SetNormalScale(0.25, 0.25)   -- 图片平时的缩放大小
+        self.openbutton:SetFocusScale(0.3, 0.3)      -- 鼠标移动到上面时的大小
+        self.openbutton:SetPosition(-190,-260,0)     -- 设置位置
+        --self.openbutton:SetScaleMode(SCALEMODE_PROPORTIONAL)  -- 保持纵横比，全局常量 SCALEMODE_PROPORTIONAL = 2
+        --self.openbutton:SetMaxPropUpscale(1)    -- UI最大缩放比例
+
+
+        function self:ChangeDirState()
+            if self.yoshino_itemdir and self.yoshino_itemdir.inst:IsValid() then
+                TheFrontEnd:PopScreen(self.yoshino_itemdir) --将指定屏幕移出栈
+                self.yoshino_itemdir = nil
+            end
+            self:ShowYoshino_Itemdir()
+        end
+
+        -- 显示面板
+        self.ShowYoshino_Itemdir = function(_, attach)
+            self.yoshino_itemdir = Yoshino_Itemdir(self.owner)
+            self:OpenScreenUnderPause(self.yoshino_itemdir)
+            self.yoshino_itemdir:SetHAnchor(0)
+            self.yoshino_itemdir:SetVAnchor(0)
+            self.yoshino_itemdir:SetPosition(TUNING.MOD_YOSHINO.itemscreen.pos[1],TUNING.MOD_YOSHINO.itemscreen.pos[2])
+
+            return self.yoshino_itemdir
+        end
+        -- 关闭面板（已废弃，从其他按钮操作）
+        --self.CloseYoshino_Itemdir = function(_)
+        --    if self.yoshino_itemdir then
+        --        self.yoshino_itemdir:Hide()
+        --        self.yoshino_itemdir = nil
+        --    end
+        --end
+    end
+end)
+
+--*******************************************

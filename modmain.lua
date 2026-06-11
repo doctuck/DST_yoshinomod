@@ -4,19 +4,21 @@ local require = GLOBAL.require
 local STRINGS = GLOBAL.STRINGS
 local TUNING = GLOBAL.TUNING
 
-GLOBAL.YOSHINO_API = env    --皮肤API
+GLOBAL.YOSHINO_API = env  --皮肤API
 
-PrefabFiles = {              --预制物（命名绝对不能大写）
-    "yoshino",               --四糸乃
-    "yoshinon",              --四糸奈
-    "yoshino_foods",         --四糸乃的料理
-    "yoshino_crystals",      --灵结晶和反灵结晶
-    "yoshino_zadkiel",       --天使·冰结傀儡
-    "yoshino_atkspike",      --冰结傀儡攻击时的冰刺
-    "yoshino_elyonban",      --神威灵装·四番
-    "yoshino_elfz",          --神威灵装·四番(反转形态)
-    "yoshino_sirvon",        --冰结傀儡·冻铠（简称 "冰铠" ）
-    "yoshino_snowshield",    --冰雪护盾
+PrefabFiles = {           --预制物（命名绝对不能大写）
+    "yoshino",            --四糸乃
+    "yoshinon",           --四糸奈
+    "yoshino_foods",      --四糸乃的料理
+    "yoshino_crystals",   --灵结晶和反灵结晶
+    "yoshino_zadkiel",    --天使·冰结傀儡
+    "yoshino_atkspike",   --冰结傀儡攻击时的冰刺
+    "yoshino_elyonban",   --神威灵装·四番
+    "yoshino_elfz",       --神威灵装·四番(反转形态)
+    "yoshino_sirvon",     --冰结傀儡·冻铠（简称 "冰铠" ）
+    "yoshino_snowshield", --冰雪护盾
+    "yoshino_fan",        --折扇
+    "yoshino_reiryokuice",--魔力冰锥
 }
 
 Assets = {
@@ -56,14 +58,14 @@ Assets = {
     Asset("IMAGE", "bigportraits/yoshino_none.tex"), --人物大图（椭圆）
     Asset("ATLAS", "bigportraits/yoshino_none.xml"), --基础默认皮肤
 
-    Asset("IMAGE","bigportraits/yoshino_skin1.tex"), --人物大图（椭圆）
-    Asset("ATLAS","bigportraits/yoshino_skin1.xml"), --枫色祈愿皮肤
+    Asset("IMAGE", "bigportraits/yoshino_skin1.tex"), --人物大图（椭圆）
+    Asset("ATLAS", "bigportraits/yoshino_skin1.xml"), --枫色祈愿皮肤
 
-    Asset("ANIM", "anim/wilsonzadkiel.zip"),   --四糸乃骑乘冰结傀儡时的人物动画
-    Asset("ANIM", "anim/yoshino_zadkiel.zip"), --冰结傀儡动画
-    Asset("ANIM", "anim/zadkiel_icespike.zip"),--冰刺动画
+    Asset("ANIM", "anim/wilsonzadkiel.zip"),         --四糸乃骑乘冰结傀儡时的人物动画
+    Asset("ANIM", "anim/yoshino_zadkiel.zip"),       --冰结傀儡动画
+    Asset("ANIM", "anim/zadkiel_icespike.zip"),      --冰刺动画
 
-    Asset("ANIM", "anim/yoshino_badge.zip"),   --四糸乃的新增属性——灵力值
+    Asset("ANIM", "anim/yoshino_badge.zip"),         --四糸乃的新增属性——灵力值
     Asset("ATLAS", "images/inventoryimages/decrease_reiryoku.xml"),
     Asset("IMAGE", "images/inventoryimages/decrease_reiryoku.tex"),
 
@@ -73,26 +75,34 @@ Assets = {
     Asset("ATLAS", "images/inventoryimages/yoshino_anticrystal.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_anticrystal.tex"),
 
-    Asset("ANIM", "anim/yoshino_ELyonban.zip"),   --神威灵装·四番
+    Asset("ANIM", "anim/yoshino_ELyonban.zip"), --神威灵装·四番
     Asset("ATLAS", "images/inventoryimages/yoshino_ELyonban.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_ELyonban.tex"),
-    Asset("ANIM", "anim/yoshino_fanzhuan.zip"),   --神威灵装·四番（反转）
+    Asset("ANIM", "anim/yoshino_fanzhuan.zip"), --神威灵装·四番（反转）
     Asset("ATLAS", "images/inventoryimages/yoshino_elfz.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_elfz.tex"),
 
-    Asset("ANIM", "anim/yoshino_sirvon.zip"),   --冰结傀儡·冻铠
+    Asset("ANIM", "anim/yoshino_sirvon.zip"), --冰结傀儡·冻铠
     Asset("ATLAS", "images/inventoryimages/yoshino_sirvon.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_sirvon.tex"),
 
-    Asset("ANIM", "anim/yoshino_snowshield.zip"),   --冰雪护盾
+    Asset("ANIM", "anim/yoshino_snowshield.zip"), --冰雪护盾
     Asset("ATLAS", "images/inventoryimages/yoshino_snowshield.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_snowshield.tex"),
 
-    Asset("ANIM", "anim/yoshino_dishes.zip"), --料理
-    Asset("ATLAS", "images/inventoryimages/yoshino_milkcoco.xml"),  --牛奶可可
+    Asset("ANIM", "anim/yoshino_fan.zip"), --折扇
+    Asset("ATLAS", "images/inventoryimages/yoshino_fan.xml"),
+    Asset("IMAGE", "images/inventoryimages/yoshino_fan.tex"),
+    Asset("ANIM", "anim/yoshino_reiryokuice.zip"),  --冰锥动画
+
+    Asset("ANIM", "anim/yoshino_dishes.zip"),                      --料理
+    Asset("ATLAS", "images/inventoryimages/yoshino_milkcoco.xml"), --牛奶可可
     Asset("IMAGE", "images/inventoryimages/yoshino_milkcoco.tex"),
-    Asset("ATLAS", "images/inventoryimages/yoshino_oyakodon.xml"),  --亲子丼
+    Asset("ATLAS", "images/inventoryimages/yoshino_oyakodon.xml"), --亲子丼
     Asset("IMAGE", "images/inventoryimages/yoshino_oyakodon.tex"),
+
+    Asset("ATLAS", "images/inventoryimages/yoshino_dir.xml"), --辅助游玩的一个按钮图片，没什么用
+    Asset("IMAGE", "images/inventoryimages/yoshino_dir.tex"),
 }
 
 modimport("scripts/main/string_yoshino") --常量加载

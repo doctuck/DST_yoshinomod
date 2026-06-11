@@ -71,7 +71,9 @@ function ReiryokuBadge:OnUpdate(dt)
 		anim ="arrow_loop_increase"
 	end
 	if self.owner.replica.rider and self.owner.replica.rider:GetMount()~= nil and self.owner.replica.rider:GetMount():HasTag("yoshino_zadkiel") then
-		anim = "arrow_loop_decrease"
+		if not (TUNING.YOSHINOCONFIG.zadkiel_ride_cost == 0) then
+			anim = "arrow_loop_decrease"
+		end
 	end
 	if self.arrowdir ~= anim then
         self.arrowdir = anim

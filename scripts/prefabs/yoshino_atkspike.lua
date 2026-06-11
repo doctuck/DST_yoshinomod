@@ -1,3 +1,10 @@
+--资源加载
+local assets = {
+    Asset("ANIM", "anim/zadkiel_icespike.zip"), --冰刺动画
+}
+
+--添加预制物的预制物
+local prefabs = {}
 
 local function onhit(inst, attacker, target)
     local fx = SpawnPrefab("shatter")
@@ -10,59 +17,47 @@ local function onhit(inst, attacker, target)
             target.components.freezable:SpawnShatterFX()
         end
     end
-	
-	--[[if attacker and target.components.combat and target.components.combat:CanTarget(attacker) then
+
+    --[[if attacker and target.components.combat and target.components.combat:CanTarget(attacker) then
         target.components.combat:SuggestTarget(attacker)
     end]]
 
     if target and target.components.health:IsDead() then
-        attacker:PushEvent("killed", {victim = target, attacker = attacker})
+        attacker:PushEvent("killed", { victim = target, attacker = attacker })
     end
     inst:DoTaskInTime(2, inst.Remove)
-    
 end
 
-local function makeprojectile(prefabname)
-    --资源加载
-    local assets = {
-        Asset("ANIM", "anim/zadkiel_icespike.zip"),--冰刺动画
-    }
 
-    --添加预制物的预制物
-    local prefabs = {}
+local function fn()
+    local inst = CreateEntity()
 
-    local function fn()
-        local inst = CreateEntity()
+    inst.entity:AddTransform()
+    inst.entity:AddAnimState()
+    inst.entity:AddNetwork()
+    inst.entity:AddSoundEmitter()
 
-        inst.entity:AddTransform()
-        inst.entity:AddAnimState()
-        inst.entity:AddNetwork()
-        inst.entity:AddSoundEmitter()
+    MakeInventoryPhysics(inst)
+    MakeInventoryFloatable(inst, nil, nil)
+    RemovePhysicsColliders(inst)
 
-        MakeInventoryPhysics(inst)
-        MakeInventoryFloatable(inst, nil, nil)
-        RemovePhysicsColliders(inst)
+    inst.AnimState:SetBank("icespike")
+    inst.AnimState:SetBuild("zadkiel_icespike")
+    inst.AnimState:PlayAnimation("spike")
 
-        inst.AnimState:SetBank("icespike")
-        inst.AnimState:SetBuild("zadkiel_icespike")
-        inst.AnimState:PlayAnimation("spike")
+    inst.Transform:SetNoFaced() --设置无面朝向
 
-        inst.Transform:SetNoFaced() --设置无面朝向
+    inst.entity:SetPristine()
 
-        inst.entity:SetPristine()
-
-        if not TheWorld.ismastersim then
-            return inst
-        end
-
-        inst:ListenForEvent("spawnbyyoshino", function(thisentity, data)
-            onhit(inst, inst.owner or data.attacker, data.target or nil)
-        end)
-
+    if not TheWorld.ismastersim then
         return inst
     end
 
-    return Prefab(prefabname, fn, assets, prefabs)
+    inst:ListenForEvent("spawnbyyoshino", function(thisentity, data)
+        onhit(inst, inst.owner or data.attacker, data.target or nil)
+    end)
+
+    return inst
 end
 
-return makeprojectile("yoshino_atkspike")
+return Prefab("yoshino_atkspike", fn, assets, prefabs)

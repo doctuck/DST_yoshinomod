@@ -57,6 +57,7 @@ AddComponentAction("SCENE", "rideable",  --第一个参数是动作类型， 第
     end
 )
 
+-------------------------------------------------------------------------------------------------
 --用于将神威灵装·四番反转
 local DETERIORATION = Action({mount_valid = true})
 DETERIORATION.id = "DETERIORATION"
@@ -125,6 +126,61 @@ AddComponentAction("USEITEM", "yoshino_savemoddata",
         end
     end
 )
+
+-------------------------------------------------------------------------------------------------
+--修补四糸乃的折扇
+local fuelitem = {
+    yoshino_fan = {
+        sewing_kit = 0.5,
+        feather_robin = 0.3,
+    },
+}
+local canrepairitem = { "yoshino_fan", }
+local REPAIR_YOSHINO_FAN = Action({mount_valid = true, paused_valid=true})  --骑乘有效，暂停有效
+REPAIR_YOSHINO_FAN.id = "REPAIR_YOSHINO_FAN"
+REPAIR_YOSHINO_FAN.str = STRINGS.ACTIONS.REPAIR
+REPAIR_YOSHINO_FAN.fn = function (act)
+    local doer = act.doer
+    local obj = act.invobject   --这里指要被消耗的物品
+    local target = act.target   --这里指要被操作的物品
+
+    if not target.components.finiteuses then
+        return false
+    end
+
+    local repairpercent = fuelitem[target.prefab][obj.prefab]
+
+    local maxfiniteuse = target.components.finiteuses.total
+    if obj.components.stackable ~= nil and obj.components.stackable:StackSize() >= 1 then
+        obj.components.stackable:Get(1):Remove()
+        target.components.finiteuses:Repair(repairpercent * maxfiniteuse)
+        return true
+    elseif obj.components.stackable == nil then
+        obj:Remove()
+        target.components.finiteuses:Repair(repairpercent * maxfiniteuse)
+        return true
+    else
+        print("未知原因导致修复动作失败")
+        return false
+    end
+
+end
+
+AddAction(REPAIR_YOSHINO_FAN)
+
+AddStategraphActionHandler("wilson", ActionHandler(ACTIONS.REPAIR_YOSHINO_FAN, "domediumaction"))
+AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS.REPAIR_YOSHINO_FAN, "domediumaction"))
+
+AddComponentAction("USEITEM","yoshino_savemoddata",
+    function (inst, doer, target, actions, right)
+        if inst:HasTag("repair_yoshinofan") and table.contains(canrepairitem, target.prefab) and right then
+            table.insert(actions, ACTIONS.REPAIR_YOSHINO_FAN)
+        end
+    end
+)
+
+
+
 
 
 --[[以下是RPC部分]]

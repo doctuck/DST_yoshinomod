@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b5">
+    <folder id="0" name="fan">
+        <file id="0" name="fan/fan-0.png" width="128" height="128" pivot_x="0.546154" pivot_y="0.238462"/>
+    </folder>
+    <folder id="1" name="swap_fan_yoshino">
+        <file id="0" name="swap_fan_yoshino/fan_yoshino-0.png" width="128" height="128" pivot_x="0.269231" pivot_y="0.269231"/>
+        <file id="1" name="swap_fan_yoshino/fan_yoshino-1.png" width="128" height="128" pivot_x="0.261538" pivot_y="0.292308"/>
+        <file id="2" name="swap_fan_yoshino/fan_yoshino-2.png" width="128" height="128" pivot_x="0.353846" pivot_y="0.207692"/>
+        <file id="3" name="swap_fan_yoshino/fan_yoshino-3.png" width="128" height="128" pivot_x="0.223077" pivot_y="0.230769"/>
+        <file id="4" name="swap_fan_yoshino/fan_yoshino-4.png" width="128" height="128" pivot_x="0.230769" pivot_y="0.238462"/>
+    </folder>
+    <entity id="0" name="yoshino_fan">
+        <animation id="0" name="idle" length="33">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" name="fan-0" folder="0" file="0" abs_x="0" abs_y="0" abs_pivot_x="0.546154" abs_pivot_y="0.238462" abs_angle="0" abs_scale_x="1.5" abs_scale_y="1" abs_a="1" timeline="0" key="0" z_index="0"/>
+                </key>
+                <key id="1" time="33">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="fan-0">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.5"/>
+                </key>
+                <key id="1" time="33" spin="0">
+                    <object folder="0" file="0" angle="0"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

@@ -64,15 +64,8 @@ end
 
 --捡起时（拿在手上时也会调用该函数）
 local function OnPickup(inst, owner, src_pos)
-    --检查持有者是否为四糸乃
-    if owner ~= nil and owner.components.talker then
-        if owner:HasTag("yoshino") and inst.components.container ~= nil then
-            inst.components.container:Close(owner)
-        else
-            if math.random() <= 0.4 then
-                owner.components.talker:Say(STRINGS.CHARACTERS.GENERIC.ANNOUNCE_PICK_YOSHINON)
-            end
-        end
+    if inst.components.container ~= nil then
+        inst.components.container:Close(owner)
     end
 end
 -- 扔下来时
@@ -125,6 +118,7 @@ local function fn()
     inst:AddTag("yoshinon")                                               --添加物品标签
     inst:AddTag("nosteal")                                                --不可被偷
     inst:AddTag("sticky_weapon")                                          --不脱手的武器标签
+    inst:AddTag("nopunch")                                                --不视为空手
     --inst:AddTag("backpack")                --该物品属于背包同类
     --inst:AddTag("fridge")                  --该物品属于冰箱同类
 
@@ -153,6 +147,13 @@ local function fn()
     inst.components.inventoryitem:SetOnPickupFn(OnPickup)       --拾起时调用对应函数
     inst.components.inventoryitem:SetOnDroppedFn(OnDropped)     --掉落时调用对应函数
     inst.components.inventoryitem:SetSinks(false)               --设置true可以落水，掉海里直接消失。
+    inst.components.inventoryitem:SetOnPutInInventoryFn(
+        function(owner)
+            if owner and owner.components.talker and not owner:HasTag("yoshino") then
+                owner.components.talker:Say(STRINGS.CHARACTERS.GENERIC.ANNOUNCE_PICK_YOSHINON)
+            end
+        end
+    )
 
     inst:AddComponent("container")                              --添加容器组件
     inst.components.container:WidgetSetup("yoshinon_container") --设置容器名

@@ -46,13 +46,26 @@ TUNING.MOD_YOSHINO = {
         pos ={ -125, 35, 0 },       --相对位置x,y,z(屏幕上只有x和y,所以z要为0)
         color = { 0 / 255, 128 / 255, 250 / 255, 1 }, --颜色和透明度
     },
+    itemscreen = {
+        width = 400,        --界面的宽
+        height = 500,       --界面的高
+        pos = {0,0,0},      --界面相对位置
+        textwidth = 400,    --文本详情页的宽
+        textheigth = 600,   --文本详情页的高
+    },
+    yoshino_fan = {
+        uses = 10,          --折扇的使用耐久
+        damage = 24,         --折扇的攻击力
+        range = 8,          --折扇的攻击范围和命中范围
+        addcold_val = 0.2   --攻击附带寒冷值
+    },
     YOSHINO_ZADKIEL = {
         SEARCH_RANGE = 10,  --冰洁傀儡仇恨搜索范围
         SPEED_RUN = 14,     --跑步速度
         SPEED_WALK = 6,     --步行速度
         DAMAGE_DEAFULT = 82,--默认基础伤害
         PLANAR_DEAFULT = 51,--默认位面伤害
-        ATK_RANGE = 8,     --攻击范围(进入此范围内则可以准备攻击)
+        ATK_RANGE = 8,      --攻击范围(进入此范围内则可以准备攻击)
         HIT_RANGE = 8,      --击中范围(进入此范围才能真正打中)
         ADDCOLD_VAL = 0.4,  --攻击时附带0.4 寒冷值
     },

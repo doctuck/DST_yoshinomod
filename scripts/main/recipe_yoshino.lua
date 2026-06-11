@@ -44,6 +44,20 @@ AddRecipe2("yoshino_sirvon",      --配方ID
     { "CHARACTER", "ARMOUR", "MAGIC", "RAIN" }              --配方属于角色页面、护甲页面、魔法页面、雨具
 )
 
+--四糸乃的折扇合成配方
+AddRecipe2("yoshino_fan_replica",      --配方ID
+    { Ingredient("feather_robin", 3), Ingredient("twigs", 3) }, --物品配方（红羽毛*3 + 树枝*3 ）
+    TECH.SCIENCE_ONE,       --需要科学一本
+    {
+        atlas = "images/inventoryimages/yoshino_fan.xml",
+        image = "yoshino_fan.tex",
+        builder_tag = "yoshino", --限制建造者为四糸乃
+        product = "yoshino_fan",    --产物：四糸乃的折扇
+        no_deconstruction = false --可拆解
+    },
+    { "CHARACTER", "TOOLS", "WEAPONS", "SUMMER" }              --配方属于角色页面、工具、武器、夏季物品
+)
+
 --冰的合成配方, 四糸乃专属
 CHARACTER_INGREDIENT.REIRYOKU = "decrease_reiryoku"
 --local old_IsCharacterIngredient = IsCharacterIngredient   --已移动到hook_yoshino.lua
@@ -65,5 +79,6 @@ AddRecipe2("yoshino_ice",      --配方ID
     { "CHARACTER", "REFINE" }              --配方属于角色页面、精炼材料页面
 )
 
---配方分解例子
+--配方分解(注意：自己写的分解配方，物品名不能和自己写的合成配方ID一致)
 --AddDeconstructRecipe("axe", {Ingredient("twigs", 2)}) --分解斧头得到两个树枝
+AddDeconstructRecipe("yoshino_fan", {Ingredient("feather_robin", 3), Ingredient("twigs", 3)})   --分解四糸乃的折扇得到完整制作材料
