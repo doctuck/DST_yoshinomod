@@ -19,6 +19,7 @@ PrefabFiles = {           --预制物（命名绝对不能大写）
     "yoshino_snowshield", --冰雪护盾
     "yoshino_fan",        --折扇
     "yoshino_reiryokuice",--魔力冰锥
+    "yoshino_witchhat",   --魔女帽
 }
 
 Assets = {
@@ -52,14 +53,20 @@ Assets = {
     Asset("IMAGE", "images/avatars/self_inspect_yoshino.tex"), --自检头像
     Asset("ATLAS", "images/avatars/self_inspect_yoshino.xml"),
 
-    Asset("IMAGE", "images/inventoryimages/yoshinon.tex"), --四糸乃的手偶：四糸奈
-    Asset("ATLAS", "images/inventoryimages/yoshinon.xml"),
-
     Asset("IMAGE", "bigportraits/yoshino_none.tex"), --人物大图（椭圆）
     Asset("ATLAS", "bigportraits/yoshino_none.xml"), --基础默认皮肤
 
     Asset("IMAGE", "bigportraits/yoshino_skin1.tex"), --人物大图（椭圆）
     Asset("ATLAS", "bigportraits/yoshino_skin1.xml"), --枫色祈愿皮肤
+
+    Asset("IMAGE", "bigportraits/yoshino_skin2.tex"), --人物大图（椭圆）
+    Asset("ATLAS", "bigportraits/yoshino_skin2.xml"), --万圣节皮肤
+
+    Asset("IMAGE", "bigportraits/yoshino_skin3.tex"), --人物大图（椭圆）
+    Asset("ATLAS", "bigportraits/yoshino_skin3.xml"), --春绮花朝皮肤
+
+    Asset("IMAGE", "images/inventoryimages/yoshinon.tex"), --四糸乃的手偶：四糸奈
+    Asset("ATLAS", "images/inventoryimages/yoshinon.xml"),
 
     Asset("ANIM", "anim/wilsonzadkiel.zip"),         --四糸乃骑乘冰结傀儡时的人物动画
     Asset("ANIM", "anim/yoshino_zadkiel.zip"),       --冰结傀儡动画
@@ -69,20 +76,20 @@ Assets = {
     Asset("ATLAS", "images/inventoryimages/decrease_reiryoku.xml"),
     Asset("IMAGE", "images/inventoryimages/decrease_reiryoku.tex"),
 
-    Asset("ANIM", "anim/yoshino_crystals.zip"), --灵结晶和反灵结晶
+    Asset("ANIM", "anim/yoshino_crystals.zip"),   --灵结晶和反灵结晶
     Asset("ATLAS", "images/inventoryimages/yoshino_crystal.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_crystal.tex"),
     Asset("ATLAS", "images/inventoryimages/yoshino_anticrystal.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_anticrystal.tex"),
 
-    Asset("ANIM", "anim/yoshino_ELyonban.zip"), --神威灵装·四番
+    Asset("ANIM", "anim/yoshino_ELyonban.zip"),   --神威灵装·四番
     Asset("ATLAS", "images/inventoryimages/yoshino_ELyonban.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_ELyonban.tex"),
     Asset("ANIM", "anim/yoshino_fanzhuan.zip"), --神威灵装·四番（反转）
     Asset("ATLAS", "images/inventoryimages/yoshino_elfz.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_elfz.tex"),
 
-    Asset("ANIM", "anim/yoshino_sirvon.zip"), --冰结傀儡·冻铠
+    Asset("ANIM", "anim/yoshino_sirvon.zip"),     --冰结傀儡·冻铠
     Asset("ATLAS", "images/inventoryimages/yoshino_sirvon.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_sirvon.tex"),
 
@@ -90,12 +97,16 @@ Assets = {
     Asset("ATLAS", "images/inventoryimages/yoshino_snowshield.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_snowshield.tex"),
 
-    Asset("ANIM", "anim/yoshino_fan.zip"), --折扇
+    Asset("ANIM", "anim/yoshino_fan.zip"),        --折扇
     Asset("ATLAS", "images/inventoryimages/yoshino_fan.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_fan.tex"),
     Asset("ANIM", "anim/yoshino_reiryokuice.zip"),  --冰锥动画
 
-    Asset("ANIM", "anim/yoshino_dishes.zip"),                      --料理
+    Asset("ANIM", "anim/yoshino_witchhat.zip"),   --魔女帽
+    Asset("ATLAS", "images/inventoryimages/yoshino_witchhat.xml"),
+    Asset("IMAGE", "images/inventoryimages/yoshino_witchhat.tex"),
+
+    Asset("ANIM", "anim/yoshino_dishes.zip"),     --料理
     Asset("ATLAS", "images/inventoryimages/yoshino_milkcoco.xml"), --牛奶可可
     Asset("IMAGE", "images/inventoryimages/yoshino_milkcoco.tex"),
     Asset("ATLAS", "images/inventoryimages/yoshino_oyakodon.xml"), --亲子丼

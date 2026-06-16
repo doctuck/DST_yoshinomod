@@ -59,7 +59,7 @@ AddComponentAction("SCENE", "rideable",  --第一个参数是动作类型， 第
 
 -------------------------------------------------------------------------------------------------
 --用于将神威灵装·四番反转
-local DETERIORATION = Action({mount_valid = true})
+local DETERIORATION = Action({priority = 99, mount_valid = true})
 DETERIORATION.id = "DETERIORATION"
 DETERIORATION.strfn = function(act)
     return act.target.prefab == "yoshino_elyonban" and "REVERSE" or "HUIFU"
@@ -118,25 +118,30 @@ STRINGS.ACTIONS.DETERIORATION = {
 AddStategraphActionHandler("wilson", ActionHandler(ACTIONS.DETERIORATION, "castspellmind"))
 AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS.DETERIORATION, "castspellmind"))
 
-AddComponentAction("USEITEM", "yoshino_savemoddata",
+AddComponentAction("USEITEM", "yoshino_useless",
     function (inst, doer, target, actions, right)
         --例如：在USEITEM场景中，函数参数inst是手持物品，即要进行动作的物品；target是被进行动作的目标物品，doer是动作的执行者，就是玩家
-        if (inst.prefab == "yoshino_anticrystal" and target.prefab == "yoshino_elyonban") or (inst.prefab == "yoshino_crystal" and target.prefab == "yoshino_elfz") then
+        if (inst:HasTag("yoshino_anticrystal") and target:HasTag("yoshino_elyonban")) or (inst:HasTag("yoshino_crystal") and target:HasTag("yoshino_elfz")) and right then
             table.insert(actions, ACTIONS.DETERIORATION)
         end
     end
 )
 
 -------------------------------------------------------------------------------------------------
---修补四糸乃的折扇
+--修补（适用于finiteuses组件）
 local fuelitem = {
+    --四糸乃的折扇
     yoshino_fan = {
-        sewing_kit = 0.5,
+        feather_canary = 0.2,
+        feather_crow = 0.2,
+        feather_robin_winter = 0.2,
+        goose_feather = 0.4,
+        malbatross_feather = 0.4,
         feather_robin = 0.3,
     },
 }
 local canrepairitem = { "yoshino_fan", }
-local REPAIR_YOSHINO_FAN = Action({mount_valid = true, paused_valid=true})  --骑乘有效，暂停有效
+local REPAIR_YOSHINO_FAN = Action({mount_valid = true, paused_valid = true})  --骑乘有效，暂停有效
 REPAIR_YOSHINO_FAN.id = "REPAIR_YOSHINO_FAN"
 REPAIR_YOSHINO_FAN.str = STRINGS.ACTIONS.REPAIR
 REPAIR_YOSHINO_FAN.fn = function (act)
@@ -144,7 +149,7 @@ REPAIR_YOSHINO_FAN.fn = function (act)
     local obj = act.invobject   --这里指要被消耗的物品
     local target = act.target   --这里指要被操作的物品
 
-    if not target.components.finiteuses then
+    if not target.components.finiteuses or not target.components.fueled then
         return false
     end
 
@@ -171,7 +176,7 @@ AddAction(REPAIR_YOSHINO_FAN)
 AddStategraphActionHandler("wilson", ActionHandler(ACTIONS.REPAIR_YOSHINO_FAN, "domediumaction"))
 AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS.REPAIR_YOSHINO_FAN, "domediumaction"))
 
-AddComponentAction("USEITEM","yoshino_savemoddata",
+AddComponentAction("USEITEM","yoshino_savemoddata", --相同场景且同样使用"左键或右键"似乎不能绑在相同组件上
     function (inst, doer, target, actions, right)
         if inst:HasTag("repair_yoshinofan") and table.contains(canrepairitem, target.prefab) and right then
             table.insert(actions, ACTIONS.REPAIR_YOSHINO_FAN)

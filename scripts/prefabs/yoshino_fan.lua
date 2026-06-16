@@ -136,7 +136,7 @@ local function fn()
     --    if inst.components.finiteuses:GetUses() <= 0 then
     --        return
     --    end
-    --    inst.components.finiteuses:Use(1)   --每次使用减1
+    --    inst.components.finiteuses:Use(1)   --每次攻击使用减1
     --end)
 
     inst:AddComponent("equippable")     --可装备组件

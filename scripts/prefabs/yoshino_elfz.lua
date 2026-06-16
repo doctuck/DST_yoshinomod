@@ -40,7 +40,7 @@ local function ownerequip(owner, data)
     end
 end
 local function ownerunequip(owner, data)
-    --隐藏其他的头部装备
+    --其他头部装备卸下时，会清除相关通道，因此需要再次使这些通道重新覆盖
     if data.eslot == EQUIPSLOTS.HEAD then
         owner:DoTaskInTime(0, function ()
             owner.AnimState:ClearOverrideSymbol("swap_hat")
@@ -111,7 +111,7 @@ local function onequip(inst, owner)
         end
     end
 
-    owner.components.combat.damagemultiplier = 1.0    --伤害系数
+    owner.components.combat.externaldamagemultipliers:SetModifier("yoshino_elfz", 1.25, "ELfz_equiped")
 
     owner:ListenForEvent("onhitother", frozenother)
     owner:ListenForEvent("equip", ownerequip)
@@ -161,14 +161,14 @@ local function onunequip(inst, owner)
     owner.AnimState:OverrideSymbol("swap_hat", player_build, "swap_hat")
     owner.AnimState:OverrideSymbol("torso", player_build, "torso")
 
-    owner.components.combat.damagemultiplier = TUNING.MOD_YOSHINO.yoshino.DAMAGE_DEAFULT_Ratio  --伤害系数恢复
-
     --如果有装备四糸奈，则替换四糸奈的皮肤（尚未实现）
     for k, v in pairs(owner.components.inventory.equipslots) do
         if v.prefab == "yoshinon" and v.yoshinonequip ~= nil then
             v.yoshinonequip(v,owner)    --恢复四糸奈的贴图
         end
     end
+
+    owner.components.combat.externaldamagemultipliers:RemoveModifier("yoshino_elfz", "ELfz_equiped")
 
     owner:RemoveEventCallback("onhitother", frozenother)    --卸下时取消监听
     owner:RemoveEventCallback("equip", ownerequip)          --卸下时取消监听

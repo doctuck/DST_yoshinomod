@@ -391,7 +391,7 @@ for _, v in pairs(shadowtags) do
 end
 -----------------------------
 ---可用于补充四糸乃的折扇的物品-
-local fueltags = {"sewing_kit","feather_robin"}
+local fueltags = {"feather_canary","feather_robin","feather_crow","feather_robin_winter","goose_feather","malbatross_feather"}
 for _,v in pairs(fueltags) do
     AddPrefabPostInit(v, function(inst)
         inst:AddTag("repair_yoshinofan")
@@ -639,7 +639,7 @@ AddClassPostConstruct("screens/playerhud", function(self)
         self.openbutton:SetVAnchor(1)    -- 设置原点y坐标位置，0、1、2分别对应屏幕中、上、下
         self.openbutton:SetNormalScale(0.25, 0.25)   -- 图片平时的缩放大小
         self.openbutton:SetFocusScale(0.3, 0.3)      -- 鼠标移动到上面时的大小
-        self.openbutton:SetPosition(-190,-260,0)     -- 设置位置
+        self.openbutton:SetPosition(-260,-260,0)     -- 设置位置
         --self.openbutton:SetScaleMode(SCALEMODE_PROPORTIONAL)  -- 保持纵横比，全局常量 SCALEMODE_PROPORTIONAL = 2
         --self.openbutton:SetMaxPropUpscale(1)    -- UI最大缩放比例
 

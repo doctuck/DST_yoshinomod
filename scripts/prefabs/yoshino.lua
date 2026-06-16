@@ -315,7 +315,7 @@ local function master_postinit(inst)
     inst.components.hunger:SetMax(TUNING.YOSHINO_HUNGER)                             --饥饿
     inst.components.sanity:SetMax(TUNING.YOSHINO_SANITY)                             --理智
     --其他杂项
-    inst.components.combat.damagemultiplier = TUNING.MOD_YOSHINO.yoshino.DAMAGE_DEAFULT_Ratio  --伤害系数，0.8倍 (即无加成时8点伤害,有加成时加成乘0.8)
+    inst.components.combat.damagemultiplier = TUNING.MOD_YOSHINO.yoshino.DAMAGE_DEAFULT_Ratio  --伤害系数，0.8倍 (即无加成时8点伤害,有加成时加成乘0.8, 此条目设定好后难以改变)
     --inst.components.combat:SetRange(10, 10)                                          --设置攻击范围和命中范围
     inst.components.health.absorb = 0                                                --防御系数,absorb = 1时抵抗百分之百的伤害，即免疫，为负数则表示所受伤害增加。
     inst.components.hunger.hungerrate = 0.9 * TUNING.WILSON_HUNGER_RATE              --饥饿速度，每天(0.9*75)

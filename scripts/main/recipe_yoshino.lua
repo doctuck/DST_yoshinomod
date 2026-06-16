@@ -18,7 +18,7 @@ AddRecipe2("yoshinon",      --配方ID
 
 --神威灵装·四番的合成配方
 AddRecipe2("yoshino_elyonban",      --配方ID
-    { Ingredient("tentaclespots", 2), Ingredient("bluegem", 1), Ingredient("silk", 6) }, --物品配方（触手皮*2 +蓝宝石*1+蜘蛛丝*6）
+    { Ingredient("tentaclespots", 2), Ingredient("bluegem", 1), Ingredient("silk", 6) }, --物品配方（触手皮*2+蓝宝石*1+蜘蛛丝*6）
     TECH.MAGIC_TWO,              --需要魔法一本(灵子分解器)
     {
         atlas = "images/inventoryimages/yoshino_ELyonban.xml",
@@ -46,7 +46,7 @@ AddRecipe2("yoshino_sirvon",      --配方ID
 
 --四糸乃的折扇合成配方
 AddRecipe2("yoshino_fan_replica",      --配方ID
-    { Ingredient("feather_robin", 3), Ingredient("twigs", 3) }, --物品配方（红羽毛*3 + 树枝*3 ）
+    { Ingredient("feather_robin", 10), Ingredient("twigs", 3) }, --物品配方（红羽毛*10+树枝*3）
     TECH.SCIENCE_ONE,       --需要科学一本
     {
         atlas = "images/inventoryimages/yoshino_fan.xml",
@@ -56,6 +56,20 @@ AddRecipe2("yoshino_fan_replica",      --配方ID
         no_deconstruction = false --可拆解
     },
     { "CHARACTER", "TOOLS", "WEAPONS", "SUMMER" }              --配方属于角色页面、工具、武器、夏季物品
+)
+
+--四糸乃的魔女帽合成配方
+AddRecipe2("yoshino_witchhat_replica",      --配方ID
+    { Ingredient("manrabbit_tail", 12), Ingredient("livinglog", 3), Ingredient("feather_robin", 1),Ingredient("rope", 4) }, --物品配方（兔绒*12+活木头*3+红羽毛*1+绳子*4）
+    TECH.SCIENCE_ONE,       --需要科学一本
+    {
+        atlas = "images/inventoryimages/yoshino_witchhat.xml",
+        image = "yoshino_witchhat.tex",
+        builder_tag = "yoshino", --限制建造者为四糸乃
+        product = "yoshino_witchhat",    --产物：四糸乃的魔女帽
+        no_deconstruction = false --可拆解
+    },
+    { "CHARACTER", "CLOTHING", "LIGHT", "WINTER" }              --配方属于角色页面、服装、光源、冬季物品
 )
 
 --冰的合成配方, 四糸乃专属
@@ -82,3 +96,4 @@ AddRecipe2("yoshino_ice",      --配方ID
 --配方分解(注意：自己写的分解配方，物品名不能和自己写的合成配方ID一致)
 --AddDeconstructRecipe("axe", {Ingredient("twigs", 2)}) --分解斧头得到两个树枝
 AddDeconstructRecipe("yoshino_fan", {Ingredient("feather_robin", 3), Ingredient("twigs", 3)})   --分解四糸乃的折扇得到完整制作材料
+AddDeconstructRecipe("yoshino_witchhat", {Ingredient("manrabbit_tail", 12), Ingredient("livinglog", 3), Ingredient("feather_robin", 1),Ingredient("rope", 4)})   --分解四糸乃的魔女帽得到完整制作材料
