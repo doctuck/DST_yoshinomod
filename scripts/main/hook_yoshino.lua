@@ -136,13 +136,22 @@ end)
 
 --//////////////////////////////////////////////////////////////////////////////////////////////
 --四糸乃初始化后
+local last_time = 0
 AddPrefabPostInit("yoshino", function(inst)
     if TheNet:GetIsClient() or TheNet:GetServerIsClientHosted() then --以下仅是从客户端向服务端发送消息的部分
         TheInput:AddKeyDownHandler(
             TUNING.YOSHINOCONFIG["call_zadkiel_key"],
             function()
+                local now_time = GetTime()
+                if ThePlayer:HasTag("playerghost") or not ThePlayer:IsValid() then
+                    return
+                end
+                if now_time - last_time < 1.08 then --避免被快速点击的方式召唤多个
+                    return
+                end
                 --发送RPC
                 SendModRPCToServer(MOD_RPC["yoshinomod"]["call_zadkiel"])     --发送召唤冰洁傀儡的RPC
+                last_time = GetTime()
             end
         )
     end
@@ -445,33 +454,6 @@ local function SGwilson(sg)
         locomote_fn(inst, data)
         inst.sg.GoToState = old_GoToState
     end
-
-    --hook使用折扇时的状态
-    local oldusefan = sg.states.use_fan.onenter
-    sg.states.use_fan.onenter = function(inst, ...)
-        local invobject = nil
-        if inst.bufferedaction ~= nil then
-            invobject = inst.bufferedaction.invobject
-            if invobject ~= nil and invobject.components.fan ~= nil and invobject.components.fan:IsChanneling() then
-                inst.sg.statemem.item = invobject
-                inst.sg.statemem.target = inst.bufferedaction.target or inst.bufferedaction.doer
-                inst.sg:AddStateTag("busy")
-            end
-        end
-        inst.components.locomotor:Stop()
-        inst.AnimState:PlayAnimation("action_uniqueitem_pre")
-        inst.AnimState:PushAnimation("fan", false)
-        local skin_build = invobject ~= nil and invobject:GetSkinBuild() or nil
-        local src_symbol = invobject ~= nil and invobject.components.fan ~= nil and invobject.components.fan.overridesymbol or "swap_fan"
-        if skin_build ~= nil then
-            inst.AnimState:OverrideItemSkinSymbol( "fan01", skin_build, src_symbol, invobject.GUID, "fan" )
-        else
-            inst.AnimState:OverrideSymbol( "fan01", invobject ~= nil and invobject.AnimState:GetBuild() or "fan", src_symbol)
-        --else  --原版用法纯傻，不让人换build内容
-        --    inst.AnimState:OverrideSymbol( "fan01", "fan", src_symbol )
-        end
-        inst.components.inventory:ReturnActiveActionItem(invobject)
-    end
 end
 AddComponentPostInit("rider", function(self)
     local old_mount = self.Mount
@@ -639,13 +621,78 @@ AddClassPostConstruct("screens/playerhud", function(self)
         self.openbutton:SetVAnchor(1)    -- 设置原点y坐标位置，0、1、2分别对应屏幕中、上、下
         self.openbutton:SetNormalScale(0.25, 0.25)   -- 图片平时的缩放大小
         self.openbutton:SetFocusScale(0.3, 0.3)      -- 鼠标移动到上面时的大小
-        self.openbutton:SetPosition(-260,-260,0)     -- 设置位置
+        self.openbutton:SetPosition(-260,-260,0)     -- 设置默认位置
         --self.openbutton:SetScaleMode(SCALEMODE_PROPORTIONAL)  -- 保持纵横比，全局常量 SCALEMODE_PROPORTIONAL = 2
         --self.openbutton:SetMaxPropUpscale(1)    -- UI最大缩放比例
 
+        --根据保存记录，重设按钮的位置
+        TheSim:GetPersistentString("yoshino_itembutton", function(load_success, str)
+            if load_success == true and str ~= nil then
+                local pt = string.split(str, ",")
+                self.openbutton:SetPosition(Vector3(tonumber(pt[1]), tonumber(pt[2]), 0));
+            end
+        end)
+
+
+        -- ========== 添加右键拖拽功能 ==========
+        --hook一下原widget的按钮移动函数
+        local oldOnMouseButton = self.openbutton.OnMouseButton
+        self.openbutton.OnMouseButton = function(widget, button, down, x, y)
+            if button == MOUSEBUTTON_RIGHT then
+                if down then
+                    -- 开始拖拽
+                    widget._isDragging = true
+                    local pos = widget:GetPosition()
+                    widget._dragOffset = Vector3(x - pos.x, y - pos.y, 0)   -- 记录鼠标与按钮的偏移
+
+                    -- 添加全局鼠标移动监听
+                    widget._dragHandler = TheInput:AddMoveHandler(function(mx, my)
+                        if widget._isDragging then
+                            local newX = mx - widget._dragOffset.x
+                            local newY = my - widget._dragOffset.y
+                            widget:SetPosition(newX, newY)
+                            self.button_pt = Vector3(newX, newY, 0)
+                        end
+                    end)
+                    return true
+                else
+                    -- 结束拖拽
+                    widget._isDragging = false
+                    if widget._dragHandler then
+                        widget._dragHandler:Remove()
+                        widget._dragHandler = nil
+                    end
+                    self:SaveButtonPt()
+                    return true
+                end
+            else
+                --其他鼠标指令由原函数处理
+                if oldOnMouseButton then
+                    return oldOnMouseButton(widget, button, down, x, y)
+                end
+            end
+        end
+
+        --保存按钮位置
+        function self:SaveButtonPt()
+            if self.button_pt then
+                local pt = self.button_pt
+                TheSim:SetPersistentString("yoshino_itembutton", tostring(pt.x) .. "," .. tostring(pt.y))
+                --print("按钮位置保存成功！")
+            end
+        end
+        TheInput:AddKeyHandler(function(key, down)
+            if down and key == KEY_PAGEUP then  --按PageUp键恢复
+                if self.openbutton._dragHandler then
+                    self.openbutton._dragHandler:Remove()
+                    self.openbutton._dragHandler = nil
+                end
+                self.openbutton:SetPosition(-260,-260)
+            end
+        end)
 
         function self:ChangeDirState()
-            if self.yoshino_itemdir and self.yoshino_itemdir.inst:IsValid() then
+            if self.yoshino_itemdir then
                 TheFrontEnd:PopScreen(self.yoshino_itemdir) --将指定屏幕移出栈
                 self.yoshino_itemdir = nil
             end

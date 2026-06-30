@@ -42,7 +42,7 @@ local function NoHoles(pt)
     return not TheWorld.Map:IsPointNearHole(pt)
 end
 local function onchannelingfn(inst, target)
-    if inst.components.finiteuses:GetUses() > 2 then
+    if inst.components.finiteuses:GetUses() > 4 then
         local pos =(target ~= nil and target:GetPosition()) or (inst.components.inventoryitem.owner ~= nil and inst.components.inventoryitem.owner:GetPosition()) or nil
         if pos ~= nil then
             local angle
@@ -59,7 +59,7 @@ local function onchannelingfn(inst, target)
                 --inst.components.finiteuses:Use(1) --使用扇风动作本就有消耗了
 
                 local tornado = SpawnPrefab("tornado")
-                tornado:SetDuration(TUNING.PERDFAN_TORNADO_LIFETIME)
+                tornado:SetDuration(TUNING.PERDFAN_TORNADO_LIFETIME)    --设置存在时长
                 tornado.WINDSTAFF_CASTER = inst.components.inventoryitem.owner
                 tornado.WINDSTAFF_CASTER_ISPLAYER = tornado.WINDSTAFF_CASTER ~= nil and tornado.WINDSTAFF_CASTER:HasTag("player")
                 tornado.Transform:SetPosition(pos.x + offset.x * .5, 0, pos.z + offset.z * .5)

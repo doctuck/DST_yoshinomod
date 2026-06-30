@@ -118,14 +118,14 @@ STRINGS.ACTIONS.DETERIORATION = {
 AddStategraphActionHandler("wilson", ActionHandler(ACTIONS.DETERIORATION, "castspellmind"))
 AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS.DETERIORATION, "castspellmind"))
 
-AddComponentAction("USEITEM", "yoshino_useless",
-    function (inst, doer, target, actions, right)
-        --例如：在USEITEM场景中，函数参数inst是手持物品，即要进行动作的物品；target是被进行动作的目标物品，doer是动作的执行者，就是玩家
-        if (inst:HasTag("yoshino_anticrystal") and target:HasTag("yoshino_elyonban")) or (inst:HasTag("yoshino_crystal") and target:HasTag("yoshino_elfz")) and right then
-            table.insert(actions, ACTIONS.DETERIORATION)
-        end
-    end
-)
+--AddComponentAction("USEITEM", "yoshino_useless",
+--    function (inst, doer, target, actions, right)
+--        --例如：在USEITEM场景中，函数参数inst是手持物品，即要进行动作的物品；target是被进行动作的目标物品，doer是动作的执行者，就是玩家
+--        if (inst:HasTag("yoshino_anticrystal") and target:HasTag("yoshino_elyonban")) or (inst:HasTag("yoshino_crystal") and target:HasTag("yoshino_elfz")) and right then
+--            table.insert(actions, ACTIONS.DETERIORATION)
+--        end
+--    end
+--)
 
 -------------------------------------------------------------------------------------------------
 --修补（适用于finiteuses组件）
@@ -149,7 +149,7 @@ REPAIR_YOSHINO_FAN.fn = function (act)
     local obj = act.invobject   --这里指要被消耗的物品
     local target = act.target   --这里指要被操作的物品
 
-    if not target.components.finiteuses or not target.components.fueled then
+    if not target.components.finiteuses then
         return false
     end
 
@@ -176,14 +176,16 @@ AddAction(REPAIR_YOSHINO_FAN)
 AddStategraphActionHandler("wilson", ActionHandler(ACTIONS.REPAIR_YOSHINO_FAN, "domediumaction"))
 AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS.REPAIR_YOSHINO_FAN, "domediumaction"))
 
-AddComponentAction("USEITEM","yoshino_savemoddata", --相同场景且同样使用"左键或右键"似乎不能绑在相同组件上
+AddComponentAction("USEITEM","yoshino_savemoddata",     --相同场景绑定相同组件时，不同动作应根据判断条件写在一起
     function (inst, doer, target, actions, right)
         if inst:HasTag("repair_yoshinofan") and table.contains(canrepairitem, target.prefab) and right then
             table.insert(actions, ACTIONS.REPAIR_YOSHINO_FAN)
+        elseif (inst:HasTag("yoshino_anticrystal") and target:HasTag("yoshino_elyonban")) or (inst:HasTag("yoshino_crystal") and target:HasTag("yoshino_elfz")) and right then
+            table.insert(actions, ACTIONS.DETERIORATION)
         end
     end
 )
-
+-------------------------------------------------------------------------------------------------
 
 
 

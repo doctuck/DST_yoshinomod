@@ -12,7 +12,7 @@ description = [[
 反馈可加Q群303721628
 ]]
 author = "doctuckos"
-version = "1.4.0"
+version = "1.4.2"
 version_compatible = version
 forumthread = "" --不在单机版使用所以不管
 server_filter_tags = { "yoshino", "hermit", "四糸乃", "约会大作战", "doctuckos" }
@@ -128,7 +128,7 @@ configuration_options = {
 		default = 0
 	},
 	{
-		name = "addcold_cost", --主键
+		name = "addcold_cost",
 		label = language and "身着冰铠时积累冰冻消耗的灵力" or "Spirit_energy consumed by freezing while equipped sirvon",
 		hover = "装备冰铠，每次对敌人积累冰冻点数所需消耗的灵力",
 		options = reiryoku_cost,

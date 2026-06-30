@@ -107,7 +107,7 @@ local function makecrystals(prefabname,animname)
 
         inst:AddComponent("tradable")   --可交易组件，有了这个就可以给猪人
         
-        inst:AddComponent("yoshino_useless")    --保存数据用的，但这里不使用其功能，仅作为动作所需组件
+        inst:AddComponent("yoshino_savemoddata")    --保存数据用的，但这里不使用其功能，仅作为动作所需组件
 
 
         if prefabname == "yoshino_crystal" then

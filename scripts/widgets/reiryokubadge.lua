@@ -66,8 +66,22 @@ function ReiryokuBadge:OnUpdate(dt)
 		return
 	end
 	local anim = "neutral"
+
+	local thistag = false
+	local pos = ThePlayer:GetPosition()  --获取玩家当前位置
+    -- 冷火或极光旁
+    local nearent = TheSim:FindEntities(pos.x, pos.y, pos.z, 4, nil, nil, { "star_cold" }) --使用添加的自定义标签搜索特定实体
+	for k, v in pairs(nearent) do
+        if v.prefab == "coldfirepit" or v.prefab == "coldfire" then --吸热营火或者吸热火坑
+			if not v:HasTag("fueldepleted") then thistag = true end
+		end
+		if v.prefab == "staffcoldlight" or v.prefab == "staffcoldlightfx" then --在极光旁
+			thistag = true
+		end
+	end
+
 	--指示器动画的变化
-	if not self.owner.replica.inventory:EquipHasTag("yoshinon") or TheWorld.state.israining or TheWorld.state.issnowing then
+	if not self.owner.replica.inventory:EquipHasTag("yoshinon") or TheWorld.state.israining or TheWorld.state.issnowing or thistag == true then
 		anim ="arrow_loop_increase"
 	end
 	if self.owner.replica.rider and self.owner.replica.rider:GetMount()~= nil and self.owner.replica.rider:GetMount():HasTag("yoshino_zadkiel") then

@@ -205,4 +205,30 @@ AddStategraphPostInit("wilson", function(sg)
         end
     end
 
+    --hook使用折扇时的状态
+    local oldusefan = sg.states.use_fan.onenter
+    sg.states.use_fan.onenter = function(inst, ...)
+        local invobject = nil
+        if inst.bufferedaction ~= nil then
+            invobject = inst.bufferedaction.invobject
+            if invobject ~= nil and invobject.components.fan ~= nil and invobject.components.fan:IsChanneling() then
+                inst.sg.statemem.item = invobject
+                inst.sg.statemem.target = inst.bufferedaction.target or inst.bufferedaction.doer
+                inst.sg:AddStateTag("busy")
+            end
+        end
+        inst.components.locomotor:Stop()
+        inst.AnimState:PlayAnimation("action_uniqueitem_pre")
+        inst.AnimState:PushAnimation("fan", false)
+        local skin_build = invobject ~= nil and invobject:GetSkinBuild() or nil
+        local src_symbol = invobject ~= nil and invobject.components.fan ~= nil and invobject.components.fan.overridesymbol or "swap_fan"
+        if skin_build ~= nil then
+            inst.AnimState:OverrideItemSkinSymbol( "fan01", skin_build, src_symbol, invobject.GUID, "fan" )
+        else
+            inst.AnimState:OverrideSymbol( "fan01", invobject ~= nil and invobject.AnimState:GetBuild() or "fan", src_symbol)
+        --else  --原版用法纯傻，不让人换build内容
+        --    inst.AnimState:OverrideSymbol( "fan01", "fan", src_symbol )
+        end
+        inst.components.inventory:ReturnActiveActionItem(invobject)
+    end
 end)

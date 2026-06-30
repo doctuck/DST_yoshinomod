@@ -56,14 +56,14 @@ Assets = {
     Asset("IMAGE", "bigportraits/yoshino_none.tex"), --人物大图（椭圆）
     Asset("ATLAS", "bigportraits/yoshino_none.xml"), --基础默认皮肤
 
-    Asset("IMAGE", "bigportraits/yoshino_skin1.tex"), --人物大图（椭圆）
     Asset("ATLAS", "bigportraits/yoshino_skin1.xml"), --枫色祈愿皮肤
+    Asset("IMAGE", "bigportraits/yoshino_skin1.tex"),
 
-    Asset("IMAGE", "bigportraits/yoshino_skin2.tex"), --人物大图（椭圆）
     Asset("ATLAS", "bigportraits/yoshino_skin2.xml"), --万圣节皮肤
+    Asset("IMAGE", "bigportraits/yoshino_skin2.tex"),
 
-    Asset("IMAGE", "bigportraits/yoshino_skin3.tex"), --人物大图（椭圆）
     Asset("ATLAS", "bigportraits/yoshino_skin3.xml"), --春绮花朝皮肤
+    Asset("IMAGE", "bigportraits/yoshino_skin3.tex"),
 
     Asset("IMAGE", "images/inventoryimages/yoshinon.tex"), --四糸乃的手偶：四糸奈
     Asset("ATLAS", "images/inventoryimages/yoshinon.xml"),
