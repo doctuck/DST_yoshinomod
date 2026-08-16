@@ -36,7 +36,8 @@ STRINGS.NAMES.YOSHINO_ZADKIEL = "天使·冰结傀儡"
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.YOSHINO_ZADKIEL = "四糸乃的\"天使\"…!" --角色检查时的通用描述
 STRINGS.CHARACTERS.GENERIC.ACTIONFAIL.MOUNT.NOTYOSHINO = "我无法掌控\"天使\"" --非四糸乃角色试图骑乘冰结傀儡
 
-STRINGS.RECIPE_DESC.ICE = "释放寒冷的灵力凝结冰晶" --配方上的描述，最多两行，共32个中文字符不含"\n"符号
+STRINGS.RECIPE_DESC.YOSHINO_ICE = "释放寒冷的灵力凝结冰晶"               --配方上的描述，最多两行，共32个中文字符不含"\n"符号
+STRINGS.RECIPE_DESC.YOSHINO_OPALPRECIOUSGEM = "来到这里后学会的神奇魔法" --配方上的描述，最多两行，共32个中文字符不含"\n"符号
 
 STRINGS.NAMES.YOSHINO_MILKCOCO = "牛奶可可" --游戏里或配方上的名字
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.YOSHINO_MILKCOCO = "香甜可口的乳制饮品" --食物描述
@@ -64,8 +65,12 @@ STRINGS.CHARACTERS.GENERIC.DESCRIBE.YOSHINO_FAN = "一柄漂亮的扇子" --检�
 STRINGS.RECIPE_DESC.YOSHINO_FAN = "漂亮的扇子，居家旅行必备"   --配方上的描述，最多两行，共32个中文字符不含"\n"符号
 
 STRINGS.NAMES.YOSHINO_WITCHHAT = "小魔女帽"
-STRINGS.CHARACTERS.GENERIC.DESCRIBE.YOSHINO_WITCHHAT = "万圣节去要糖果！" --检查四糸乃的折扇时的通用台词
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.YOSHINO_WITCHHAT = "万圣节去要糖果！" --检查四糸乃的魔女帽时的通用台词
 STRINGS.RECIPE_DESC.YOSHINO_WITCHHAT = "一顶很有节日氛围的帽子"   --配方上的描述，最多两行，共32个中文字符不含"\n"符号
+
+STRINGS.NAMES.YOSHINO_WHITEHAT = "宽檐帽"
+STRINGS.CHARACTERS.GENERIC.DESCRIBE.YOSHINO_WHITEHAT = "去哪里逛逛吧……" --检查四糸乃的宽檐帽时的通用台词
+STRINGS.RECIPE_DESC.YOSHINO_WHITEHAT = "休闲外出带的帽子"   --配方上的描述，最多两行，共32个中文字符不含"\n"符号
 
 STRINGS.CHARACTERS.GENERIC.ACTIONFAIL.REBACK_ZADKIEL = {    --动作REBACK_ZADKIEL失败语音
     GENERIC = "我做不到",

@@ -23,7 +23,7 @@ local itemstitle = {    --物品目录
     {index = 10, name = "灵力结界(冰雪护盾)", prefabname = "yoshino_snowshield", x = 0, y = 0, z = 0},
     {index = 11, name = "折扇", prefabname = "yoshino_fan", x = 0, y = 0, z = 0},
     {index = 12, name = "魔女帽", prefabname = "yoshino_witchhat", x = 0, y = 0, z = 0},
-    --{index = 13, name = "白色宽檐帽(未上线)", prefabname = "yoshino_whitehat", x = 0, y = 0, z = 0},
+    {index = 13, name = "宽檐帽", prefabname = "yoshino_whitehat", x = 0, y = 0, z = 0},
     --{index = 14, name = "幸运香囊(未上线)", prefabname = "yoshino_luckysachet", x = 0, y = 0, z = 0},
 }
 

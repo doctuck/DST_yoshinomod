@@ -165,6 +165,7 @@ AddPrefabPostInit("yoshino", function(inst)
 
     inst:AddComponent("yoshino_savemoddata")    --一个自定义组件，在其他地方有用到
 
+
     if not inst.components.timer then inst:AddComponent("timer") end
     --免疫伤害
     local OldGetAttacked = inst.components.combat.GetAttacked
@@ -232,6 +233,47 @@ AddPrefabPostInit("yoshino", function(inst)
     end
 end)
 --//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+--//////////////////
+--hook睡眠组件，免疫睡眠
+--[[
+AddComponentPostInit("sleeper", function(self)
+    local old_addSleepiness = self.AddSleepiness
+    self.AddSleepiness = function(self, sleepiness, sleeptime)
+        if not self.inst:HasTag("yoshino") then
+            return old_addSleepiness(self, sleepiness, sleeptime)
+        end
+
+        if self.redirect ~= nil then
+            self.redirect(self.inst, sleepiness, sleeptime)
+            return 0
+        end
+
+        return old_addSleepiness(self, sleepiness, sleeptime)
+    end
+end)--]]--
+local IMMUNITY_MODIFIER_LIST_KEY = "groggyimmunity"
+AddComponentPostInit("grogginess", function(self)
+    local old_AddGrogginess = self.AddGrogginess
+    self.AddGrogginess = function (self, grogginess, knockoutduration)
+        if grogginess <= 0 or self._immunity_sources:CalculateModifierFromKey(IMMUNITY_MODIFIER_LIST_KEY) then
+            return
+        end
+        if not self.inst:HasTag("yoshino") then
+            return old_AddGrogginess(self, grogginess, knockoutduration)
+        end
+        --当玩家为四糸乃时，进行以下内容
+        if self.redirect ~= nil then
+            self.redirect(self.inst, grogginess, knockoutduration)
+            return 0
+        end
+
+        return old_AddGrogginess(self, grogginess, knockoutduration)
+    end
+end)
+
+--//////////////////
 
 
 --/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -429,7 +471,6 @@ AddComponentPostInit("locomotor", function(self)
         return can_hop, hop_x, hop_z, target_platform, blocked
     end
 end)
-
 
 -- 修改目标state（两边同时修改的才放这里，单独的放在对应SG底部）
 local function SGwilson(sg)
@@ -673,7 +714,7 @@ AddClassPostConstruct("screens/playerhud", function(self)
             end
         end
 
-        --保存按钮位置
+        --保存按钮位置（保存在客户端本地，即使创建新档也会保存）
         function self:SaveButtonPt()
             if self.button_pt then
                 local pt = self.button_pt

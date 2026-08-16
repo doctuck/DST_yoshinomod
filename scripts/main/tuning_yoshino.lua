@@ -22,7 +22,7 @@ GLOBAL.TUNING.YOSHINOCONFIG = {
     shield_cooldown = GetModConfigData("shield_cooldown"),
     shield_cost = GetModConfigData("shield_cost"),
     space_shake = GetModConfigData("space_shake"),
-    addcold_cost = GetModConfigData("addcold_cost"),
+    --addcold_cost = GetModConfigData("addcold_cost"),
 }
 
 --配置仅可在本mod中使用的全局常量

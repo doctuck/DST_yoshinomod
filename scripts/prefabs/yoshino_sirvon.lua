@@ -8,23 +8,34 @@ local assets = {
 local prefabs = {}
 
 local function frozenother(owner, data)
-    local spiritual_energy = owner.components.spiritual_energy
+    --local spiritual_energy = owner.components.spiritual_energy
     local target = data.target or nil
-    local reiryoku_config = TUNING.YOSHINOCONFIG.addcold_cost or 12
+    --local reiryoku_config = TUNING.YOSHINOCONFIG.addcold_cost or 12
 
     --身穿冰铠时, 若灵力足够，则攻击附带 4 冰冻点数
     if target and target.components.freezable then   --只有有freezable组件的prefab才会被冰冻
         local coldness = 4       --(冰冻强度，每个可冰冻的prefab都有冰冻抗性，只有积累的强度超过抗性了才会被冰冻)
         local freezetime = 10    --(冰冻时间：10秒)
-        if spiritual_energy then
-            if spiritual_energy:GetCurrent() >= reiryoku_config then
-                target.components.freezable:AddColdness(coldness, freezetime)
-                spiritual_energy:DoDelta(-reiryoku_config)
-            else
-                if math.random() < 0.05 then owner.components.talker:Say(STRINGS.CHARACTERS.YOSHINO.ANNOUNCE_REIRYOKU.SHORTAGE.."无法造成冰冻。") end
-            end
-        end
+        --if spiritual_energy then  --扣除造成冰冻的对应灵力（已废弃）
+        --    if spiritual_energy:GetCurrent() >= reiryoku_config then
+        --        target.components.freezable:AddColdness(coldness, freezetime)
+        --        spiritual_energy:DoDelta(-reiryoku_config)
+        --    else
+        --        if math.random() < 0.05 then owner.components.talker:Say(STRINGS.CHARACTERS.YOSHINO.ANNOUNCE_REIRYOKU.SHORTAGE.."无法造成冰冻。") end
+        --    end
+        --end
+        target.components.freezable:AddColdness(coldness, freezetime)
     end
+end
+--免疫睡眠
+local IMMUNITY_MODIFIER_LIST_KEY = "sirvon_grogginess"
+local function Resistsleep(owner, sleepiness, sleeptime)
+    owner.components.sleeper:WakeUp()
+	return
+end
+local function Resistgrogginess(owner, grogginess, knockoutduration)
+    owner.components.grogginess:ComeTo()   -- 唤醒并清除瞌睡状态
+	return
 end
 
 local function ownerequip(owner, data)
@@ -100,7 +111,7 @@ local function onequip(inst, owner)
     owner:ListenForEvent("unequip", ownerunequip)
 
     --owner.temptask = owner:DoPeriodicTask(0.03, function()
-    --    if owner.components.temperature then --刷帧设置恒温25℃（待优化）
+    --    if owner.components.temperature then --刷帧设置恒温25℃
     --        owner.components.temperature:SetTemperature(25)
     --    end
     --end)
@@ -114,6 +125,14 @@ local function onequip(inst, owner)
     if owner.components.sanity then
         owner.components.sanity.neg_aura_absorb = 1
     end
+
+    --免疫睡眠
+    if owner.components.grogginess then
+		owner.components.grogginess.redirect = Resistgrogginess
+	end
+	--if owner.components.sleeper then
+	--	owner.components.sleeper.redirect = Resistsleep
+	--end
 end
 
 --卸下时调用
@@ -170,6 +189,14 @@ local function onunequip(inst, owner)
     if owner.components.sanity then
         owner.components.sanity.neg_aura_absorb = 0
     end
+	
+	--解除免疫睡眠
+    if owner.components.grogginess then
+		owner.components.grogginess.redirect = nil
+	end
+	--if owner.components.sleeper then
+	--	owner.components.sleeper.redirect = nil
+	--end
 end
 
 --捡起时（拿在手上时也会调用该函数）

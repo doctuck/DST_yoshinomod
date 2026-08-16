@@ -20,6 +20,7 @@ PrefabFiles = {           --预制物（命名绝对不能大写）
     "yoshino_fan",        --折扇
     "yoshino_reiryokuice",--魔力冰锥
     "yoshino_witchhat",   --魔女帽
+    "yoshino_whitehat",   --宽檐帽
 }
 
 Assets = {
@@ -65,6 +66,9 @@ Assets = {
     Asset("ATLAS", "bigportraits/yoshino_skin3.xml"), --春绮花朝皮肤
     Asset("IMAGE", "bigportraits/yoshino_skin3.tex"),
 
+    Asset("ATLAS", "bigportraits/yoshino_skin4.xml"), --夏日炎炎皮肤
+    Asset("IMAGE", "bigportraits/yoshino_skin4.tex"),
+
     Asset("IMAGE", "images/inventoryimages/yoshinon.tex"), --四糸乃的手偶：四糸奈
     Asset("ATLAS", "images/inventoryimages/yoshinon.xml"),
 
@@ -106,6 +110,10 @@ Assets = {
     Asset("ATLAS", "images/inventoryimages/yoshino_witchhat.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_witchhat.tex"),
 
+    Asset("ANIM", "anim/yoshino_whitehat.zip"),   --宽檐帽
+    Asset("ATLAS", "images/inventoryimages/yoshino_whitehat.xml"),
+    Asset("IMAGE", "images/inventoryimages/yoshino_whitehat.tex"),
+
     Asset("ANIM", "anim/yoshino_dishes.zip"),     --料理
     Asset("ATLAS", "images/inventoryimages/yoshino_milkcoco.xml"), --牛奶可可
     Asset("IMAGE", "images/inventoryimages/yoshino_milkcoco.tex"),
@@ -114,6 +122,9 @@ Assets = {
 
     Asset("ATLAS", "images/inventoryimages/yoshino_dir.xml"), --辅助游玩的一个按钮图片，没什么用
     Asset("IMAGE", "images/inventoryimages/yoshino_dir.tex"),
+    Asset("ATLAS", "images/inventoryimages/bluecharge.xml"), --宝石转换配方贴图
+    Asset("IMAGE", "images/inventoryimages/bluecharge.tex"),
+
 }
 
 modimport("scripts/main/string_yoshino") --常量加载

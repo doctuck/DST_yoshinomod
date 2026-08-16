@@ -1,6 +1,7 @@
 local language = locale == "zh" or locale == "zhr" or false
 name = language and "氷芽川·四糸乃" or "Himekawa_Yoshino" --mod名字
 description = [[
+version: 1.5
 《约会大作战》中的四糸乃
 模组仅上传steam
 
@@ -12,7 +13,7 @@ description = [[
 反馈可加Q群303721628
 ]]
 author = "doctuckos"
-version = "1.4.2"
+version = "1.5.0"
 version_compatible = version
 forumthread = "" --不在单机版使用所以不管
 server_filter_tags = { "yoshino", "hermit", "四糸乃", "约会大作战", "doctuckos" }
@@ -109,7 +110,7 @@ end
 
 --mod配置
 configuration_options = {
-	AddTitle("人物特性设置"),
+	AddTitle(language and "人物特性设置" or "Character Feature Setting"),
 	{
 		name = "max_spiritual_energy", --主键
 		label = language and "灵力最大值设定" or "Set Max spiritual_energy",
@@ -119,7 +120,7 @@ configuration_options = {
 	},
 	{
 		name = "space_shake", --主键
-		label = language and "空间震" or "need the earthquake",
+		label = language and "空间震" or "open the earthquake",
 		hover = "人物首次生成时是否产生空间震(地裂效果)",
 		options = {
 			{description = "Yes", data = 1},
@@ -127,14 +128,14 @@ configuration_options = {
 		},
 		default = 0
 	},
-	{
-		name = "addcold_cost",
-		label = language and "身着冰铠时积累冰冻消耗的灵力" or "Spirit_energy consumed by freezing while equipped sirvon",
-		hover = "装备冰铠，每次对敌人积累冰冻点数所需消耗的灵力",
-		options = reiryoku_cost,
-		default = 12
-	},
-	AddTitle("快捷键设置"),
+	--{
+	--	name = "addcold_cost",
+	--	label = language and "身着冰铠时积累冰冻消耗的灵力" or "Spirit_energy consumed by freezing while equipped sirvon",
+	--	hover = "装备冰铠，每次对敌人积累冰冻点数所需消耗的灵力",
+	--	options = reiryoku_cost,
+	--	default = 12
+	--},
+	AddTitle(language and "快捷键设置" or "Hotkey Setting"),
 	{
 		name = "call_zadkiel_key",
 		label = language and "召唤冰结傀儡" or "call mount \"zadkiel\"",
@@ -142,7 +143,7 @@ configuration_options = {
 		options = keylist,
 		default = 122
 	},
-	AddTitle("技能设置"),
+	AddTitle(language and "技能设置" or "General Skills Setting"),
 	{
 		name = "zadkiel_cost",
 		label = language and "召唤冰结傀儡的灵力花费" or "energy cost for call mount \"zadkiel\"",

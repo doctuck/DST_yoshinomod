@@ -80,12 +80,12 @@ MakeYOSHINOSkin("yoshino_skin1",{
     des = "秋日祭, 赏花大会等郊游时穿的衣装",        --选人界面的皮肤描述
     quotes = "一起...去郊游吗...?",    --选人界面，底下的台词描述
     rarity = "四季",     --稀有度 官方不存在的珍惜度则直接覆盖字符串
-    rarityorder = 3, -- 稀有度的排序 用于按优先级排序 基本没啥用
+    rarityorder = 4, -- 稀有度的排序 用于按优先级排序 基本没啥用
     raritycorlor = {255/255,111/255,0/255,1},   --稀有度的字体颜色（用了官方的稀有度，这里就会无效）
     assets = {
             Asset("ANIM", "anim/yoshino_skin1.zip"),
             Asset("ANIM", "anim/ghost_yoshino_build.zip")
-        },
+    },
     skins = {
         normal_skin = "yoshino_skin1",
         ghost_skin = "ghost_yoshino_build"
@@ -100,12 +100,12 @@ MakeYOSHINOSkin("yoshino_skin2",{
     des = "穿上合适的服装去找糖果吧",        --选人界面的皮肤描述
     quotes = "Trick or Treat, 不给糖...就恶作剧...",    --选人界面，底下的台词描述
     rarity = "节日",     --稀有度 官方不存在的珍惜度则直接覆盖字符串
-    rarityorder = 4, -- 稀有度的排序 用于按优先级排序 基本没啥用
+    rarityorder = 5, -- 稀有度的排序 用于按优先级排序 基本没啥用
     raritycorlor = {215/255,43/255,242/255,1},   --稀有度的字体颜色（用了官方的稀有度，这里就会无效）
     assets = {
             Asset("ANIM", "anim/yoshino_skin2.zip"),
             Asset("ANIM", "anim/ghost_yoshino_build.zip")
-        },
+    },
     skins = {
         normal_skin = "yoshino_skin2",
         ghost_skin = "ghost_yoshino_build"
@@ -125,12 +125,32 @@ MakeYOSHINOSkin("yoshino_skin3",{
     assets = {
             Asset("ANIM", "anim/yoshino_skin3.zip"),
             Asset("ANIM", "anim/ghost_yoshino_build.zip")
-        },
+    },
     skins = {
         normal_skin = "yoshino_skin3",
         ghost_skin = "ghost_yoshino_build"
     },
     build_name_override = "yoshino_skin3",  --皮肤选择图标
     share_bigportrait_name = "yoshino_skin3",   --皮肤大图采用的图标（记得在xml里Element name处的".tex"要改成"_oval.tex"才能生效）
+    FrameSymbol = "Elegant",
+},true,true)
+
+MakeYOSHINOSkin("yoshino_skin4",{
+    name = "夏日炎炎",      --皮肤的显示名称
+    des = "暑假、沙滩、海浪，小心别让泳池结冰",        --选人界面的皮肤描述
+    quotes = "夏天...我有点不擅长对付夏天呢",    --选人界面，底下的台词描述
+    rarity = "四季",     --稀有度 官方不存在的珍惜度则直接覆盖字符串
+    rarityorder = 3, -- 稀有度的排序 用于按优先级排序 基本没啥用
+    raritycorlor = {215/255,43/255,242/255,1},   --稀有度的字体颜色（用了官方的稀有度，这里就会无效）
+    assets = {
+            Asset("ANIM", "anim/yoshino_skin4.zip"),
+            Asset("ANIM", "anim/ghost_yoshino_build.zip")
+    },
+    skins = {
+        normal_skin = "yoshino_skin4",
+        ghost_skin = "ghost_yoshino_build"
+    },
+    build_name_override = "yoshino_skin4",  --皮肤选择图标
+    share_bigportrait_name = "yoshino_skin4",   --皮肤大图采用的图标（记得在xml里Element name处的".tex"要改成"_oval.tex"才能生效）
     FrameSymbol = "Elegant",
 },true,true)

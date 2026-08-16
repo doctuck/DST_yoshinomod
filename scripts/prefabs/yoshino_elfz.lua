@@ -223,7 +223,7 @@ local function fn()
     inst.components.equippable.equipslot = EQUIPSLOTS.BODY  --装备在身体部位
     inst.components.equippable:SetOnEquip(onequip)          --装备时使用装备函数
     inst.components.equippable:SetOnUnequip(onunequip)      --装卸时使用拆卸函数
-    inst.components.equippable.dapperness = -4 / 60         --每分钟恢复-4理智
+    inst.components.equippable.dapperness = -12 / 60         --每分钟恢复-12理智
     inst.components.equippable.restrictedtag = "yoshino"    --限制仅四糸乃可装备
 
     --inst:AddComponent("waterproofer")                       --防水

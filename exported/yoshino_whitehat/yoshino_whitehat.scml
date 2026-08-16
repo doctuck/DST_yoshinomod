@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b5">
+    <folder id="0" name="swap_hat">
+        <file id="0" name="swap_hat/swap_hat-0.png" width="400" height="400" pivot_x="0.5" pivot_y="0.229353"/>
+        <file id="1" name="swap_hat/swap_hat-1.png" width="400" height="400" pivot_x="0.522388" pivot_y="0.234328"/>
+        <file id="2" name="swap_hat/swap_hat-2.png" width="400" height="400" pivot_x="0.502488" pivot_y="0.269154"/>
+        <file id="3" name="swap_hat/swap_hat-3.png" width="400" height="400" pivot_x="0.5" pivot_y="0.345771"/>
+    </folder>
+    <entity id="0" name="yoshino_whitehat">
+        <animation id="0" name="idle" length="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" name="swap_hat-3_000" folder="0" file="3" abs_x="0" abs_y="0" abs_pivot_x="0.5" abs_pivot_y="0.345771" abs_angle="360" abs_scale_x="1" abs_scale_y="1" abs_a="1" timeline="1" key="0" z_index="0"/>
+                </key>
+                <key id="1" time="100">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="swap_hat-3">
+                <key id="0" time="100" spin="0">
+                    <object folder="0" file="3"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="swap_hat-3_000">
+                <key id="0" spin="0">
+                    <object folder="0" file="3"/>
+                </key>
+                <key id="1" time="100" spin="0">
+                    <object folder="0" file="3"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>
