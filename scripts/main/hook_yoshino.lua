@@ -440,6 +440,33 @@ for _, v in pairs(shadowtags) do
         end
     end)
 end
+--击杀树精守卫概率掉落宽檐帽蓝图
+local treetag = {"leif","leif_sparse"}
+for _, v in pairs(treetag) do
+    AddPrefabPostInit(v, function(inst)
+        if not TheWorld.ismastersim then return end    --主客机判断
+        if not inst.components.lootdropper then inst:AddComponent("lootdropper") end --确保有掉落器组件
+        if inst.components.lootdropper.loot then
+            local old_loot = inst.components.lootdropper.lootsetupfn
+            inst.components.lootdropper.lootsetupfn = function(self)
+                if old_loot then
+                    old_loot(self)
+                end
+                --考虑到游戏崩溃重载时，可能存在已经添加在其中的情况，因此需要去除重复
+                if self.chanceloot then
+                    for i = #self.chanceloot, 1, -1 do
+                        if self.chanceloot[i].prefab == "yoshino_whitehat_blueprint" then
+                            table.remove(self.chanceloot, i)
+                        end
+                    end
+                end
+                self:AddChanceLoot("yoshino_whitehat_blueprint", 0.33)       --33% 概率掉落
+            end
+        end
+    end)
+end
+---------------------------
+
 -----------------------------
 ---可用于补充四糸乃的折扇的物品-
 local fueltags = {"feather_canary","feather_robin","feather_crow","feather_robin_winter","goose_feather","malbatross_feather"}

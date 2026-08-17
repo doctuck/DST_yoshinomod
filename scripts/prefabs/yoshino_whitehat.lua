@@ -4,7 +4,12 @@ local assets = {
     Asset("ATLAS", "images/inventoryimages/yoshino_whitehat.xml"), --物品栏贴图
     Asset("IMAGE", "images/inventoryimages/yoshino_whitehat.tex"),
     Asset("ANIM", "anim/yoshino_whitehat.zip"),                    --动画
+
+    Asset("ANIM", "anim/yoshino_blueprint.zip"),      --自定义蓝图
+    Asset("IMAGE", "images/inventoryimages/yoshino_blueprint.tex"),
+    Asset("ATLAS", "images/inventoryimages/yoshino_blueprint.xml"),
 }
+
 --添加预制物的预制物
 local prefabs = {}
 
@@ -44,6 +49,70 @@ local function onunequip(inst, owner)
         inst.components.fueled:StopConsuming()
     end
 end
+
+local prefabname = "yoshino_whitehat"
+
+local function MakeBluePrint()
+    local inst = CreateEntity()
+    inst.entity:AddTransform()                --添加变化(大小、位置、形状等)
+    inst.entity:AddAnimState()                --添加动画状态
+    inst.entity:AddNetwork()                  --加入服务器
+
+    MakeInventoryPhysics(inst)                --可物理模拟（如果没有这个，则无法进行相关action）
+    MakeInventoryFloatable(inst, "small", 0.1, 0.70)  --可漂浮
+
+    inst.AnimState:SetBank("yoshino_blueprint")
+    inst.AnimState:SetBuild("yoshino_blueprint")
+    inst.AnimState:PlayAnimation("idle")
+
+    inst:AddTag("_named")
+
+
+    inst.entity:SetPristine()
+    if not TheWorld.ismastersim then
+        return inst
+    end
+
+    inst:RemoveTag("_named")
+
+    -- 添加蓝图所需组件
+    inst:AddComponent("inspectable")
+    --inst.components.inspectable.getstatus = function() return "COMMON" end
+
+    inst:AddComponent("inventoryitem")
+    inst.components.inventoryitem.imagename = "yoshino_blueprint"
+    inst.components.inventoryitem.atlasname = "images/inventoryimages/yoshino_blueprint.xml"
+
+    inst:AddComponent("erasablepaper")
+    inst:AddComponent("named")
+    inst:AddComponent("teacher")
+    inst.components.teacher.onteach = function(inst, learner)
+        learner:PushEvent("learnrecipe", { teacher = inst, recipe = inst.components.teacher.recipe })
+    end
+
+    inst:AddComponent("fuel")
+    inst.components.fuel.fuelvalue = TUNING.SMALL_FUEL
+
+    -- 绑定指定配方
+    local r = GetValidRecipe("recipe_"..prefabname)
+    if r then
+        inst.recipetouse = r.name
+        inst.components.teacher:SetRecipe(r.name)
+        inst.components.named:SetName(STRINGS.NAMES[string.upper(prefabname)] .. STRINGS.NAMES.BLUEPRINT)
+    else
+        inst.recipetouse = "unknown"
+        inst.components.teacher:SetRecipe("unknown")
+        inst.components.named:SetName("Unknown Blueprint")
+    end
+
+    MakeSmallBurnable(inst, TUNING.SMALL_BURNTIME)  --可燃烧的
+    MakeSmallPropagator(inst)                       --燃烧可传播
+    MakeHauntableLaunch(inst)                       --可被鬼魂作祟
+    AddHauntableCustomReaction(inst, function() return false end, true, false, true)    --添加鬼魂作祟
+
+    return inst
+end
+
 
 local function fn()
     local inst = CreateEntity()               --定义 inst变量 指代 创建实体函数
@@ -114,4 +183,5 @@ local function fn()
     return inst
 end
 
-return Prefab("yoshino_whitehat", fn, assets, prefabs)
+return Prefab("yoshino_whitehat", fn, assets, prefabs),
+    Prefab("yoshino_whitehat_blueprint", MakeBluePrint, assets, prefabs)

@@ -69,6 +69,10 @@ Assets = {
     Asset("ATLAS", "bigportraits/yoshino_skin4.xml"), --夏日炎炎皮肤
     Asset("IMAGE", "bigportraits/yoshino_skin4.tex"),
 
+    Asset("ANIM", "anim/yoshino_blueprint.zip"),      --自定义蓝图
+    Asset("ATLAS", "images/inventoryimages/yoshino_blueprint.xml"),
+    Asset("IMAGE", "images/inventoryimages/yoshino_blueprint.tex"),
+
     Asset("IMAGE", "images/inventoryimages/yoshinon.tex"), --四糸乃的手偶：四糸奈
     Asset("ATLAS", "images/inventoryimages/yoshinon.xml"),
 

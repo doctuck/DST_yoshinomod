@@ -125,11 +125,11 @@ AddRecipe2("recipe_yoshino_witchhat",      --配方ID
 --四糸乃的宽檐帽合成配方
 AddRecipe2("recipe_yoshino_whitehat",      --配方ID
     { Ingredient("cutreeds", 4),Ingredient("petals", 2), Ingredient("beefalowool", 6) }, --物品配方（采下的芦苇*4，花瓣*2， 牛毛*6）
-    TECH.SCIENCE_ONE,       --需要科学一本
+    TECH.LOST,       --蓝图解锁
     {
         atlas = "images/inventoryimages/yoshino_whitehat.xml",
         image = "yoshino_whitehat.tex",
-        builder_tag = "yoshino", --限制建造者为四糸乃
+        --builder_tag = "yoshino", --限制建造者为四糸乃
         product = "yoshino_whitehat",    --产物：四糸乃的宽檐帽
         no_deconstruction = false --可拆解
     },
