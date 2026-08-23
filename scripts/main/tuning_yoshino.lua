@@ -69,6 +69,7 @@ TUNING.MOD_YOSHINO = {
         HIT_RANGE = 8,      --击中范围(进入此范围才能真正打中)
         ADDCOLD_VAL = 0.4,  --攻击时附带0.4 寒冷值
     },
+    YOSHINO_LUCKYSACHET = 1, --幸运香囊提供的幸运值
     ANTICRYSTAL_DROP = 0.15, --反灵结晶掉落概率
     CRYSTALS_DELTA = 100,    --灵/反灵 结晶食用后恢复的灵力
 }

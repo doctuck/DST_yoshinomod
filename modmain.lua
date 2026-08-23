@@ -21,6 +21,7 @@ PrefabFiles = {           --预制物（命名绝对不能大写）
     "yoshino_reiryokuice",--魔力冰锥
     "yoshino_witchhat",   --魔女帽
     "yoshino_whitehat",   --宽檐帽
+    "yoshino_luckysachet",--幸运香囊
 }
 
 Assets = {
@@ -69,10 +70,6 @@ Assets = {
     Asset("ATLAS", "bigportraits/yoshino_skin4.xml"), --夏日炎炎皮肤
     Asset("IMAGE", "bigportraits/yoshino_skin4.tex"),
 
-    Asset("ANIM", "anim/yoshino_blueprint.zip"),      --自定义蓝图
-    Asset("ATLAS", "images/inventoryimages/yoshino_blueprint.xml"),
-    Asset("IMAGE", "images/inventoryimages/yoshino_blueprint.tex"),
-
     Asset("IMAGE", "images/inventoryimages/yoshinon.tex"), --四糸乃的手偶：四糸奈
     Asset("ATLAS", "images/inventoryimages/yoshinon.xml"),
 
@@ -117,6 +114,10 @@ Assets = {
     Asset("ANIM", "anim/yoshino_whitehat.zip"),   --宽檐帽
     Asset("ATLAS", "images/inventoryimages/yoshino_whitehat.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_whitehat.tex"),
+
+    Asset("ANIM", "anim/yoshino_backpack.zip"),   --幸运香囊
+    Asset("ATLAS", "images/inventoryimages/yoshino_luckbag.xml"),
+    Asset("IMAGE", "images/inventoryimages/yoshino_luckbag.tex"),
 
     Asset("ANIM", "anim/yoshino_dishes.zip"),     --料理
     Asset("ATLAS", "images/inventoryimages/yoshino_milkcoco.xml"), --牛奶可可

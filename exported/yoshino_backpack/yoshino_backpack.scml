@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b5">
+    <folder id="0" name="yoshino_bag">
+        <file id="0" name="yoshino_bag/yoshino_bag-0.png" width="80" height="101" pivot_x="0.506036" pivot_y="0.18071"/>
+        <file id="1" name="yoshino_bag/yoshino_bag-1.png" width="79" height="103" pivot_x="0.551858" pivot_y="0.174717"/>
+        <file id="2" name="yoshino_bag/yoshino_bag-2.png" width="79" height="103" pivot_x="0.420297" pivot_y="0.165174"/>
+        <file id="3" name="yoshino_bag/yoshino_bag-3.png" width="80" height="110" pivot_x="0.301894" pivot_y="0.177545"/>
+        <file id="4" name="yoshino_bag/yoshino_bag-4.png" width="64" height="118" pivot_x="0.0498428" pivot_y="0.27246"/>
+        <file id="5" name="yoshino_bag/yoshino_bag-5.png" width="91" height="96" pivot_x="0.40184" pivot_y="0.0964044"/>
+        <file id="6" name="yoshino_bag/yoshino_bag-6.png" width="71" height="34" pivot_x="0.489458" pivot_y="-1.50299"/>
+        <file id="7" name="yoshino_bag/yoshino_bag-7.png" width="70" height="40" pivot_x="0.677149" pivot_y="-1.22871"/>
+        <file id="8" name="yoshino_bag/yoshino_bag-8.png" width="70" height="42" pivot_x="0.299715" pivot_y="-1.01831"/>
+        <file id="9" name="yoshino_bag/yoshino_bag-9.png" width="100" height="100" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="10" name="yoshino_bag/yoshino_bag-10.png" width="100" height="100" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="11" name="yoshino_bag/yoshino_bag-11.png" width="100" height="100" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="12" name="yoshino_bag/yoshino_bag-12.png" width="100" height="100" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="13" name="yoshino_bag/yoshino_bag-13.png" width="100" height="100" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="14" name="yoshino_bag/yoshino_bag_idle.png" width="84" height="84" pivot_x="0.5" pivot_y="0.2"/>
+    </folder>
+    <entity id="0" name="yoshino_bag">
+        <animation id="0" name="backpack_idle" length="33">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" name="yoshino_bag_idle" folder="0" file="14" abs_x="0" abs_y="0" abs_pivot_x="0.5" abs_pivot_y="0.2" abs_angle="360" abs_scale_x="2" abs_scale_y="2" abs_a="1" timeline="0" key="0" z_index="0"/>
+                </key>
+                <key id="1" time="33">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="yoshino_bag_idle">
+                <key id="0" spin="0">
+                    <object folder="0" file="14" scale_x="2" scale_y="2"/>
+                </key>
+                <key id="1" time="33" spin="0">
+                    <object folder="0" file="14" scale_x="2" scale_y="2"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

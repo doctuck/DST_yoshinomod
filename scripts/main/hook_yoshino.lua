@@ -226,7 +226,9 @@ AddPrefabPostInit("yoshino", function(inst)
                     end
                 end)
             else
-                amount = math.floor(amount / 2 )    --骑乘冰结傀儡时受到物理伤害减半
+                if amount < 0 then
+                    amount =  math.ceil(amount / 2)    --骑乘冰结傀儡时受到伤害减半
+                end
             end
         end
         oldHealthDoDelta(self, amount, overtime, cause, ignore_invincible, afflicter, ignore_absorb)

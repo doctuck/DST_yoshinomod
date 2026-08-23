@@ -92,7 +92,7 @@ local function fn()
     inst.components.fueled:SetDepletedFn(inst.Remove)       --燃料消耗完时移除
 
     --inst:AddComponent("armor")                              --护甲组件
-    --inst.components.armor:InitIndestructible(0.2)           --20%保护度
+    --inst.components.armor:InitIndestructible(0.2)           --20%保护度且无限耐久
 
     inst:AddComponent("insulator")                          --绝缘
     inst.components.insulator:SetInsulation(TUNING.INSULATION_LARGE)--隔离240

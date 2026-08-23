@@ -90,6 +90,10 @@ local function MakeBluePrint()
         learner:PushEvent("learnrecipe", { teacher = inst, recipe = inst.components.teacher.recipe })
     end
 
+    --inst:AddComponent("stackable")  --可堆叠
+    --（备注：组件初始化默认就是堆叠20，非要写的话一定要使用官方TUNING表里固定的几个堆叠数字，否则无法适配“防卡很多招 workshop-3050607025”<--修改官方全局变量的笨蛋，不要用！）
+    --inst.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM --最大堆叠10个
+
     inst:AddComponent("fuel")
     inst.components.fuel.fuelvalue = TUNING.SMALL_FUEL
 
@@ -108,7 +112,6 @@ local function MakeBluePrint()
     MakeSmallBurnable(inst, TUNING.SMALL_BURNTIME)  --可燃烧的
     MakeSmallPropagator(inst)                       --燃烧可传播
     MakeHauntableLaunch(inst)                       --可被鬼魂作祟
-    AddHauntableCustomReaction(inst, function() return false end, true, false, true)    --添加鬼魂作祟
 
     return inst
 end
@@ -162,7 +165,7 @@ local function fn()
     inst.components.fueled:SetDepletedFn(inst.Remove)       --燃料消耗完时移除
 
     --inst:AddComponent("armor")                              --护甲组件
-    --inst.components.armor:InitIndestructible(0.2)           --20%保护度
+    --inst.components.armor:InitIndestructible(0.2)           --20%保护度且无限耐久
 
     inst:AddComponent("insulator")                          --绝缘
     inst.components.insulator:SetInsulation(TUNING.INSULATION_LARGE)--隔离240

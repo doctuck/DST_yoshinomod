@@ -136,6 +136,21 @@ AddRecipe2("recipe_yoshino_whitehat",      --配方ID
     { "CHARACTER", "CLOTHING", "SUMMER" }              --配方属于角色页面、服装、夏季物品
 )
 
+--四糸乃的幸运香囊合成配方
+AddRecipe2("yoshino_luckysachet",      --配方ID
+    { Ingredient("cutgrass", 2), Ingredient("pigskin", 8), Ingredient("rope", 2), Ingredient("orangegem", 1) }, --物品配方（采下的草*2，猪皮*8，绳子*2，橙宝石*1）
+    TECH.SCIENCE_TWO,       --科学二本解锁
+    {
+        atlas = "images/inventoryimages/yoshino_luckbag.xml",
+        image = "yoshino_luckbag.tex",
+        builder_tag = "yoshino", --限制建造者为四糸乃
+        product = "yoshino_luckysachet",    --产物：四糸乃的幸运香囊
+        no_deconstruction = true    --不可拆解
+    },
+    { "CHARACTER", "CONTAINERS"}              --配方属于角色页面、储物方案
+)
+
+
 --冰的合成配方, 四糸乃专属
 CHARACTER_INGREDIENT.REIRYOKU = "decrease_reiryoku"
 --local old_IsCharacterIngredient = IsCharacterIngredient   --已移动到hook_yoshino.lua
