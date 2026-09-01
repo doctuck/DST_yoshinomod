@@ -15,7 +15,7 @@ version: 1.5
 ]]
 
 author = "doctuckos"
-version = "1.5.1"
+version = "1.5.2"
 version_compatible = version
 forumthread = "" --不在单机版使用所以不管
 server_filter_tags = { "yoshino", "hermit", "四糸乃", "约会大作战", "doctuckos" }
@@ -122,7 +122,7 @@ configuration_options = {
 	},
 	{
 		name = "space_shake", --主键
-		label = language and "空间震" or "open the earthquake",
+		label = language and "空间震" or "open the space quake",
 		hover = "人物首次生成时是否产生空间震(地裂效果)",
 		options = {
 			{description = "Yes", data = 1},

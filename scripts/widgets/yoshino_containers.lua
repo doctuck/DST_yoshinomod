@@ -64,7 +64,7 @@ params.yoshino_luckysachet = {
     openlimit = 1,          -- 限制整个世界里只允许有几个当前类型的容器被打开
     itemtestfn = function(inst, item, slot) -- 容器里可以装的物品的条件(inst是容器组件本身,item是放入容器的物品,slot是容器物品栏里的物品序号)
     --注：此函数内部属于服务器范围
-        return not (item:HasTag("irreplaceable") or item:HasTag("_container"))  --不能放其他容器，也不能放诅咒饰品、启迪碎片等特殊不可替代物
+        return not (item:HasTag("irreplaceable") or item:HasTag("_container"))  --不能放其他容器，也不能放诅咒饰品、启迪碎片、圣殿钥石等独特物品（备注：具有“irreplaceable”标签的物品，无法被任何方式摧毁，无法打包，也不会被除玩家以外的任何生物捡起。）
     end,
 }
 for y = 0, 5 do

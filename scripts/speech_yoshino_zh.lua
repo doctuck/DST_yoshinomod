@@ -3320,7 +3320,7 @@ return {
         DUMBBELL_GOLDEN = "金灿灿的高级哑铃",		--黄金哑铃
 		DUMBBELL_MARBLE = "用大理石制作的更结实的哑铃",		--大理石哑铃
         DUMBBELL_GEM = "...用宝石制作的哑铃?",		--宝石哑铃
-        POTATOSACK = "",		--土豆袋
+        POTATOSACK = "装满了土豆，很重很重的说~",		--土豆袋
 
         DUMBBELL_HEAT = "在锻炼的同时也能保持温暖",		--热铃
         DUMBBELL_REDGEM = "可以喷火的哑铃\n四糸奈:画风都变得奇怪了",		--火铃
@@ -3440,7 +3440,7 @@ return {
         WX78_SCANNER_ITEM = "我不懂怎么使用它",		--生物扫描分析仪(物品栏)
         WX78_SCANNER_SUCCEEDED = "它在发光, 或许是等待它的主人收回它。",		--生物扫描分析仪(扫描成功)
 
-        WX78_MODULEREMOVER = "这似乎致死一个...钳子?",		--电路提取器
+        WX78_MODULEREMOVER = "这似乎只是一个...钳子?",		--电路提取器
 
         SCANDATA = "唔...好复杂的数据报告...",		--生物数据
 
@@ -3692,125 +3692,126 @@ return {
 
         SEEDPOUCH = "把种子收到一起,这样就不会乱了",		--种子袋
 
-		-- Crow Carnival(鸦年华)(有空再写)
-		--[[CARNIVAL_HOST = "What an odd fellow.",		--良羽鸦
-		CARNIVAL_CROWKID = "Good day to you, small bird person.",		--
-		CARNIVAL_GAMETOKEN = "One shiny token.",		--
+		-- Crow Carnival(鸦年华)
+		CARNIVAL_HOST = "是个奇怪的人。",						--良羽鸦
+		CARNIVAL_CROWKID = "飞来了一群乌鸦，是来玩的吗？",		--小乌鸦
+		CARNIVAL_GAMETOKEN = "庆典游戏的代币。",				--鸦年华代币
 		CARNIVAL_PRIZETICKET =		--
 		{
-			GENERIC = "That's the ticket!",		--
-			GENERIC_SMALLSTACK = "That's the tickets!",		--
-			GENERIC_LARGESTACK = "That's a lot of tickets!",		--
+			GENERIC = "一张奖票",								--常态默认（单张）
+			GENERIC_SMALLSTACK = "可以换一些小玩意了。",		--小堆奖票
+			GENERIC_LARGESTACK = "唔…有什么大奖可以兑换的？",	--大堆奖票
 		},
 
-		CARNIVALGAME_FEEDCHICKS_NEST = "It's a little trapdoor.",		--
-		CARNIVALGAME_FEEDCHICKS_STATION =		--
+		CARNIVALGAME_FEEDCHICKS_NEST = "这是个小活板门",		--鸟吃虫游戏的场地活板门
+		CARNIVALGAME_FEEDCHICKS_STATION =		--鸟吃虫游戏建筑
 		{
-			GENERIC = "It won't let me play until I give it something shiny.",		--
-			PLAYING = "This looks like fun!",		--
+			GENERIC = "支付代币才能游玩",		--常态默认
+			PLAYING = "看起来挺有趣。",			--玩家游玩中
 		},
-		CARNIVALGAME_FEEDCHICKS_KIT = "This really is a pop-up carnival.",		--
-		CARNIVALGAME_FEEDCHICKS_FOOD = "I don't need to chew them up first, do I?",		--
+		CARNIVALGAME_FEEDCHICKS_KIT = "原来要自己拼……",		--鸟吃虫游戏套装(物品栏)
+		CARNIVALGAME_FEEDCHICKS_FOOD = "鸟儿们吃的",		--蛴螬(鸟吃虫游戏中喂鸟的食物)
 
-		CARNIVALGAME_MEMORY_KIT = "This really is a pop-up carnival.",		--
-		CARNIVALGAME_MEMORY_STATION =		--
+		CARNIVALGAME_MEMORY_KIT = "原来要自己拼……",		--篮中蛋套装(物品栏)
+		CARNIVALGAME_MEMORY_STATION =		--篮中蛋游戏建筑
 		{
-			GENERIC = "It won't let me play until I give it something shiny.",		--
-			PLAYING = "Not to brag, but I've been called a bit of an egghead in the past.",		--
+			GENERIC = "支付代币才能游玩",		--常态默认
+			PLAYING = "看起来挺有趣。",			--玩家游玩中
 		},
-		CARNIVALGAME_MEMORY_CARD =		--
+		CARNIVALGAME_MEMORY_CARD =		--篮中蛋游戏的场地活板门
 		{
-			GENERIC = "It's a little trapdoor.",		--
-			PLAYING = "Is this the right one?",		--
+			GENERIC = "里面会冒出什么？",		--常态默认
+			PLAYING = "它是对的那一个吗？",		--玩家游玩中
 		},
 
-		CARNIVALGAME_HERDING_KIT = "This really is a pop-up carnival.",		--
-		CARNIVALGAME_HERDING_STATION =		--
+		CARNIVALGAME_HERDING_KIT = "原来要自己拼……",		--追蛋游戏套装(物品栏)
+		CARNIVALGAME_HERDING_STATION =		--追蛋游戏建筑
 		{
-			GENERIC = "It won't let me play until I give it something shiny.",		--
-			PLAYING = "Those eggs are looking a little runny.",		--
+			GENERIC = "支付代币才能游玩",		--常态默认
+			PLAYING = "把蛋全赶回来就行。",		--玩家游玩中
 		},
-		CARNIVALGAME_HERDING_CHICK = "Come back here!",		--
+		CARNIVALGAME_HERDING_CHICK = "赶回中心",			--"追蛋"(需要赶回来的那些蛋)
 
-		CARNIVALGAME_SHOOTING_KIT = "This really is a pop-up carnival.",		--
-		CARNIVALGAME_SHOOTING_STATION =		--
+		CARNIVALGAME_SHOOTING_KIT = "原来要自己拼……",		--保卫鸟巢游戏套装(物品栏)
+		CARNIVALGAME_SHOOTING_STATION =		--保卫鸟巢游戏建筑
 		{
-			GENERIC = "It won't let me play until I give it something shiny.",		--
-			PLAYING = "I could calculate the trajectory, but it involves a lot of complicated numbers and squiggles.",		--
+			GENERIC = "支付代币才能游玩",		--常态默认
+			PLAYING = "要看准方向",				--玩家游玩中
 		},
-		CARNIVALGAME_SHOOTING_TARGET =		--
+		CARNIVALGAME_SHOOTING_TARGET =		--保卫鸟巢游戏的活板门
 		{
-			GENERIC = "It's a little trapdoor.",		--
-			PLAYING = "That target's really starting to bug me.",		--
+			GENERIC = "一个小门，标靶从里面出现",	--常态默认
+			PLAYING = "出来的会是正确的吗？",		--玩家游玩中
 		},
 
-		CARNIVALGAME_SHOOTING_BUTTON =		--
+		CARNIVALGAME_SHOOTING_BUTTON =		--保卫鸟巢游戏的按钮
 		{
-			GENERIC = "It won't let me play until I give it something shiny.",		--
-			PLAYING = "Science compels me to press that big shiny button!",		--
+			GENERIC = "支付代币后就能玩了",		--常态默认
+			PLAYING = "看准时机…按下按钮！",	--玩家游玩中
 		},
 
-		CARNIVALGAME_WHEELSPIN_KIT = "This really is a pop-up carnival.",		--
-		CARNIVALGAME_WHEELSPIN_STATION =		--
+		CARNIVALGAME_WHEELSPIN_KIT = "搞半天原来要自己拼…",		--布谷鸟转盘游戏套装(物品栏)
+		CARNIVALGAME_WHEELSPIN_STATION =		--布谷鸟转盘游戏建筑
 		{
-			GENERIC = "It won't let me play until I give it something shiny.",		--
-			PLAYING = "It turns out that spinning your wheels is actually very productive.",		--
+			GENERIC = "支付代币才能游玩",		--常态默认
+			PLAYING = "觉得时机合适了就停下吧",	--玩家游玩中
 		},
 
-		CARNIVALGAME_PUCKDROP_KIT = "This really is a pop-up carnival.",		--
-		CARNIVALGAME_PUCKDROP_STATION =		--
+		CARNIVALGAME_PUCKDROP_KIT = "找个地方搭建场地",			--鸟房落球游戏套装(物品栏)
+		CARNIVALGAME_PUCKDROP_STATION =		--鸟房落球游戏建筑
 		{
-			GENERIC = "It won't let me play until I give it something shiny.",		--
-			PLAYING = "Physics don't always work the same way twice.",		--
+			GENERIC = "支付代币才能游玩",		--常态默认
+			PLAYING = "随机落进一个洞口。",		--玩家游玩中
 		},
 
-		CARNIVAL_PRIZEBOOTH_KIT = "The real prize is the booth we made along the way.",		--
-		CARNIVAL_PRIZEBOOTH =		--
+		CARNIVAL_PRIZEBOOTH_KIT = "也许这个就是奖品…?",		--奖品摊位套装(物品栏)
+		CARNIVAL_PRIZEBOOTH =		--奖品摊位建筑
 		{
-			GENERIC = "I've got my eyes on the prize. That one, over there!",		--
+			GENERIC = "看看能换哪些奖品",		--常态默认
 		},
 
-		CARNIVALCANNON_KIT = "I've got a lot of experience in making things explode.",		--
-		CARNIVALCANNON =
+		CARNIVALCANNON_KIT = "这个和烟花一样吗……?",		--亮片、彩纸、彩带等大炮套装
+		CARNIVALCANNON =		--亮片、彩纸、彩带等大炮(放置地上)
 		{
-			GENERIC = "This experiment blows up on purpose!",		--
-			COOLDOWN = "What a blast!",		--
+			GENERIC = "这场庆典很热闹",				--常态默认(未激活)
+			COOLDOWN = "嗯！大家会开心的！",		--已激活
 		},
 
-		CARNIVAL_PLAZA_KIT = "It's a scientifically proven fact that birds love trees.",		--
-		CARNIVAL_PLAZA =		--
+		CARNIVAL_PLAZA_KIT = "一颗特别的树苗，象征着庆典的开始。",		--鸦年华树苗
+		CARNIVAL_PLAZA =		--鸦年华树
 		{
-			GENERIC = "It doesn't really scream \"Cawnival\" yet, does it?",		--
-			LEVEL_2 = "A little birdy told me it could use some more decorations around here.",		--
-			LEVEL_3 = "This tree is caws for celebration!",		--
+			GENERIC = "现在还不够热闹",							-- 1级
+			LEVEL_2 = "装饰品还不够多",							-- 2级
+			LEVEL_3 = "唔呣！从这棵树能看出庆典很热闹呢！",		-- 3级
 		},
 
-		CARNIVALDECOR_EGGRIDE_KIT = "I hope this prize is all it's cracked up to be.",		--
-		CARNIVALDECOR_EGGRIDE = "I could watch it for hours.",		--
+		CARNIVALDECOR_EGGRIDE_KIT = "作为一个纪念品吧",		-- 奖品摊位的各种迷你游戏设施套装(物品栏)
+		CARNIVALDECOR_EGGRIDE = "作为装饰很不错",			-- 奖品摊位的各种迷你游戏设施
 
-		CARNIVALDECOR_LAMP_KIT = "Only some light work left to do.",		--
-		CARNIVALDECOR_LAMP = "It's powered by whimsy.",		--
-		CARNIVALDECOR_PLANT_KIT = "Maybe it's a boxwood?",		--
-		CARNIVALDECOR_PLANT = "Either it's small, or I'm gigantic.",		--
-		CARNIVALDECOR_BANNER_KIT = "I have to build it myself? I should have known there'd be a catch.",		--
-		CARNIVALDECOR_BANNER = "I think all these shiny decorations reflect well on me.",		--
+		CARNIVALDECOR_LAMP_KIT = "光，照亮凉爽的夏夜",		--盛夏夜灯套装
+		CARNIVALDECOR_LAMP = "周围变得很亮了",				--盛夏夜灯
+		CARNIVALDECOR_PLANT_KIT = "迷你景观",				--微型树套装
+		CARNIVALDECOR_PLANT = "迷你景观",					--微型树
+		CARNIVALDECOR_BANNER_KIT = "试试将它组装起来。",	--光线捕捉器套装
+		CARNIVALDECOR_BANNER = "更闪更亮的装饰。",			--光线捕捉器
 
-		CARNIVALDECOR_FIGURE =		--
+		CARNIVALDECOR_FIGURE =		-- 神秘盒子(放在地上)
 		{
-			RARE = "See? Proof that trying the exact same thing over and over will eventually lead to success!",		--
-			UNCOMMON = "You don't see this kind of design too often.",		--
-			GENERIC = "I seem to be getting a lot of these...",		--
+			RARE = "唔呣？是稀有款…？",					-- 稀有
+			UNCOMMON = "似乎不太常见。",				-- 特别
+			GENERIC = "好像收到了很多这种东西",			-- 常态默认(普通款)
 		},
-		CARNIVALDECOR_FIGURE_KIT = "The thrill of discovery!",		--
-		CARNIVALDECOR_FIGURE_KIT_SEASON2 = "The thrill of discovery!",		--
+		CARNIVALDECOR_FIGURE_KIT = "试试开盲盒",				--绿色神秘盒子套装(物品栏)
+		CARNIVALDECOR_FIGURE_KIT_SEASON2 = "试试开盲盒",		--金色神秘盒子套装(物品栏)
+		CARNIVALDECOR_FIGURE_KIT_SEASON3 = "试试开盲盒",		--红色神秘盒子套装(物品栏)
 
-        CARNIVAL_BALL = "It's genius in its simplicity.", --unimplemented		--
-		CARNIVAL_SEEDPACKET = "I was feeling a bit peckish.",		--
-		CARNIVALFOOD_CORNTEA = "Is this drink supposed to be crunchy?",		--
+        --CARNIVAL_BALL = "It's genius in its simplicity.", --unimplemented		--
+		CARNIVAL_SEEDPACKET = "一袋种子",						-- 种子包
+		CARNIVALFOOD_CORNTEA = "凉透了，口感不太好。",			-- 玉米泥
 
-        CARNIVAL_VEST_A = "I think it makes me look adventurous.",		--
-        CARNIVAL_VEST_B = "It's like wearing my own shade tree.",		--
-        CARNIVAL_VEST_C = "I hope there's no bugs in it...",--]]		--
+        CARNIVAL_VEST_A = "树叶做的围巾倒是很凉快没错啦…",		--叽叽喳喳围巾
+        CARNIVAL_VEST_B = "披上斗篷，像树林里的小精灵",			--叽叽喳喳斗篷
+        CARNIVAL_VEST_C = "它散发着夏叶的独有的芬芳。",			--叽叽喳喳小披肩
 
         -- YOTB(皮弗娄牛之年)(有空再写)
         --[[YOTB_SEWINGMACHINE = "Sewing can't be that hard... can it?",		--
@@ -4854,6 +4855,57 @@ return {
 			SLEEPING = "它睡着了",		-- 睡眠
             VENTING = "...好难闻的味道!", -- in the shield state and venting out gasses		-- 喷气
         },
+		
+		-- Rifts 7
+        STALKER_NPC = "现在它将不再敌对，暂时的。",					--远古织影者(NPC)
+
+        MITEGLAND =		-- 火腺
+        {
+            GENERIC = "唔…我不太想拿着它。",		--常态默认
+            COLD = "看上去凉透了。",				--冷掉了
+        },
+        MITEGLAND_COOKED = "熟了……但真的能吃吗？\n四糸奈:试试不亏~！",		-- 熟火腺
+
+        BROKEN_FUMAROLETOOLITEM = "也许需要很多热量才能熔合一体。", -- character should comment that they could melt the pieces back together by heating it.
+        FUMAROLEAXE =			--炽热斧
+		{
+			GENERIC = "冰冷而脆弱。",				-- 最冷的状态(1级)		-- This is the coldest state, the heat tool is about to break and shatter into the broken state if used a bit more, there are visible cracks.
+			LUKEWARM = "快凉透了", 					-- 比最冷好一点(2级)	-- The next state, its lukewarm, no cracks.
+			WARM = "温暖且充满能量", 				-- 温暖状态(3级)		-- It's starting to get red hot, it's a bit more efficient in the action it does, and keeps the player cozy.
+			HOT = "热到如此程度，希望效率足够高。", -- 最热的状态(4级)		-- SUPER HOT, it's very efficient in the action it does, e.g. the axe fells trees in half the hits needed, keeps the player cozy, maybe too cozy! (e.g. overheat in summer)
+		},
+
+        FUMAROLEPICKAXE =		--烈焰鹤嘴锄
+		{
+			GENERIC = "冰冷而脆弱。",				-- 最冷的状态(1级)		-- This is the coldest state, the heat tool is about to break and shatter into the broken state if used a bit more, there are visible cracks.
+			LUKEWARM = "快凉透了", 					-- 比最冷好一点(2级)	-- The next state, its lukewarm, no cracks.
+			WARM = "温暖且充满能量", 				-- 温暖状态(3级)		-- It's starting to get red hot, it's a bit more efficient in the action it does, and keeps the player cozy.
+			HOT = "热到如此程度，希望效率足够高。", -- 最热的状态(4级)		-- SUPER HOT, it's very efficient in the action it does, e.g. the axe fells trees in half the hits needed, keeps the player cozy, maybe too cozy! (e.g. overheat in summer)
+		},
+
+        FUMAROLEHAMMER =		--炎头锤
+		{
+			GENERIC = "冰冷而脆弱。",				-- 最冷的状态(1级)		-- This is the coldest state, the heat tool is about to break and shatter into the broken state if used a bit more, there are visible cracks.
+			LUKEWARM = "快凉透了", 					-- 比最冷好一点(2级)	-- The next state, its lukewarm, no cracks.
+			WARM = "温暖且充满能量", 				-- 温暖状态(3级)		-- It's starting to get red hot, it's a bit more efficient in the action it does, and keeps the player cozy.
+			HOT = "热到如此程度，希望效率足够高。", -- 最热的状态(4级)		-- SUPER HOT, it's very efficient in the action it does, e.g. the axe fells trees in half the hits needed, keeps the player cozy, maybe too cozy! (e.g. overheat in summer)
+		},
+
+        FUMAROLESHOVEL =		--呲啦铲
+		{
+			GENERIC = "冰冷而脆弱。",				-- 最冷的状态(1级)		-- This is the coldest state, the heat tool is about to break and shatter into the broken state if used a bit more, there are visible cracks.
+			LUKEWARM = "快凉透了", 					-- 比最冷好一点(2级)	-- The next state, its lukewarm, no cracks.
+			WARM = "温暖且充满能量", 				-- 温暖状态(3级)		-- It's starting to get red hot, it's a bit more efficient in the action it does, and keeps the player cozy.
+			HOT = "热到如此程度，希望效率足够高。", -- 最热的状态(4级)		-- SUPER HOT, it's very efficient in the action it does, e.g. the axe fells trees in half the hits needed, keeps the player cozy, maybe too cozy! (e.g. overheat in summer)
+		},
+
+        FUMAROLE_FARM_HOE =		--烧灼园艺锄
+		{
+			GENERIC = "冰冷而脆弱。",				-- 最冷的状态(1级)		-- This is the coldest state, the heat tool is about to break and shatter into the broken state if used a bit more, there are visible cracks.
+			LUKEWARM = "快凉透了", 					-- 比最冷好一点(2级)	-- The next state, its lukewarm, no cracks.
+			WARM = "温暖且充满能量", 				-- 温暖状态(3级)		-- It's starting to get red hot, it's a bit more efficient in the action it does, and keeps the player cozy.
+			HOT = "热到如此程度，希望效率足够高。", -- 最热的状态(4级)		-- SUPER HOT, it's very efficient in the action it does, e.g. the axe fells trees in half the hits needed, keeps the player cozy, maybe too cozy! (e.g. overheat in summer)
+		},
 
         --[[--Hallowed Nights 2025(20025万圣夜)(没有写的必要)
 		PUMPKINHAT =		-- 无面南瓜

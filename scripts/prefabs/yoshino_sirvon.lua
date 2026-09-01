@@ -28,11 +28,11 @@ local function frozenother(owner, data)
     end
 end
 --免疫睡眠
-local IMMUNITY_MODIFIER_LIST_KEY = "sirvon_grogginess"
-local function Resistsleep(owner, sleepiness, sleeptime)
-    owner.components.sleeper:WakeUp()
-	return
-end
+--local IMMUNITY_MODIFIER_LIST_KEY = "sirvon_grogginess"
+--local function Resistsleep(owner, sleepiness, sleeptime)
+--    owner.components.sleeper:WakeUp()
+--	return
+--end
 local function Resistgrogginess(owner, grogginess, knockoutduration)
     owner.components.grogginess:ComeTo()   -- 唤醒并清除瞌睡状态
 	return
