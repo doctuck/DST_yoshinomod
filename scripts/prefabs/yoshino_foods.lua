@@ -117,7 +117,7 @@ local function MakePreparedFood(data)
         inst.components.edible.secondaryfoodtype = data.secondaryfoodtype or nil
         inst.components.edible.sanityvalue = data.sanity or 0
         inst.components.edible.temperaturedelta = data.temperature or 0  --吃下后的温度变化
-        inst.components.edible.temperatureduration = data.temperatureduration or 0  --吃下后的温度持续变化
+        inst.components.edible.temperatureduration = data.temperatureduration or 0  --吃下后的温度持续变化时间
         inst.components.edible.nochill = data.nochill or nil
         inst.components.edible.spice = data.spice
         inst.components.edible:SetOnEatenFn(data.oneatenfn)
@@ -169,7 +169,7 @@ end
 
 local prefs = {}
 
-for k, v in pairs(require("yoshino_foods")) do
+for k, v in pairs(require("util/yoshino_foods")) do
     table.insert(prefs, MakePreparedFood(v))
 end
 for k, v in pairs(require("spicedfoods")) do

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b5">
+    <folder id="0" name="shadow">
+        <file id="0" name="shadow/shadow-0.png" width="212" height="55" pivot_x="0.5" pivot_y="0.5"/>
+    </folder>
+    <folder id="1" name="yoshinon">
+        <file id="0" name="yoshinon/yoshinon-1.png" width="600" height="800" pivot_x="0.503322" pivot_y="0.112219"/>
+        <file id="1" name="yoshinon/yoshinon-0.png" width="600" height="800" pivot_x="0.503322" pivot_y="0.112219"/>
+    </folder>
+    <entity id="0" name="yoshinon_icebox">
+        <animation id="0" name="idle" length="33">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" name="shadow-0" folder="0" file="0" abs_x="0" abs_y="0" abs_pivot_x="0.5" abs_pivot_y="0.5" abs_angle="0" abs_scale_x="1.81593" abs_scale_y="1.28032" abs_a="1" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" name="yoshinon-1" folder="1" file="0" abs_x="0" abs_y="0" abs_pivot_x="0.503322" abs_pivot_y="0.112219" abs_angle="0" abs_scale_x="1" abs_scale_y="1" abs_a="1" timeline="1" key="0" z_index="1"/>
+                </key>
+                <key id="1" time="33">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="1" z_index="1"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="shadow-0">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+                <key id="1" time="33" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="yoshinon-1">
+                <key id="0" spin="0">
+                    <object folder="1" file="0" angle="0"/>
+                </key>
+                <key id="1" time="33" spin="0">
+                    <object folder="1" file="0" angle="0"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="1" name="place" length="297">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" name="shadow-0_003" folder="0" file="0" abs_x="0" abs_y="0" abs_pivot_x="0.5" abs_pivot_y="0.5" abs_angle="0" abs_scale_x="1.81593" abs_scale_y="1.28032" abs_a="1" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" name="yoshinon-1_002" folder="1" file="1" abs_x="0" abs_y="121.875" abs_pivot_x="0.503322" abs_pivot_y="0.112219" abs_angle="0" abs_scale_x="1" abs_scale_y="1" abs_a="1" timeline="1" key="0" z_index="1"/>
+                </key>
+                <key id="1" time="231">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="1" z_index="1"/>
+                </key>
+                <key id="2" time="264">
+                    <object_ref id="0" timeline="0" key="2" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="2" z_index="1"/>
+                </key>
+                <key id="3" time="297">
+                    <object_ref id="0" timeline="0" key="3" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="3" z_index="1"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="shadow-0_003">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+                <key id="1" time="231" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+                <key id="2" time="264" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+                <key id="3" time="297" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="yoshinon-1_002">
+                <key id="0" spin="0">
+                    <object folder="1" file="1" y="121.875" angle="0"/>
+                </key>
+                <key id="1" time="231" spin="0">
+                    <object folder="1" file="0" angle="0"/>
+                </key>
+                <key id="2" time="264" spin="0">
+                    <object folder="1" file="0" y="5.230007" pivot_x="0.503322" pivot_y="0.112219" angle="0"/>
+                </key>
+                <key id="3" time="297" spin="0">
+                    <object folder="1" file="0" angle="0"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="2" name="open" length="99">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" name="shadow-0_000" folder="0" file="0" abs_x="0" abs_y="0" abs_pivot_x="0.5" abs_pivot_y="0.5" abs_angle="0" abs_scale_x="1.81593" abs_scale_y="1.28032" abs_a="1" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" name="yoshinon-1_000" folder="1" file="0" abs_x="0" abs_y="0" abs_pivot_x="0.503322" abs_pivot_y="0.112219" abs_angle="0" abs_scale_x="1" abs_scale_y="1" abs_a="1" timeline="1" key="0" z_index="1"/>
+                </key>
+                <key id="1" time="66">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="1" z_index="1"/>
+                </key>
+                <key id="2" time="99">
+                    <object_ref id="0" timeline="0" key="2" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="2" z_index="1"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="shadow-0_000">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+                <key id="1" time="66" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+                <key id="2" time="99" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="yoshinon-1_000">
+                <key id="0" spin="0">
+                    <object folder="1" file="0" angle="0"/>
+                </key>
+                <key id="1" time="66" spin="0">
+                    <object folder="1" file="1" angle="0"/>
+                </key>
+                <key id="2" time="99" spin="0">
+                    <object folder="1" file="1" angle="0"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="3" name="close" length="99">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" name="shadow-0_001" folder="0" file="0" abs_x="0" abs_y="0" abs_pivot_x="0.5" abs_pivot_y="0.5" abs_angle="0" abs_scale_x="1.81593" abs_scale_y="1.28032" abs_a="1" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" name="yoshinon-0" folder="1" file="1" abs_x="0" abs_y="0" abs_pivot_x="0.503322" abs_pivot_y="0.112219" abs_angle="0" abs_scale_x="1" abs_scale_y="1" abs_a="1" timeline="1" key="0" z_index="1"/>
+                </key>
+                <key id="1" time="66">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="1" z_index="1"/>
+                </key>
+                <key id="2" time="99">
+                    <object_ref id="0" timeline="0" key="2" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="2" z_index="1"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="shadow-0_001">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+                <key id="1" time="66" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+                <key id="2" time="99" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="yoshinon-0">
+                <key id="0" spin="0">
+                    <object folder="1" file="1" angle="0"/>
+                </key>
+                <key id="1" time="66" spin="0">
+                    <object folder="1" file="0" angle="0"/>
+                </key>
+                <key id="2" time="99" spin="0">
+                    <object folder="1" file="0" pivot_x="0.503322" pivot_y="0.112219" angle="0"/>
+                </key>
+            </timeline>
+        </animation>
+        <animation id="4" name="hit" length="231">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" name="shadow-0_002" folder="0" file="0" abs_x="0" abs_y="0" abs_pivot_x="0.5" abs_pivot_y="0.5" abs_angle="0" abs_scale_x="1.81593" abs_scale_y="1.28032" abs_a="1" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" name="yoshinon-1_001" folder="1" file="0" abs_x="0" abs_y="0" abs_pivot_x="0.503322" abs_pivot_y="0.112219" abs_angle="0" abs_scale_x="1" abs_scale_y="1" abs_a="1" timeline="1" key="0" z_index="1"/>
+                </key>
+                <key id="1" time="132">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="1" z_index="1"/>
+                </key>
+                <key id="2" time="231">
+                    <object_ref id="0" timeline="0" key="2" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="2" z_index="1"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="shadow-0_002">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+                <key id="1" time="132" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+                <key id="2" time="231" spin="0">
+                    <object folder="0" file="0" angle="0" scale_x="1.81593" scale_y="1.28032"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="yoshinon-1_001">
+                <key id="0" spin="0">
+                    <object folder="1" file="0" angle="0"/>
+                </key>
+                <key id="1" time="132" spin="0">
+                    <object folder="1" file="0" angle="0" scale_y="0.8"/>
+                </key>
+                <key id="2" time="231" spin="0">
+                    <object folder="1" file="0" angle="0"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

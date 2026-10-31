@@ -129,22 +129,10 @@ AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS.DETERIORATION,
 
 -------------------------------------------------------------------------------------------------
 --修补（适用于finiteuses组件）
-local fuelitem = {
-    --四糸乃的折扇
-    yoshino_fan = {
-        feather_canary = 0.2,
-        feather_crow = 0.2,
-        feather_robin_winter = 0.2,
-        goose_feather = 0.4,
-        malbatross_feather = 0.4,
-        feather_robin = 0.3,
-    },
-}
-local canrepairitem = { "yoshino_fan", }
-local REPAIR_YOSHINO_FAN = Action({mount_valid = true, paused_valid = true})  --骑乘有效，暂停有效
-REPAIR_YOSHINO_FAN.id = "REPAIR_YOSHINO_FAN"
-REPAIR_YOSHINO_FAN.str = STRINGS.ACTIONS.REPAIR
-REPAIR_YOSHINO_FAN.fn = function (act)
+local REPAIR_YOSHINO_ITEM_FIN = Action({mount_valid = true, paused_valid = true})  --骑乘有效，暂停有效
+REPAIR_YOSHINO_ITEM_FIN.id = "REPAIR_YOSHINO_ITEM_FIN"
+REPAIR_YOSHINO_ITEM_FIN.str = STRINGS.ACTIONS.REPAIR
+REPAIR_YOSHINO_ITEM_FIN.fn = function (act)
     local doer = act.doer
     local obj = act.invobject   --这里指要被消耗的物品
     local target = act.target   --这里指要被操作的物品
@@ -153,9 +141,9 @@ REPAIR_YOSHINO_FAN.fn = function (act)
         return false
     end
 
-    local repairpercent = fuelitem[target.prefab][obj.prefab]
-
+    local repairpercent = TUNING.MOD_YOSHINO[string.upper(target.prefab)]["repairprefab"][obj.prefab]
     local maxfiniteuse = target.components.finiteuses.total
+
     if obj.components.stackable ~= nil and obj.components.stackable:StackSize() >= 1 then
         obj.components.stackable:Get(1):Remove()
         target.components.finiteuses:Repair(repairpercent * maxfiniteuse)
@@ -165,27 +153,125 @@ REPAIR_YOSHINO_FAN.fn = function (act)
         target.components.finiteuses:Repair(repairpercent * maxfiniteuse)
         return true
     else
-        print("未知原因导致修复动作失败")
+        --print("未知原因导致修复动作失败")
         return false
     end
 
 end
 
-AddAction(REPAIR_YOSHINO_FAN)
+AddAction(REPAIR_YOSHINO_ITEM_FIN)
 
-AddStategraphActionHandler("wilson", ActionHandler(ACTIONS.REPAIR_YOSHINO_FAN, "domediumaction"))
-AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS.REPAIR_YOSHINO_FAN, "domediumaction"))
+AddStategraphActionHandler("wilson", ActionHandler(ACTIONS.REPAIR_YOSHINO_ITEM_FIN, "domediumaction"))
+AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS.REPAIR_YOSHINO_ITEM_FIN, "domediumaction"))
 
 AddComponentAction("USEITEM","yoshino_savemoddata",     --相同场景绑定相同组件时，不同动作应根据判断条件写在一起
     function (inst, doer, target, actions, right)
-        if inst:HasTag("repair_yoshinofan") and table.contains(canrepairitem, target.prefab) and right then
-            table.insert(actions, ACTIONS.REPAIR_YOSHINO_FAN)
+        if inst:HasTag("repair_yoshinofan") and target.prefab == "yoshino_fan" and right then
+            table.insert(actions, ACTIONS.REPAIR_YOSHINO_ITEM_FIN)   --修折扇
         elseif (inst:HasTag("yoshino_anticrystal") and target:HasTag("yoshino_elyonban")) or (inst:HasTag("yoshino_crystal") and target:HasTag("yoshino_elfz")) and right then
-            table.insert(actions, ACTIONS.DETERIORATION)
+            table.insert(actions, ACTIONS.DETERIORATION)        --反转和恢复灵装
         end
     end
 )
 -------------------------------------------------------------------------------------------------
+--修补（适用于fueled组件）
+local REPAIR_YOSHINO_ITEM_FUEL = Action({mount_valid = true, paused_valid = true })
+REPAIR_YOSHINO_ITEM_FUEL.id = "REPAIR_YOSHINO_ITEM_FUEL"
+REPAIR_YOSHINO_ITEM_FUEL.str = "修复"
+
+REPAIR_YOSHINO_ITEM_FUEL.fn = function (act)
+    local doer = act.doer
+    local obj = act.invobject   --这里指要被消耗的物品
+    local target = act.target   --这里指要被操作的物品
+
+    if (obj == nil or not obj:IsValid()) or (target == nil or not target:IsValid()) or (doer == nil or not doer:IsValid()) then
+        return false
+    end
+    if target.components.fueled == nil or target.components.fueled:IsFull() then
+        return false
+    end
+
+    local repairpercent = TUNING.MOD_YOSHINO[string.upper(target.prefab)].repairprefab[obj.prefab]
+    local maxfueled = target.components.fueled.maxfuel
+
+    if obj.components.stackable ~= nil and obj.components.stackable:StackSize() >= 1 then
+        obj.components.stackable:Get(1):Remove()
+        target.components.fueled:DoDelta(repairpercent * maxfueled, doer)
+        return true
+    elseif obj.components.stackable == nil then
+        obj:Remove()
+        target.components.finiteuses:DoDelta(repairpercent * maxfueled, doer)
+        return true
+    else
+        --print("未知原因导致修复动作失败")
+        return false
+    end
+
+end
+AddAction(REPAIR_YOSHINO_ITEM_FUEL)
+
+AddStategraphActionHandler("wilson", ActionHandler(ACTIONS.REPAIR_YOSHINO_ITEM_FUEL, "domediumaction"))
+AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS.REPAIR_YOSHINO_ITEM_FUEL, "domediumaction"))
+
+AddComponentAction("USEITEM", "inventoryitem", function (inst, doer, target, actions, right)
+    if (inst.prefab == "forgetmelots" or inst.prefab == "forgetmelots_dried" ) and target:HasTag("yoshino_forgethairpin") and right then
+        table.insert(actions, ACTIONS.REPAIR_YOSHINO_ITEM_FUEL)  --修必忘我发夹
+    end
+end)
+-------------------------------------------------------------------------------------------------
+
+--四糸奈10级技能
+local YOSHINON_SKILL_TEN = Action({mount_valid = false, paused_valid = false, rmb = true, distance = 20})
+YOSHINON_SKILL_TEN.id = "YOSHINON_SKILL_TEN"
+YOSHINON_SKILL_TEN.str = "寒冰影刺"
+YOSHINON_SKILL_TEN.fn = function (act)
+	local doer = act.doer			--动作执行者
+	local pos = act:GetActionPoint()	--目标地点
+	local obj = act.invobject		--本次动作的物品
+	if doer == nil or not doer:IsValid() then
+		return false
+	end
+	if not doer:HasTag("yoshino") then
+		return false, "UNYOSHINO"
+	end
+
+	if doer.components.spiritual_energy == nil or doer.components.spiritual_energy:GetCurrent() < TUNING.MOD_YOSHINO.YOSHINON.cost_reiryoku then
+		return false, "NOREIYOKU"
+	end
+
+    if obj ~= nil then
+		if obj.components.yoshinon_upgrade and obj.components.cooldown and not obj.components.cooldown:IsCharging() then
+        	obj.components.cooldown:StartCharging(TUNING.MOD_YOSHINO.YOSHINON.cooltime)	--进入冷却
+		end
+		doer.components.spiritual_energy:DoDelta(-TUNING.MOD_YOSHINO.YOSHINON.cost_reiryoku)	--扣除所需灵力
+    end
+
+	return true
+end
+
+AddAction(YOSHINON_SKILL_TEN)
+
+AddStategraphActionHandler("wilson", ActionHandler(ACTIONS.YOSHINON_SKILL_TEN, "shadow_blink_pre"))
+AddStategraphActionHandler("wilson_client", ActionHandler(ACTIONS.YOSHINON_SKILL_TEN, "shadow_blink_pre"))
+
+AddComponentAction("POINT", "yoshinon_upgrade", function(inst, doer, pos, actions, right, target)
+	local x,y,z = pos:Get()
+	--local doerx, doery, doerz = doer.Transform:GetWorldPosition()
+	if right and (TheWorld.Map:IsAboveGroundAtPoint(x,y,z) or TheWorld.Map:GetPlatformAtPoint(x,z) ~= nil) and not TheWorld.Map:IsGroundTargetBlocked(pos) then
+		local level = inst.replica.yoshinon_upgrade and inst.replica.yoshinon_upgrade:GetLevel() or nil
+		--冷却结束才能显示动作
+		if level ~= nil and level >= 10 and not inst._yoshinon_cd:value() and inst:HasTag("yoshinon") then
+			table.insert(actions, ACTIONS.YOSHINON_SKILL_TEN)
+		end
+	end
+end)
+
+-------------------------------------------------------------------------------------------------
+
+
+
+
+
 
 
 

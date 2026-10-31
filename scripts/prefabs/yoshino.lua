@@ -153,7 +153,7 @@ local function onload(inst, data)
             end)
             savedata_this.array_data.nofirst = true
         end
-    end 
+    end
     if data and data.zadkiel then
         local zadkiel = SpawnSaveRecord(data.zadkiel)
         inst.zadkiel = zadkiel
@@ -207,8 +207,39 @@ local function oneatfood(inst, data)
             --冰淇淋则 +4 灵力
             if data.food.prefab == "icecream" then inst.components.spiritual_energy:DoDelta(0.8) end
         end
+		--将吃的食物告知装备栏中的四糸奈
+		if inst.components.inventory and inst.components.inventory.equipslots then
+			local yoshinon = nil
+			for _, v in pairs(inst.components.inventory.equipslots) do
+				if v:HasTag("yoshinon") then
+					yoshinon = v
+					break
+				end
+    		end
+			if yoshinon ~= nil then
+				yoshinon:PushEvent("yoshino_rpc_eat", {food = data.food, player = inst})
+			end
+		end
     end
 end
+
+--当进行任意制造时
+local function onbuilt(inst, data)
+	--将“制作了物品”一事告知装备栏中的四糸奈
+	if inst.components.inventory and inst.components.inventory.equipslots then
+		local yoshinon = nil
+		for _, v in pairs(inst.components.inventory.equipslots) do
+			if v:HasTag("yoshinon") then
+				yoshinon = v
+				break
+			end
+    	end
+		if yoshinon ~= nil then
+			yoshinon:PushEvent("yoshino_rpc_build", {player = inst})
+		end
+	end
+end
+
 
 --设置冷冻的重定向函数
 local function onfreeze(inst, coldness, freezetime, nofreeze)
@@ -320,7 +351,7 @@ local function master_postinit(inst)
     inst.components.health.absorb = 0                                                --防御系数,absorb = 1时抵抗百分之百的伤害，即免疫，为负数则表示所受伤害增加。
     inst.components.hunger.hungerrate = 0.9 * TUNING.WILSON_HUNGER_RATE              --饥饿速度，每天(0.9*75)
     inst.components.foodaffinity:AddPrefabAffinity("icecream", TUNING.AFFINITY_15_CALORIES_HUGE)        --最喜欢的食物是冰淇淋
-    inst.components.locomotor:SetExternalSpeedMultiplier(inst, "yoshino_speed", 1.3) --设置额外移速，基础移速的1.3倍（备注：人物基础跑步速度是6，所以此处为6*1.3=7.8）
+    inst.components.locomotor:SetExternalSpeedMultiplier(inst, "yoshino_speed", 1.2) --设置额外移速，基础移速的1.3倍（备注：人物基础跑步速度是6，所以此处为6*1.2=7.2）
     --inst.components.temperature.mintemp = -10                                         --设置最低温度为-10
     inst.components.temperature.overheattemp = 60                                    --炎热抗性，默认是70
     inst.skeleton_prefab = nil                                                       --死亡不掉落骨架
@@ -341,13 +372,15 @@ local function master_postinit(inst)
         end
     end
 
-    inst:ListenForEvent("moisturedelta", onwetdelta)                 --监听潮湿值变化事件，当值大于60时理智恢复 <--这玩意居然按帧频率发送！
-    inst:ListenForEvent("onattackother", onattack)                   --监听击中事件（执行攻击时发送）
-    inst:ListenForEvent("onhitother", onhittarget)                   --监听击中事件（目标被击中向攻击者发送）
-    inst:ListenForEvent("yoshino_reiryoku_delta", onspiritual_dalta) --监听灵力值变化事件
-    inst:ListenForEvent("reiryokuchaos", chaosdebuff)                --执行灵力紊乱
-    inst:ListenForEvent("oneat", oneatfood)                          --监听吃东西事件
-    inst:ListenForEvent("remove_zadkiel", function ()                --移除冰结傀儡时会监听到该事件
+    inst:ListenForEvent("moisturedelta", onwetdelta)                --监听潮湿值变化事件，当值大于60时理智恢复 <--这玩意居然按帧频率发送！
+    inst:ListenForEvent("onattackother", onattack)                  --监听击中事件（执行攻击时发送）
+    inst:ListenForEvent("onhitother", onhittarget)                  --监听击中事件（目标被击中向攻击者发送）
+    inst:ListenForEvent("yoshino_reiryoku_delta", onspiritual_dalta)--监听灵力值变化事件
+    inst:ListenForEvent("reiryokuchaos", chaosdebuff)               --执行灵力紊乱
+    inst:ListenForEvent("oneat", oneatfood)                         --监听吃东西事件
+	inst:ListenForEvent("builditem", onbuilt)						--监听建造物品事件
+	inst:ListenForEvent("buildstructure", onbuilt)					--监听建造建筑事件
+    inst:ListenForEvent("remove_zadkiel", function ()               --移除冰结傀儡时会监听到该事件
         if inst.zakiel then inst.zadkiel = nil end
     end)
 

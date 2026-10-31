@@ -1,6 +1,6 @@
 --资源加载
 local assets = {
-    Asset("ANIM", "anim/zadkiel_icespike.zip"), --冰刺动画
+    Asset("ANIM", "anim/zadkiel_icespike.zip"),		--冰刺动画
 }
 
 --添加预制物的预制物
@@ -27,7 +27,6 @@ local function onhit(inst, attacker, target)
     end
     inst:DoTaskInTime(2, inst.Remove)
 end
-
 
 local function fn()
     local inst = CreateEntity()
@@ -59,5 +58,7 @@ local function fn()
 
     return inst
 end
+
+
 
 return Prefab("yoshino_atkspike", fn, assets, prefabs)

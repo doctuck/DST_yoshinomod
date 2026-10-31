@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r11">
+	<folder id="0" name="hairpin">
+		<file id="0" name="hairpin/hairpin-0.png" width="180" height="180" pivot_x="0.50274724" pivot_y="0.3592562" />
+		<file id="1" name="hairpin/hairpin-1.png" width="180" height="180" pivot_x="0.5133136" pivot_y="0.3831361" />
+		<file id="2" name="hairpin/hairpin-2.png" width="100" height="100" pivot_x="0.5" pivot_y="0.5" />
+		<file id="3" name="hairpin/hairpin-3.png" width="180" height="180" pivot_x="0.587912" pivot_y="0.258242" />
+	</folder>
+	<entity id="0" name="yoshino_forgethairpin">
+		<animation id="0" name="idle" length="33" interval="33">
+			<mainline>
+				<key id="0" time="0">
+					<object_ref id="0" timeline="0" key="0" z_index="0" name="hairpin" />
+				</key>
+				<key id="1" time="33">
+					<object_ref id="0" timeline="0" key="1" z_index="0" name="hairpin" />
+				</key>
+			</mainline>
+			<timeline id="0" name="hairpin">
+				<key id="0" time="0" spin="0" curve_type="instant">
+					<object folder="0" file="3" x="0" y="0" scale_x="1.5" scale_y="1.5" angle="0" />
+				</key>
+				<key id="1" time="33" spin="0" curve_type="instant">
+					<object folder="0" file="3" x="0" y="0" scale_x="1.5" scale_y="1.5" angle="0" />
+				</key>
+			</timeline>
+		</animation>
+	</entity>
+</spriter_data>

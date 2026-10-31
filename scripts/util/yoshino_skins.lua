@@ -433,9 +433,8 @@ function basic_skinclear_fn(inst, skinname) -- 默认认为 build 和prefab同�
     end
     inst.AnimState:SetBuild(data.basebuild or prefab)
     if inst.components.inventoryitem ~= nil then
-        inst.components.inventoryitem.atlasname =
-            GetInventoryItemAtlas(prefab .. ".tex")
-        inst.components.inventoryitem:ChangeImageName(prefab)
+        inst.components.inventoryitem.atlasname = data.baseatlas or GetInventoryItemAtlas((data.baseimage or prefab) .. ".tex")
+		inst.components.inventoryitem:ChangeImageName(data.baseimage or prefab)
     end
     if itemskins[skinname].skinclear_fn then
         itemskins[skinname].skinclear_fn(inst, skinname)

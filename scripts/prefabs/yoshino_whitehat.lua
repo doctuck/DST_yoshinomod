@@ -161,7 +161,7 @@ local function fn()
     inst:AddComponent("tradable")                           --可交易的
     inst:AddComponent("fueled")                             --可被补充燃料的
     inst.components.fueled.fueltype = FUELTYPE.USAGE
-    inst.components.fueled:InitializeFuelLevel(TUNING.AUTOSAVE_INTERVAL*8) --持续时间：8天
+    inst.components.fueled:InitializeFuelLevel(TUNING.MOD_YOSHINO.WHITEHAT.fuel)    --设置最大耐久，顺便设置初始获得的耐久为满
     inst.components.fueled:SetDepletedFn(inst.Remove)       --燃料消耗完时移除
 
     --inst:AddComponent("armor")                              --护甲组件
@@ -182,6 +182,7 @@ local function fn()
         end)
     end
 
+    MakeSmallBurnable(inst, TUNING.SMALL_BURNTIME)  --可被燃烧并返还1灰烬
     MakeHauntableLaunch(inst)               --可被鬼魂作祟并能够弹起来
     return inst
 end

@@ -50,6 +50,7 @@ config = { -- table
 }
 filters -- table 制作栏过滤器 默认放入模组栏MODS,具体见官方recipes_filter.lua
 --]]--
+CHARACTER_INGREDIENT.REIRYOKU = "decrease_reiryoku"
 
 
 --四糸奈的合成配方
@@ -58,7 +59,7 @@ AddRecipe2("yoshinon",      --配方ID
     TECH.NONE,              --无需科技等级
     {
         atlas = "images/inventoryimages/yoshinon.xml",
-        image = "yoshinon.tex",
+        image = "yoshinon_none.tex",
         builder_tag = "yoshino", --限制建造者为四糸乃
         product = "yoshinon",    --产物：四糸奈
         no_deconstruction = true --不可拆解
@@ -109,7 +110,7 @@ AddRecipe2("recipe_yoshino_fan",      --配方ID
 )
 
 --四糸乃的魔女帽合成配方
-AddRecipe2("recipe_yoshino_witchhat",      --配方ID
+AddRecipe2("yoshino_witchhat",      --配方ID
     { Ingredient("manrabbit_tail", 12), Ingredient("livinglog", 3), Ingredient("feather_robin", 1),Ingredient("rope", 4) }, --物品配方（兔绒*12+活木头*3+红羽毛*1+绳子*4）
     TECH.SCIENCE_ONE,       --需要科学一本
     {
@@ -123,7 +124,7 @@ AddRecipe2("recipe_yoshino_witchhat",      --配方ID
 )
 
 --四糸乃的宽檐帽合成配方
-AddRecipe2("recipe_yoshino_whitehat",      --配方ID
+AddRecipe2("yoshino_whitehat",      --配方ID
     { Ingredient("cutreeds", 4),Ingredient("petals", 2), Ingredient("beefalowool", 6) }, --物品配方（采下的芦苇*4，花瓣*2， 牛毛*6）
     TECH.LOST,       --蓝图解锁
     {
@@ -150,9 +151,54 @@ AddRecipe2("yoshino_luckysachet",      --配方ID
     { "CHARACTER", "CONTAINERS"}              --配方属于角色页面、储物方案
 )
 
+--浅忆（必忘我发夹）的合成配方
+AddRecipe2("yoshino_forgethairpin",
+    --配方：必忘我*5、蜘蛛丝*4、铥矿碎片*8
+    { Ingredient("forgetmelots", 5), Ingredient("silk", 4), Ingredient("thulecite_pieces", 8)},
+    --TECH.ANCIENT_TWO,     --远古科技站
+	TECH.MAGIC_TWO,			--魔法二本
+    {
+        atlas = "images/inventoryimages/yoshino_forgethairpin.xml",
+        image = "yoshino_forgethairpin.tex",
+        builder_tag = "yoshino",
+        product = "yoshino_forgethairpin",
+        no_deconstruction = false,  --可拆解
+		--station_tag="ancient_station",
+    },
+    {"CHARACTER", "CLOTHING"}	--角色页面、服装页面
+)
+
+AddRecipe2("yoshino_icebomb",
+	--配方：火药*2、月亮碎片*8，灵力*6
+	{Ingredient("gunpowder", 2), Ingredient("moonglass", 8), Ingredient("decrease_reiryoku", 6, "images/inventoryimages/decrease_reiryoku.xml")},
+	TECH.CELESTIAL_ONE,		--天体宝球
+	{
+		atlas = "images/inventoryimages/yoshino_icebomb.xml",
+        image = "yoshino_icebomb.tex",
+        builder_tag = "yoshino",		--只有四糸乃能做
+        product = "yoshino_icebomb",
+		nounlock = true,		--必须在制造站旁制作
+		numtogive = 2,       --产出数量：2
+		no_deconstruction = true,  --不可拆解
+	}
+)
+
+AddRecipe2("yoshinon_icebox",
+	--配方：齿轮*5、电子元件*3、熊皮*2)
+	{Ingredient("bearger_fur", 2), Ingredient("gears", 5), Ingredient("transistor", 3)},
+	TECH.NONE,
+	{
+		atlas = "images/inventoryimages/yoshinon_icebox.xml",
+        image = "yoshinon_icebox.tex",
+        builder_tag = "yoshino",
+		placer="yoshinon_icebox_placer",
+		min_spacing = 2,
+		no_deconstruction = false,  --可拆解
+	},
+	{"CHARACTER", "STRUCTURES",  "CONTAINERS"}	--角色、建筑、储物方案
+)
 
 --冰的合成配方, 四糸乃专属
-CHARACTER_INGREDIENT.REIRYOKU = "decrease_reiryoku"
 --local old_IsCharacterIngredient = IsCharacterIngredient   --已移动到hook_yoshino.lua
 --function IsCharacterIngredient(ingredienttype)
 --	if ingredienttype == CHARACTER_INGREDIENT.REIRYOKU then
@@ -264,8 +310,6 @@ AddRecipe2("yoshino_bluegem_5",      --配方ID
 )
 --/////////////////////////////////
 
---配方分解(注意：自己写的分解配方，物品名不能和自己写的合成配方ID一致)
+--配方分解(注意：自己写的分解配方，物品名不能和自己写的合成配方ID一致，如果分解得到的是所有制作材料，那么在配方的no_deconstruction标记为可分解即可，无需再写分解配方)
 --AddDeconstructRecipe("axe", {Ingredient("twigs", 2)}) --分解斧头得到两个树枝
-AddDeconstructRecipe("yoshino_fan", {Ingredient("feather_robin", 3), Ingredient("twigs", 3)})   --分解四糸乃的折扇得到完整制作材料
-AddDeconstructRecipe("yoshino_witchhat", {Ingredient("manrabbit_tail", 12), Ingredient("livinglog", 3), Ingredient("feather_robin", 1),Ingredient("rope", 4)})   --分解四糸乃的魔女帽得到完整制作材料
-AddDeconstructRecipe("yoshino_whitehat", {Ingredient("twigs", 4),Ingredient("petals", 2), Ingredient("beefalowool", 6)})   --分解四糸乃的魔女帽得到完整制作材料
+AddDeconstructRecipe("yoshino_fan", {Ingredient("feather_robin", 3), Ingredient("twigs", 3)})   --分解四糸乃的折扇得到部分制作材料

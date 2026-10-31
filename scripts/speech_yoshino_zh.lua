@@ -295,6 +295,19 @@ return {
             STACKEDTOOHIGH = "它太高了! ", --堆得太高, 放不上去
             MELTING = "它快融化了...", --快融化了, 无法放装饰
         },
+		POUNCECAPTURE =		--(暂无注释)好像是抓什么东西？
+		{
+			MISSED = "唔…失败了",
+		},
+        DIVEGRAB =		--(暂无注释)
+        {
+            MISSED = "唔…失败了",
+        },
+		-- Winter 2025
+		SOAKIN =	--泡温泉
+		{
+			NOSPACE = "这里人太多了，我们去别处吧",	--温泉中已经满人
+		},
     },
     ANNOUNCE_CANNOT_BUILD =     --无法制作
 	{
@@ -394,13 +407,13 @@ return {
 	ANNOUNCE_NOHUNGERSLEEP = "我想吃点东西再睡。",		--饿了无法睡觉
 	ANNOUNCE_NOSLEEPONFIRE = "着火了, 睡不了",		--营帐着火无法睡觉
     ANNOUNCE_NODANGERSIESTA = "我不能睡, 可能会死的。",		--危险, 不能午睡
-	ANNOUNCE_NONIGHTSIESTA = "这里, 也可以休息...",		--夜晚睡凉棚
-	ANNOUNCE_NONIGHTSIESTA_CAVE = "这里可以休息一下...",		--在洞穴里夜晚睡凉棚
+	ANNOUNCE_NONIGHTSIESTA = "现在睡里面太危险了……",		--夜晚试图睡凉棚
+	ANNOUNCE_NONIGHTSIESTA_CAVE = "真的要在这个时候进去躺一会吗……",		--在洞穴里夜晚睡凉棚
 	ANNOUNCE_NOHUNGERSIESTA = "我想吃点东西再睡。",		--饱度不足无法午睡
 	ANNOUNCE_PECKED = "小家伙, 不要再咬了",		--被小高鸟啄
 	ANNOUNCE_QUAKE = "地震还是空间震?",		--地震
 	ANNOUNCE_RESEARCH = "我现在掌握了更多关于这个世界的知识。",  --(暂无注释)
-	ANNOUNCE_SHELTER = "谢谢你, 大树先生。",		--下雨天躲树下
+	ANNOUNCE_SHELTER = "谢谢你, 树先生。",		--下雨天躲树下
 	ANNOUNCE_THORNS = "咿呀! 疼! ",		--玫瑰、仙人掌、荆棘扎手
 	ANNOUNCE_BURNT = "好烫! ",		--扑灭刚点燃的物品
 	ANNOUNCE_TORCH_OUT = "火把烧完了",		--火把用完了
@@ -599,6 +612,16 @@ return {
     --ANNOUNCE_ELIXIR_PLAYER_SPEED = "I think I could lift a horse.",
     --ANNOUNCE_ELIXIR_TOO_SUPER = "This one seems a little strong.",
 
+    -- Rifts 8
+
+	ANNOUNCE_GRUE_NOCHARLIE = "这个场景……既熟悉又陌生",		--击败查理后，黑暗中被袭击前
+	ANNOUNCE_GRUE_NOCHARLIE_ATTACK = "这次又是谁？\n四糸奈：有本事冲我来",		--击败查理后，黑暗中被袭击
+
+	ANNOUNCE_STOMP_SHROUDEN = "唔噫~鞋子脏了……",	--击败查理后踩暗影憎恶眼球
+
+    ANNOUNCE_DREADSTONE_SPIKE_EXPLODING = "这是要爆炸了",	--(暂无注释)
+
+
     BATTLECRY =     --战斗时
 	{
 		GENERIC = "我不会再害怕了! ",		--战斗
@@ -638,7 +661,8 @@ return {
         YOSHINO_CRYSTAL = "灵力的来源, 它已经被过滤净化",       --灵结晶
         YOSHINO_ANTICRYSTAL = "灵力的来源,但这颗...它对人的侵蚀伤害很大",   --反灵结晶
         YOSHINO_ZADKIEL = "天使·冰结傀儡",
-    
+		YOSHINON_ICEBOX = "是、超级大的四糸奈！",			--检查超级巨大四糸奈
+
 
         MULTIPLAYER_PORTAL = "一座大门, 它并不能让我回去",    --绚丽之门
         MULTIPLAYER_PORTAL_MOONROCK = "好像……更漂亮了!",   --天体传送门
@@ -660,7 +684,7 @@ return {
 			LEVEL1 = "她能听到我们说话吗?",      --1级
 			LEVEL2 = "她的能量变强了",        --2级
 			LEVEL3 = "真有精神啊(*￣▽￣*)",     --3级
-			--deprecated(旧版已废弃)
+			--deprecated(已废弃)
             --LONG = "看到那东西时, 我的灵魂受伤了。",
             --MEDIUM = "这让我毛骨悚然。",
             --SOON = "那朵花有情况! ",
@@ -4337,7 +4361,7 @@ return {
         WOODCARVEDHAT = "木头做的安全帽\n四糸奈:防止高空掉落物",		--硬木帽
         WALKING_STICK = "一根手杖,也许其他人更需要",		--木手杖
 
-        IPECACSYRUP = "四糸乃看了说明书,这个其实是泻药与催吐剂的结合",		--泻根糖浆
+        IPECACSYRUP = "泻药与催吐剂的结合，不是给人吃的",		--泻根糖浆
         --BOMB_LUNARPLANT_WORMWOOD = "Our friend seems to be getting more in touch with his lunar roots.", -- Unused
         --WORMWOOD_MUTANTPROXY_CARRAT =		--(暂无注释,命令生成貌似是个特效)
         --{
@@ -4702,10 +4726,10 @@ return {
         --SHALLOW_GRAVE = "Better you than me.",		-- 矮坟(非玩家)(wegame特供)
         THULECITEBUGNET = "更高级的捕虫网",		-- 铥矿捕虫网
 
-        -- Deck of Cards(有空再写)
-        --DECK_OF_CARDS = "Are we playing with a full deck?",		-- 牌堆
-        --PLAYING_CARD = "It's fifty-one short of a deck.",		-- 扑克牌
-        --BALATRO_MACHINE = "I'm game for a game.",		-- 小丑
+        -- Deck of Cards
+        DECK_OF_CARDS = "只是一堆扑克。",		-- 牌堆
+        PLAYING_CARD = "要玩一小会儿吗？",		-- 扑克牌
+        BALATRO_MACHINE = "发现了一台游戏机",		-- 小丑
 
 		-- Rifts 5
 		GESTALT_CAGE =		-- 幻灵捕获机
@@ -4907,7 +4931,7 @@ return {
 			HOT = "热到如此程度，希望效率足够高。", -- 最热的状态(4级)		-- SUPER HOT, it's very efficient in the action it does, e.g. the axe fells trees in half the hits needed, keeps the player cozy, maybe too cozy! (e.g. overheat in summer)
 		},
 
-        --[[--Hallowed Nights 2025(20025万圣夜)(没有写的必要)
+        --[[--Hallowed Nights 2025(20025万圣夜)
 		PUMPKINHAT =		-- 无面南瓜
 		{
 			GENERIC = "That's a hollow expression.",
@@ -4946,6 +4970,68 @@ return {
         },
         --]]
 
+		-- Rifts 8
+
+        ROCKY_BOSS =		--岩石大师
+        {
+            GENERIC = "它有巨大的钳子！",		--常态默认
+            BOULDER = "石头上传来不安的气息",		--缩壳
+            ACID = "酸雨让它的结构发生了变化",			--酸雨下，硝石形态
+        },
+		ROCKY_BOSS_SHADOW = "四糸奈，你说被那钳子夹住是不是会很疼?\n四糸奈：那还用说嘛",	--枯萎岩石大师
+        BAT_BOSS =		--猎犬蝙蝠
+        {
+            GENERIC = "蝙蝠！四糸乃绝对不要靠近……",		--常态默认
+            ACID = "这场雨让它更加暴躁了!",		--酸雨
+        },
+		BAT_BOSS_SHADOW = "面目狰狞",	--枯萎猎犬蝙蝠
+
+        BATBOSSCAVE =		--巨蝠洞
+        {
+            GENERIC = "里面好像有东西",		--常态默认
+            VACANT = "空空如也",			--空置
+        },
+
+        WORM_BOSS_SHADOW = "巨大虫子变得更加恐怖了…",		--枯萎洞穴巨虫
+
+        ARMOR_ROCKY = "这套护甲……就像它的皮肤",			--嶙峋甲壳
+        BAT_BOSSCORPSEHAT = "四糸乃不想戴这顶帽子",		--蝙蝠帽
+
+        ATRIUM_RITUAL_ORGAN_ROCKY =		--枯萎钳爪
+        {
+            GENERIC = "这是战利品",		--常态默认
+            IN_RITUAL = "仪式所需的供品", -- 仪式中
+        },
+        ATRIUM_RITUAL_ORGAN_BAT =		--枯萎喉头
+        {
+            GENERIC = "这是战利品",		--常态默认
+            IN_RITUAL = "仪式所需的供品", -- 仪式中
+        },
+        ATRIUM_RITUAL_ORGAN_WORM =		--枯萎内脏
+        {
+            GENERIC = "这是战利品",		--常态默认
+            IN_RITUAL = "仪式所需的供品", -- 仪式中
+        },
+
+		CHARLIE_BOSS = "这样的发展不对…",		--藏影女王
+		SHROUDEN =			--暗影憎恶
+		{
+			GENERIC = "这样的发展不对…",				--二阶段大体型
+			PUDDLE = "那个眼睛…四糸奈,我有点害怕…",		-- 击杀后落在地上的眼睛
+		},
+
+        CHARLIEARENA_SPIKE = "请、别再冒出来吓人的石头了！",	--绝望石矿苗（Boss技能版）
+
+        KING_CANE =		--国王魔杖
+        {
+            GENERIC = "是柄很厉害的权杖呢~",	--常态默认
+            EMPTY = "它需要一颗宝石", -- 空的，需要镶嵌宝石
+        },
+        QUEEN_TORCH = "它的火焰令人害怕",		--女王火炬
+        
+        CHARLIEARENA_TELEPORTER = "嗯，出发前要做好准备",	--查理的竞技场传送器
+
+        MASK_CHARLIE_BOSSHAT = "这个也是战利品吗……",		--查理女王面容
 
     },
     DESCRIBE_GENERIC = "四糸乃不认识这件物品",		--检查物品描述的缺省值
@@ -4965,7 +5051,7 @@ return {
 
     EAT_FOOD =		--吃特殊食物
     {
-        TALLBIRDEGG_CRACKED = "对不起, 我不得不这么做...",		--吃孵化的高脚鸟蛋
+        TALLBIRDEGG_CRACKED = "对不起, 我不得不这么做...",		--吃孵化中的高脚鸟蛋
 		WINTERSFEASTFUEL = "我好像看到了原来的世界...",		--吃节日欢愉
     },
 

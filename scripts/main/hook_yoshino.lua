@@ -139,7 +139,11 @@ end)
 local last_time = 0
 AddPrefabPostInit("yoshino", function(inst)
     if TheNet:GetIsClient() or TheNet:GetServerIsClientHosted() then --以下仅是从客户端向服务端发送消息的部分
-        TheInput:AddKeyDownHandler(
+		if inst.call_zadkilel ~= nil then
+			inst.call_zadkilel:Remove()
+			inst.call_zadkilel = nil
+		end
+        inst.call_zadkilel = TheInput:AddKeyDownHandler(
             TUNING.YOSHINOCONFIG["call_zadkiel_key"],
             function()
                 local now_time = GetTime()
@@ -155,7 +159,7 @@ AddPrefabPostInit("yoshino", function(inst)
             end
         )
     end
-    if not TheWorld.ismastersim then --此行往上，主客机共有环境；此条件内部，客机环境；此条件往下，服务器环境
+    if not TheWorld.ismastersim then
         return inst
     end
 
@@ -192,6 +196,10 @@ AddPrefabPostInit("yoshino", function(inst)
         --以下条件是为了免疫多段伤害，避免多个怪同时攻击时只免疫其中一个
         elseif inst.snowshield and inst.snowshield:IsValid() and inst.snowshield.components.timer:TimerExists("yoshino_snowshield") then
             damage = 0  --物理伤害归0
+            spdamage = nil
+		--以下是当四糸乃使用四糸奈技能期间的完全免疫
+		elseif inst:HasTag("blink_invincible_from_yoshinon") then
+			damage = 0  --物理伤害归0
             spdamage = nil
         end
 
@@ -233,6 +241,42 @@ AddPrefabPostInit("yoshino", function(inst)
         end
         oldHealthDoDelta(self, amount, overtime, cause, ignore_invincible, afflicter, ignore_absorb)
     end
+
+
+	--hook自身睡眠回调函数，用于发送事件给装备栏的四糸奈
+	local old_sleepin = inst.OnSleepIn or function (inst, ...) end
+	inst.OnSleepIn = function (inst, ...)
+		if inst.components.inventory and inst.components.inventory.equipslots then
+			local yoshinon = nil
+			for _, v in pairs(inst.components.inventory.equipslots) do
+				if v:HasTag("yoshinon") then
+					yoshinon = v
+					break
+				end
+    		end
+			if yoshinon ~= nil then
+				yoshinon:PushEvent("yoshino_rpc_sleep",{state = true, player = inst})
+			end
+		end
+		old_sleepin(inst, ...)
+	end
+	local old_wakeup = inst.OnWakeUp or function (inst, ...) end
+	inst.OnWakeUp = function (inst, ...)
+		old_wakeup(inst, ...)
+		if inst.components.inventory and inst.components.inventory.equipslots then
+			local yoshinon = nil
+			for _, v in pairs(inst.components.inventory.equipslots) do
+				if v:HasTag("yoshinon") then
+					yoshinon = v
+					break
+				end
+    		end
+			if yoshinon ~= nil then
+				yoshinon:PushEvent("yoshino_rpc_sleep",{state = false, player = inst})
+			end
+		end
+	end
+
 end)
 --//////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -276,6 +320,59 @@ AddComponentPostInit("grogginess", function(self)
 end)
 
 --//////////////////
+
+
+--/////////////////////////////////|||||||||||||||||||||||||||
+-- Hook战斗组件, 装备浅忆时不攻击就不会引发仇恨
+local function Isequiptag(owner, tag)
+    if owner == nil or not owner:IsValid() then
+        return false
+    end
+	if owner.replica.inventory and owner.replica.inventory:EquipHasTag(tag) then
+        return true
+    end
+    return false
+end
+AddComponentPostInit("combat", function(self)
+
+    local old_SetRetargetFunction = self.SetRetargetFunction
+    function self:SetRetargetFunction(period, fn)
+        if fn ~= nil then
+            local oldfn = fn
+            fn = function(inst)
+                local target, forcechange = oldfn(inst)
+                --携带特定标签时不会被仇恨，但被该玩家攻击过则不再阻止
+                if target ~= nil and target ~= self.lastattacker and Isequiptag(target, "yoshino_forgethairpin") then
+                    return nil
+                end
+                return target, forcechange
+            end
+        end
+        return old_SetRetargetFunction(self, period, fn)
+    end
+
+    local old_SetTarget = self.SetTarget
+    function self:SetTarget(target, ...)
+         if target ~= nil and (Isequiptag(target, "yoshino_forgethairpin") or target._block_aggro) and target ~= self.lastattacker then
+            return
+        end
+        return old_SetTarget(self, target, ...)
+    end
+end)
+-- 子实体生成时，如果目标是拥有特定标签的玩家，阻止其被设为仇恨
+AddComponentPostInit("childspawner", function(self)
+    local old_DoSpawnChild = self.DoSpawnChild
+    function self:DoSpawnChild(target, prefab, radius, ...)
+        if target ~= nil and Isequiptag(target, "yoshino_forgethairpin") then
+            target._block_aggro = true
+            local child, b, c = old_DoSpawnChild(self, target, prefab, radius, ...)
+            target._block_aggro = nil
+            return child, b, c
+        end
+        return old_DoSpawnChild(self, target, prefab, radius, ...)
+    end
+end)
+--/////////////////////////////////|||||||||||||||||||||||||||
 
 
 --/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -332,34 +429,10 @@ for _, v in pairs(entstag) do
     end)
 end
 
---没什么用的悬浮文字显示(紧接在物品名字和动作显示之后的下一行)
-AddClassPostConstruct("widgets/hoverer", function(self)
-    local old_SetString = self.text.SetString
-    local thismessage = "\n当前已暂停腐烂"
-    self.text.SetString = function(text, str)
-        local target = TheInput:GetHUDEntityUnderMouse() --适用于实体在物品栏
-        if target ~= nil then
-            target = target.widget ~= nil and target.widget.parent ~= nil and target.widget.parent.item
-        else
-            target = TheInput:GetWorldEntityUnderMouse() --适用于实体在游戏内的地皮上
-        end
-        if target and target.entity ~= nil then
-            if target:HasTag("inyoshinon") then
-                str = str .. thismessage
-            end
-            if target:HasTag("recoverspiritual") then
-                str = str .. "\n灵力: +100"
-            end
-        end
-        return old_SetString(text, str)
-    end
-end)
-
-
 
 --//////////////////////////////////////////////////////////////////////////
 --四糸乃的料理相关
-local foodbyyoshino = require("yoshino_foods")
+local foodbyyoshino = require("util/yoshino_foods")
 for _, v in pairs(foodbyyoshino) do
     -- 将料理添加到烹饪锅
     AddCookerRecipe("cookpot", v)
@@ -442,31 +515,28 @@ for _, v in pairs(shadowtags) do
         end
     end)
 end
---击杀树精守卫概率掉落宽檐帽蓝图
-local treetag = {"leif","leif_sparse"}
-for _, v in pairs(treetag) do
-    AddPrefabPostInit(v, function(inst)
-        if not TheWorld.ismastersim then return end    --主客机判断
-        if not inst.components.lootdropper then inst:AddComponent("lootdropper") end --确保有掉落器组件
-        if inst.components.lootdropper.loot then
-            local old_loot = inst.components.lootdropper.lootsetupfn
-            inst.components.lootdropper.lootsetupfn = function(self)
-                if old_loot then
-                    old_loot(self)
-                end
-                --考虑到游戏崩溃重载时，可能存在已经添加在其中的情况，因此需要去除重复
-                if self.chanceloot then
-                    for i = #self.chanceloot, 1, -1 do
-                        if self.chanceloot[i].prefab == "yoshino_whitehat_blueprint" then
-                            table.remove(self.chanceloot, i)
-                        end
+--击杀蜘蛛女王概率掉落宽檐帽蓝图
+AddPrefabPostInit("spiderqueen", function(inst)
+    if not TheWorld.ismastersim then return end    --主客机判断
+    if not inst.components.lootdropper then inst:AddComponent("lootdropper") end --确保有掉落器组件
+    if inst.components.lootdropper.loot then
+        local old_loot = inst.components.lootdropper.lootsetupfn
+        inst.components.lootdropper.lootsetupfn = function(self)
+            if old_loot then
+                old_loot(self)
+            end
+            --考虑到游戏崩溃重载时，可能存在已经添加在其中的情况，因此需要去除重复
+            if self.chanceloot then
+                for i = #self.chanceloot, 1, -1 do
+                    if self.chanceloot[i].prefab == "yoshino_whitehat_blueprint" then
+                        table.remove(self.chanceloot, i)
                     end
                 end
-                self:AddChanceLoot("yoshino_whitehat_blueprint", 0.33)       --33% 概率掉落
             end
+            self:AddChanceLoot("yoshino_whitehat_blueprint", TUNING.MOD_YOSHINO.WHITEHAT.drop)
         end
-    end)
-end
+    end
+end)
 ---------------------------
 
 -----------------------------
@@ -493,7 +563,7 @@ AddComponentPostInit("locomotor", function(self)
 
         local rider = self.inst.replica and self.inst.replica.rider
         local mount = rider and rider:GetMount()
-        if mount and mount:HasTag("yoshino_zadkiel") then
+        if (mount ~= nil and mount:HasTag("yoshino_zadkiel")) or self.inst:HasTag("blink_invincible_from_yoshinon") then
             can_hop = false
             blocked = true
         end
@@ -674,17 +744,22 @@ end)
 --/////以上/骑乘相关/////////////////////
 
 
+
+
+
+
 --*******************************************
---屏幕显示相关
+--模组wiki
 local Yoshino_Itemdir = require("widgets/yoshino_itemdir")
 local ImageButton = require "widgets/imagebutton"
 
 AddClassPostConstruct("screens/playerhud", function(self)
-    -- 在屏幕中添加一个按钮，用来触发面板的显示与关闭
-    if ThePlayer ~= nil and ThePlayer:HasTag("yoshino") then --仅四糸乃可以拥有
+    -- 仅四糸乃可以拥有
+    if ThePlayer ~= nil and ThePlayer:HasTag("yoshino") then
+        -- 在 HUD 中添加按钮，用来切换主面板显示与关闭
         self.openbutton = self:AddChild(ImageButton("images/inventoryimages/yoshino_dir.xml","yoshino_dir.tex"))
         self.openbutton:SetOnClick(function()
-            self:ChangeDirState()
+            self:ToggleYoshinoItemDir()
         end)
 
         self.openbutton:SetHAnchor(2)    -- 设置原点x坐标位置，0、1、2分别对应屏幕中、左、右
@@ -692,20 +767,18 @@ AddClassPostConstruct("screens/playerhud", function(self)
         self.openbutton:SetNormalScale(0.25, 0.25)   -- 图片平时的缩放大小
         self.openbutton:SetFocusScale(0.3, 0.3)      -- 鼠标移动到上面时的大小
         self.openbutton:SetPosition(-260,-260,0)     -- 设置默认位置
-        --self.openbutton:SetScaleMode(SCALEMODE_PROPORTIONAL)  -- 保持纵横比，全局常量 SCALEMODE_PROPORTIONAL = 2
-        --self.openbutton:SetMaxPropUpscale(1)    -- UI最大缩放比例
+		self.openbutton:SetTooltip("模组WIKI（右键拖拽）")
 
-        --根据保存记录，重设按钮的位置
-        TheSim:GetPersistentString("yoshino_itembutton", function(load_success, str)
-            if load_success == true and str ~= nil then
+        -- 根据保存记录，重设按钮的位置
+        TheSim:GetPersistentString("yoshino_itembutton", function(success, str)
+            if success == true and str ~= nil then
                 local pt = string.split(str, ",")
-                self.openbutton:SetPosition(Vector3(tonumber(pt[1]), tonumber(pt[2]), 0));
+                self.openbutton:SetPosition(Vector3(tonumber(pt[1]), tonumber(pt[2]), 0))
             end
         end)
 
-
         -- ========== 添加右键拖拽功能 ==========
-        --hook一下原widget的按钮移动函数
+        -- hook一下原widget的按钮移动函数
         local oldOnMouseButton = self.openbutton.OnMouseButton
         self.openbutton.OnMouseButton = function(widget, button, down, x, y)
             if button == MOUSEBUTTON_RIGHT then
@@ -715,7 +788,7 @@ AddClassPostConstruct("screens/playerhud", function(self)
                     local pos = widget:GetPosition()
                     widget._dragOffset = Vector3(x - pos.x, y - pos.y, 0)   -- 记录鼠标与按钮的偏移
 
-                    -- 添加全局鼠标移动监听
+                    -- 添加鼠标移动监听
                     widget._dragHandler = TheInput:AddMoveHandler(function(mx, my)
                         if widget._isDragging then
                             local newX = mx - widget._dragOffset.x
@@ -748,45 +821,89 @@ AddClassPostConstruct("screens/playerhud", function(self)
             if self.button_pt then
                 local pt = self.button_pt
                 TheSim:SetPersistentString("yoshino_itembutton", tostring(pt.x) .. "," .. tostring(pt.y))
-                --print("按钮位置保存成功！")
             end
         end
-        TheInput:AddKeyHandler(function(key, down)
+
+		if TheInput.recover_listen_handler then
+            TheInput.recover_listen_handler:Remove()
+            TheInput.recover_listen_handler = nil
+        end
+        TheInput.recover_listen_handler = TheInput:AddKeyHandler(function(key, down)
             if down and key == KEY_PAGEUP then  --按PageUp键恢复
                 if self.openbutton._dragHandler then
                     self.openbutton._dragHandler:Remove()
                     self.openbutton._dragHandler = nil
                 end
                 self.openbutton:SetPosition(-260,-260)
+				self:SaveButtonPt()
             end
         end)
 
-        function self:ChangeDirState()
-            if self.yoshino_itemdir then
-                TheFrontEnd:PopScreen(self.yoshino_itemdir) --将指定屏幕移出栈
-                self.yoshino_itemdir = nil
+		--创建主面板
+        self.yoshino_itemdir = self:AddChild(Yoshino_Itemdir(self.owner))
+        self.yoshino_itemdir:SetHAnchor(0)    -- 设置原点x坐标位置，0、1、2分别对应屏幕中、上、下
+        self.yoshino_itemdir:SetVAnchor(0)    -- 设置原点y坐标位置，0、1、2分别对应屏幕中、上、下
+        self.yoshino_itemdir:SetPosition(
+            TUNING.MOD_YOSHINO.itemscreen.pos[1],
+            TUNING.MOD_YOSHINO.itemscreen.pos[2]
+        )
+        self.yoshino_itemdir:Hide()
+
+        -- 切换主面板显示/隐藏
+        function self:ToggleYoshinoItemDir()
+            if self.yoshino_itemdir == nil then
+                return
             end
-            self:ShowYoshino_Itemdir()
-        end
 
-        -- 显示面板
-        self.ShowYoshino_Itemdir = function(_, attach)
-            self.yoshino_itemdir = Yoshino_Itemdir(self.owner)
-            self:OpenScreenUnderPause(self.yoshino_itemdir)
-            self.yoshino_itemdir:SetHAnchor(0)
-            self.yoshino_itemdir:SetVAnchor(0)
-            self.yoshino_itemdir:SetPosition(TUNING.MOD_YOSHINO.itemscreen.pos[1],TUNING.MOD_YOSHINO.itemscreen.pos[2])
+            if self.yoshino_itemdir.shown then
+                self.yoshino_itemdir:CloseMainContext()
+                self.yoshino_itemdir:ClearFocus()
+                self.yoshino_itemdir:Hide()
+            else
+                self.yoshino_itemdir:Show()
+                self.yoshino_itemdir.dirscroll:SetFocus()
+				--限制滚轮移动
+    			TheCamera:SetControllable(false)
 
-            return self.yoshino_itemdir
+            end
         end
-        -- 关闭面板（已废弃，从其他按钮操作）
-        --self.CloseYoshino_Itemdir = function(_)
-        --    if self.yoshino_itemdir then
-        --        self.yoshino_itemdir:Hide()
-        --        self.yoshino_itemdir = nil
-        --    end
-        --end
     end
 end)
 
 --*******************************************
+
+
+
+--没什么用的悬浮文字显示(紧接在物品名字和动作显示之后的下一行)
+AddClassPostConstruct("widgets/hoverer", function(self)
+    local old_SetString = self.text.SetString
+    --local thismessage = "\n当前已暂停腐烂"
+    self.text.SetString = function(text, str)
+        local target = TheInput:GetHUDEntityUnderMouse() --适用于实体在物品栏
+        if target ~= nil then
+            target = target.widget ~= nil and target.widget.parent ~= nil and target.widget.parent.item
+        else
+            target = TheInput:GetWorldEntityUnderMouse() --适用于实体在游戏内的地皮上
+        end
+        if target and target.entity ~= nil then
+            --if target:HasTag("inyoshinon") then
+            --    str = str .. thismessage
+            --end
+			if target:HasTag("yoshinon") and target.replica.yoshinon_upgrade then
+				local maxlv = target.replica.yoshinon_upgrade:GetMax()
+				local curlv = tostring(target.replica.yoshinon_upgrade:GetLevel())
+				local curexp = tostring(target.replica.yoshinon_upgrade:Getlvexp())
+				local needexp = tostring(target.replica.yoshinon_upgrade:Getneedexp())
+				if tonumber(curlv) < maxlv then
+					str = str .. "\nLV：" .. curlv .. " (" .. curexp .. "/" .. needexp .. ")"
+				else
+					str = str .. "\nLV：" .. curlv .. "(MAX)"
+				end
+			end
+            if target:HasTag("recoverspiritual") then
+                str = str .. "\n灵力: +100"
+            end
+        end
+        return old_SetString(text, str)
+    end
+end)

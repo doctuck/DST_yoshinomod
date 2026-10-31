@@ -2,8 +2,8 @@
 local assets = {
     Asset("ANIM", "anim/yoshino_zadkiel.zip"), --动画
     Asset("ANIM", "anim/wilsonzadkiel.zip"),
-    --Asset("IMAGE", "images/map_icons/map_zadkiel.tex"), --小地图图标
-    --Asset("ATLAS", "images/map_icons/map_zadkiel.xml"),
+    Asset("IMAGE", "images/inventoryimages/yoshino_zadkiel.tex"), --用于小地图图标
+    Asset("ATLAS", "images/inventoryimages/yoshino_zadkiel.xml"),
 }
 --添加预制物的预制物
 local prefabs = {}
@@ -233,7 +233,7 @@ local function fn()
     inst.AnimState:SetBank("zadkiel")
     inst.AnimState:SetBuild("yoshino_zadkiel")
     inst.AnimState:PlayAnimation("idle_loop", true)
-    --inst.MiniMapEntity:SetIcon("map_zadkiel.tex") --添加小地图图标
+    inst.MiniMapEntity:SetIcon("yoshino_zadkiel.tex") --添加小地图图标
     --inst.MiniMapEntity:SetEnabled(true)
 
     inst:AddTag("yoshino_zadkiel")

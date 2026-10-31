@@ -16,7 +16,7 @@ local function MakeYOSHINOSkin(name, data, notemp, free)
 	--	d.checkclientfn = YOSHINO_API.YOSHINOSkinCheckFn
 	--end
 	d.share_bigportrait_name = "yoshino"
-	d.FrameSymbol = "Reward"    --想用的背景板样式（这个只能用官方的）
+	d.FrameSymbol = "Reward"    --想用的背景板样式
     --如果传入数据缺失，默认使用上面的
     --否则遍历传进来的数据进行覆盖
 	for k, v in pairs(data) do
@@ -100,7 +100,7 @@ MakeYOSHINOSkin("yoshino_skin2",{
     des = "穿上合适的服装去找糖果吧",        --选人界面的皮肤描述
     quotes = "Trick or Treat, 不给糖...就恶作剧...",    --选人界面，底下的台词描述
     rarity = "节日",     --稀有度 官方不存在的珍惜度则直接覆盖字符串
-    rarityorder = 5, -- 稀有度的排序 用于按优先级排序 基本没啥用
+    rarityorder = 6, -- 稀有度的排序 用于按优先级排序 基本没啥用
     raritycorlor = {215/255,43/255,242/255,1},   --稀有度的字体颜色（用了官方的稀有度，这里就会无效）
     assets = {
             Asset("ANIM", "anim/yoshino_skin2.zip"),
@@ -136,7 +136,7 @@ MakeYOSHINOSkin("yoshino_skin3",{
 },true,true)
 
 MakeYOSHINOSkin("yoshino_skin4",{
-    name = "夏日炎炎",      --皮肤的显示名称
+    name = "清凉盛夏",      --皮肤的显示名称
     des = "暑假、沙滩、海浪，小心别让泳池结冰",        --选人界面的皮肤描述
     quotes = "夏天...我有点不擅长对付夏天呢",    --选人界面，底下的台词描述
     rarity = "四季",     --稀有度 官方不存在的珍惜度则直接覆盖字符串
@@ -152,5 +152,25 @@ MakeYOSHINOSkin("yoshino_skin4",{
     },
     build_name_override = "yoshino_skin4",  --皮肤选择图标
     share_bigportrait_name = "yoshino_skin4",   --皮肤大图采用的图标（记得在xml里Element name处的".tex"要改成"_oval.tex"才能生效）
+    FrameSymbol = "Elegant",
+},true,true)
+
+MakeYOSHINOSkin("yoshino_skin5",{
+    name = "玉雪暖暖",
+    des = "冬天来了，要注意保暖",        --选人界面的皮肤描述
+    quotes = "唔呣...这是给我的?...谢、谢谢!",    --选人界面，底下的台词描述
+    rarity = "四季",     --稀有度 官方不存在的珍惜度则直接覆盖字符串
+    rarityorder = 5, -- 稀有度的排序 用于按优先级排序 基本没啥用
+    raritycorlor = {215/255,43/255,242/255,1},   --稀有度的字体颜色（用了官方的稀有度，这里就会无效）
+    assets = {
+            Asset("ANIM", "anim/yoshino_skin5.zip"),
+            Asset("ANIM", "anim/ghost_yoshino_build.zip")
+    },
+    skins = {
+        normal_skin = "yoshino_skin5",
+        ghost_skin = "ghost_yoshino_build"
+    },
+    build_name_override = "yoshino_skin5",  --皮肤选择图标
+    share_bigportrait_name = "yoshino_skin5",   --皮肤大图采用的图标（记得在xml里Element name处的".tex"要改成"_oval.tex"才能生效）
     FrameSymbol = "Elegant",
 },true,true)

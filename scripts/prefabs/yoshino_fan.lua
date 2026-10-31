@@ -129,8 +129,8 @@ local function fn()
     inst.components.inventoryitem:SetSinks(false)               --设置true可以落水，掉海里直接消失。
 
     inst:AddComponent("weapon")     --武器组件
-    inst.components.weapon:SetDamage(TUNING.MOD_YOSHINO.yoshino_fan.damage)
-    inst.components.weapon:SetRange(TUNING.MOD_YOSHINO.yoshino_fan.range)
+    inst.components.weapon:SetDamage(TUNING.MOD_YOSHINO.YOSHINO_FAN.damage)
+    inst.components.weapon:SetRange(TUNING.MOD_YOSHINO.YOSHINO_FAN.range)
     inst.components.weapon:SetProjectile("yoshino_reiryokuice")    --攻击时生成冰锥
     --inst.components.weapon:SetOnProjectileLaunched(function()
     --    if inst.components.finiteuses:GetUses() <= 0 then
@@ -144,18 +144,21 @@ local function fn()
     inst.components.equippable:SetOnUnequip(onunequip)
     --inst.components.equippable.walkspeedmult = 1.2  --装备时的移动速度
     --inst.components.equippable.restrictedtag = "yoshino"   --限制仅四糸乃可装备
+    
+    if TUNING.YOSHINOCONFIG.fan_storm == 1 then
+        inst:AddComponent("finiteuses")     --耐久组件(次数类)
+        inst.components.finiteuses:SetMaxUses(TUNING.MOD_YOSHINO.YOSHINO_FAN.uses) --设置耐久
+        inst.components.finiteuses:SetUses(TUNING.MOD_YOSHINO.YOSHINO_FAN.uses) --获得时可以使用的耐久
+        inst.components.finiteuses:SetConsumption(ACTIONS.FAN, 1)   --使用扇风动作时消耗 1 耐久
+        inst.components.finiteuses:SetIgnoreCombatDurabilityLoss(true)      --忽略战斗损耗
+        inst.components.finiteuses:SetOnFinished(onfinish)   --耐久消耗完时执行的函数
 
-    inst:AddComponent("finiteuses")     --耐久组件(次数类)
-    inst.components.finiteuses:SetMaxUses(TUNING.MOD_YOSHINO.yoshino_fan.uses) --设置耐久
-    inst.components.finiteuses:SetUses(TUNING.MOD_YOSHINO.yoshino_fan.uses) --获得时可以使用的耐久
-    inst.components.finiteuses:SetConsumption(ACTIONS.FAN, 1)   --使用扇风动作时消耗 1 耐久
-    inst.components.finiteuses:SetIgnoreCombatDurabilityLoss(true)      --忽略战斗损耗
-    inst.components.finiteuses:SetOnFinished(onfinish)   --耐久消耗完时执行的函数
-
-    inst:AddComponent("fan")    --风扇组件
-    inst.components.fan:SetOnUseFn(OnFanUse)
-    inst.components.fan:SetOnChannelingFn(onchannelingfn)
-    inst.components.fan:SetOverrideSymbol("swap_fan_yoshino")
+    
+        inst:AddComponent("fan")    --风扇组件
+        inst.components.fan:SetOnUseFn(OnFanUse)
+        inst.components.fan:SetOnChannelingFn(onchannelingfn)
+        inst.components.fan:SetOverrideSymbol("swap_fan_yoshino")
+    end
     
 
     inst.OnLoad = function(inst, data)

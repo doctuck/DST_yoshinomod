@@ -22,10 +22,33 @@ local function makecrystals(prefabname,animname)
     local function oneatenfn(inst, eater)
         if eater.components.spiritual_energy ~= nil then    --回复灵力值
             eater.components.spiritual_energy:DoDelta(TUNING.MOD_YOSHINO.CRYSTALS_DELTA)
+        elseif eater.components[tostring(eater.prefab) .. "_reiryoku"] ~= nil then  --此写法是为了给之后的模组做兼容
+            eater.components[tostring(eater.prefab) .. "_reiryoku"]:DoDelta(TUNING.MOD_MUKURO.CRYSTALS_DELTA)
         end
+		--[[	--仅在开发环境可以食用灵力结晶让四糸奈升级
+		if inst:HasTag("yoshino_crystal") and eater:HasTag("yoshino") then
+			if eater.components.inventory and eater.components.inventory.equipslots then
+				local yoshinon = nil
+				for _, v in pairs(eater.components.inventory.equipslots) do
+					if v:HasTag("yoshinon") then
+						yoshinon = v
+						break
+					end
+    			end
+				if yoshinon ~= nil and yoshinon.components.yoshinon_upgrade then
+					--local oldcur = yoshinon.components.yoshinon_upgrade:GetLevel()
+					--yoshinon.components.yoshinon_upgrade:SetCurrent(oldcur + 1)
+					yoshinon.components.yoshinon_upgrade:Upexp(50)
+				end
+			end
+		end
+		]]--
+
         --猪人吃下直接变疯猪 (备注：无论吃多少个，一位猪人死亡均只掉落一个灵结晶)
         if inst:HasTag("yoshino_anticrystal") and eater.prefab == "pigman" and eater.components.werebeast ~= nil then
-            eater.components.werebeast:TriggerDelta(4)
+            if not eater.components.werebeast:IsInWereState() then
+                eater.components.werebeast:TriggerDelta(4)
+            end --先变疯猪再插入掉落物，否则不生效
             if not eater.components.lootdropper then eater:AddComponent("lootdropper") end
             table.insert(eater.components.lootdropper.loot, "yoshino_crystal")      --吃下反灵结晶的猪人死亡时必定额外掉落灵结晶
         end

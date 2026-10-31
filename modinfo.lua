@@ -1,7 +1,7 @@
 local language = locale == "zh" or locale == "zhr" or false
 name = language and "氷芽川·四糸乃" or "Himekawa_Yoshino" --mod名字
 description = [[
-version: 1.5
+version: 1.6
 《约会大作战》中的四糸乃
 模组仅上传steam
 
@@ -9,13 +9,13 @@ version: 1.5
 （不过不用担心，只是显示延迟(懒得改了)，实际数值正常，最大值在服务器那边也是正常的只是同步会延迟一点）
 2.空间震用了蚁狮地震的特效模拟，但四糸乃的识别名为"隐居者"，很少触发空间震，所以默认是关闭的。
 3.四糸乃首次进入永恒大陆必定下雨。
-4.已适配模组【45 Inventory Slots [Fixed + EquipSlot UI expand] 整合版】ID：3075429483
 
 反馈可加Q群303721628 或 模组界面下方讨论区
+本mod创意工坊ID：3736718891
 ]]
 
 author = "doctuckos"
-version = "1.5.2"
+version = "1.6.0"
 version_compatible = version
 forumthread = "" --不在单机版使用所以不管
 server_filter_tags = { "yoshino", "hermit", "四糸乃", "约会大作战", "doctuckos" }
@@ -130,13 +130,31 @@ configuration_options = {
 		},
 		default = 0
 	},
-	--{
-	--	name = "addcold_cost",
-	--	label = language and "身着冰铠时积累冰冻消耗的灵力" or "Spirit_energy consumed by freezing while equipped sirvon",
-	--	hover = "装备冰铠，每次对敌人积累冰冻点数所需消耗的灵力",
-	--	options = reiryoku_cost,
-	--	default = 12
-	--},
+	{
+		name = "spiritual_energy_rate",
+		label = language and "灵力恢复速度" or "Spiritual Energy Recovery Rate",
+		hover = "设置灵力的常态恢复速度(重选人物生效)\n自己选的话，总该不会有缺灵力的问题了吧",
+		options = {
+			{ description = "1/min",  data = 1 },
+			{ description = "5/min",  data = 5 },
+			{ description = "6/min",  data = 6 },
+			{ description = "7/min",  data = 7 },
+			{ description = "8/min",  data = 8 },
+			{ description = "9/min",  data = 9 },
+			{ description = "10/min", data = 10 },
+			{ description = "11/min", data = 11 },
+			{ description = "12/min", data = 12 },
+			{ description = "13/min", data = 13 },
+			{ description = "14/min", data = 14 },
+			{ description = "15/min", data = 15 },
+			{ description = "20/min", data = 20 },
+			{ description = "30/min", data = 30 },
+			{ description = "40/min", data = 40 },
+			{ description = "50/min", data = 50 },
+			{ description = "60/min", data = 60 },
+		},
+		default = 10,
+	},
 	AddTitle(language and "快捷键设置" or "Hotkey Setting"),
 	{
 		name = "call_zadkiel_key",
@@ -211,4 +229,44 @@ configuration_options = {
 		options = reiryoku_cost,
 		default = 10
 	},
+	AddTitle(language and "其他设置" or "other options"),
+	{
+		name = "fan_storm",
+		label = language and "折扇的冰风暴功能" or "The folding fan's ice storm ability",
+		hover = "配置是否要开启折扇的释放冰雪风暴能力\n避免部分玩家可能不小心点到造成拆家惨状",
+		options = {
+			{description = "open", data = 1},
+			{description = "close", data = 0},
+		},
+		default = 1,
+	},
+	{
+		name = "yoshinon_lv_mode",
+		label = language and "四糸奈升级的难度" or "The difficulty of upgrading Yoshinon",
+		hover = "四糸奈的升级困难程度（注意：不是四糸乃是四糸奈）\n主要设置每级所需的经验量",
+		options = {
+			{description = "困难(Hard)", data = 1},
+			{description = "普通(Normal)", data = 0},
+			{description = "简单(Easy)", data = -1}
+		},
+		default = 0
+	},
+	{
+		name = "yoshinon_cooldown",
+		label = language and "四糸奈满级技能的冷却时间" or "Yoshinon’s skill cooldown when at max level",
+		hover = language and "四糸奈升满级后，为四糸乃解锁新技能\n此项决定技能的冷却时长" or "After Yoshinon reaches max level, it unlocks a new skill for Yoshino.\nThis determines the skill's cooldown time.",
+		options = reiryoku_cost,
+		default = 10,
+	},
+	{
+		name = "yoshinon_huge",
+		label = language and "超级巨大四糸奈" or "Super huge yoshinon",
+		hover = language and "四糸奈冰箱的保鲜程度" or "The freshness level of the yoshinon fridge",
+		options = {
+			{description = "减半", data = 1},
+			{description = "永鲜", data = 0},
+			{description = "反鲜", data = -1}
+		},
+		default = 1,
+	}
 }

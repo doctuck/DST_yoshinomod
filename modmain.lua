@@ -6,22 +6,25 @@ local TUNING = GLOBAL.TUNING
 
 GLOBAL.YOSHINO_API = env  --皮肤API
 
-PrefabFiles = {           --预制物（命名绝对不能大写）
-    "yoshino",            --四糸乃
-    "yoshinon",           --四糸奈
-    "yoshino_foods",      --四糸乃的料理
-    "yoshino_crystals",   --灵结晶和反灵结晶
-    "yoshino_zadkiel",    --天使·冰结傀儡
-    "yoshino_atkspike",   --冰结傀儡攻击时的冰刺
-    "yoshino_elyonban",   --神威灵装·四番
-    "yoshino_elfz",       --神威灵装·四番(反转形态)
-    "yoshino_sirvon",     --冰结傀儡·冻铠（简称 "冰铠" ）
-    "yoshino_snowshield", --冰雪护盾
-    "yoshino_fan",        --折扇
-    "yoshino_reiryokuice",--魔力冰锥
-    "yoshino_witchhat",   --魔女帽
-    "yoshino_whitehat",   --宽檐帽
-    "yoshino_luckysachet",--幸运香囊
+PrefabFiles = {                 --预制物（命名绝对不能大写）
+    "yoshino",                  --四糸乃
+    "yoshinon",                 --四糸奈
+    "yoshino_foods",            --四糸乃的料理
+    "yoshino_crystals",         --灵结晶和反灵结晶
+    "yoshino_zadkiel",          --天使·冰结傀儡
+    "yoshino_atkspike",         --冰结傀儡攻击时的冰刺
+    "yoshino_elyonban",         --神威灵装·四番
+    "yoshino_elfz",             --神威灵装·四番(反转形态)
+    "yoshino_sirvon",           --冰结傀儡·冻铠（简称 "冰铠" ）
+    "yoshino_snowshield",       --冰雪护盾
+    "yoshino_fan",              --折扇
+    "yoshino_reiryokuice",      --魔力冰锥
+    "yoshino_witchhat",         --魔女帽
+    "yoshino_whitehat",         --宽檐帽
+    "yoshino_luckysachet",      --幸运香囊
+    "yoshino_forgethairpin",    --必忘我发夹(浅忆)
+	"yoshino_icebomb",			--冰暴炸弹
+	"yoshinon_icebox",			--超级巨大四糸奈
 }
 
 Assets = {
@@ -58,17 +61,16 @@ Assets = {
     Asset("IMAGE", "bigportraits/yoshino_none.tex"), --人物大图（椭圆）
     Asset("ATLAS", "bigportraits/yoshino_none.xml"), --基础默认皮肤
 
-    Asset("ATLAS", "bigportraits/yoshino_skin1.xml"), --枫色祈愿皮肤
+    Asset("ATLAS", "bigportraits/yoshino_skin1.xml"),   --皮肤大图
     Asset("IMAGE", "bigportraits/yoshino_skin1.tex"),
-
-    Asset("ATLAS", "bigportraits/yoshino_skin2.xml"), --万圣节皮肤
+    Asset("ATLAS", "bigportraits/yoshino_skin2.xml"),
     Asset("IMAGE", "bigportraits/yoshino_skin2.tex"),
-
-    Asset("ATLAS", "bigportraits/yoshino_skin3.xml"), --春绮花朝皮肤
+    Asset("ATLAS", "bigportraits/yoshino_skin3.xml"),
     Asset("IMAGE", "bigportraits/yoshino_skin3.tex"),
-
-    Asset("ATLAS", "bigportraits/yoshino_skin4.xml"), --夏日炎炎皮肤
+    Asset("ATLAS", "bigportraits/yoshino_skin4.xml"),
     Asset("IMAGE", "bigportraits/yoshino_skin4.tex"),
+    Asset("ATLAS", "bigportraits/yoshino_skin5.xml"),
+    Asset("IMAGE", "bigportraits/yoshino_skin5.tex"),
 
     Asset("IMAGE", "images/inventoryimages/yoshinon.tex"), --四糸乃的手偶：四糸奈
     Asset("ATLAS", "images/inventoryimages/yoshinon.xml"),
@@ -119,11 +121,16 @@ Assets = {
     Asset("ATLAS", "images/inventoryimages/yoshino_luckbag.xml"),
     Asset("IMAGE", "images/inventoryimages/yoshino_luckbag.tex"),
 
+	Asset("IMAGE", "images/inventoryimages/yoshinon_icebox.tex"),	--超级巨大四糸奈
+	Asset("ATLAS", "images/inventoryimages/yoshinon_icebox.xml"),
+
     Asset("ANIM", "anim/yoshino_dishes.zip"),     --料理
     Asset("ATLAS", "images/inventoryimages/yoshino_milkcoco.xml"), --牛奶可可
     Asset("IMAGE", "images/inventoryimages/yoshino_milkcoco.tex"),
     Asset("ATLAS", "images/inventoryimages/yoshino_oyakodon.xml"), --亲子丼
     Asset("IMAGE", "images/inventoryimages/yoshino_oyakodon.tex"),
+    Asset("ATLAS", "images/inventoryimages/yoshino_lemonslush.xml"), --柠檬冰沙
+    Asset("IMAGE", "images/inventoryimages/yoshino_lemonslush.tex"),
 
     Asset("ATLAS", "images/inventoryimages/yoshino_dir.xml"), --辅助游玩的一个按钮图片，没什么用
     Asset("IMAGE", "images/inventoryimages/yoshino_dir.tex"),
@@ -140,17 +147,22 @@ modimport("scripts/main/tuning_yoshino") --常量加载
 GLOBAL.PREFAB_SKINS["yoshino"] = { "yoshino_none" }
 
 AddMinimapAtlas("images/map_icons/map_yoshino.xml")         --注册小地图图标
+AddMinimapAtlas("images/inventoryimages/yoshinon_icebox.xml")
+AddMinimapAtlas("images/inventoryimages/yoshino_zadkiel.xml")
 
 AddModCharacter("yoshino", "FEMALE")                        --注册添加角色，性别为女
 
 AddReplicableComponent("spiritual_energy")                  --注册组件副本
+AddReplicableComponent("yoshinon_upgrade")
 
 modimport("scripts/widgets/yoshino_containers")             --注册和四糸乃有关的容器
 modimport("scripts/stategraphs/SGwilsonzadkiel.lua")        --人物状态机更改
 modimport("scripts/stategraphs/SGwilsonzadkiel_client.lua") --人物状态机更改
 modimport("scripts/stategraphs/SGyoshino_zadkiel.lua")      --导入冰结傀儡的stategraph
 modimport("scripts/main/hook_yoshino")                      --hook之类的内容加载，要在合成配方的加载之前
-modimport("scripts/main/actions_yoshino")                   --人物的一些动作
+modimport("scripts/main/hook_yoshino_container")
+modimport("scripts/main/actions_yoshino")                   --人物的一些动作和RPC
 modimport("scripts/main/recipe_yoshino")                    --导入四糸乃的相关合成配方
 
 modimport("scripts/util/yoshino_skins.lua")                 --导入皮肤调用器
+modimport("scripts/skins_data/yoshino_item_skins.lua")            --导入物品数据

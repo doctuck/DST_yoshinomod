@@ -108,6 +108,7 @@ local function fn()
         end)
     end
 
+    MakeSmallBurnable(inst, TUNING.SMALL_BURNTIME)  --可被燃烧并返还1灰烬
     MakeHauntableLaunch(inst)               --可被鬼魂作祟并能够弹起来
     return inst
 end

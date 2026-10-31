@@ -32,7 +32,7 @@ local function fn()
     --inst.AnimState:SetDeltaTimeMultiplier(0.5)      --设置动画播放的倍速
     --inst.AnimState:SetOrientation(ANIM_ORIENTATION.OnGround) --设置方向地面定向，将特效贴地
 
-    MakeInventoryPhysics(inst)   --可物理模拟
+    MakeInventoryPhysics(inst)
     MakeInventoryFloatable(inst) --可漂浮
 
     inst:AddTag("FX")            --该预制物是特效

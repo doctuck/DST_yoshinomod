@@ -19,7 +19,7 @@ local Spiritual_Energy = Class(function(self, inst)
         self.inst = inst
         self.max = TUNING.MOD_YOSHINO.badge.spiritual_energy.max or 100
         self.current = self.max * 0.6
-        self.rate = 8/60 --基础速率
+        self.rate = 8/60 --默认基础速率
         self.real_rate = self.rate  --真实速率,由多种因素计算而来,不可随意变动
         self.inst:DoPeriodicTask(PERIOD, OnTaskTick, nil, self)
     end,
