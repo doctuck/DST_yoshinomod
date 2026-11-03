@@ -57,6 +57,15 @@ local function onownersleep(inst, data)
 	end
 end
 
+local function onownerkill(inst, data)
+	if data ~= nil and data.target ~= nil then
+		--如果杀的是巨兽则经验加 5
+		if data.target:HasTag("epic") then
+			inst.components.yoshinon_upgrade:Upexp(5)
+		end
+	end
+end
+
 
 --装备时调用
 local function onequip(inst, owner)
@@ -256,6 +265,7 @@ local function fn()
 
 	inst:ListenForEvent("yoshinon_upgrade", check_upgrade)	--监听到升级事件
 	inst:ListenForEvent("yoshino_rpc_eat", onownereat)		--监听到四糸乃吃东西时发来的事件
+	inst:ListenForEvent("yoshino_rpc_killother", onownerkill)--监听四糸乃击杀生物事件
 	inst:ListenForEvent("yoshino_rpc_sleep", onownersleep)	--监听到四糸乃进入睡眠时发来的事件
 	inst:ListenForEvent("yoshino_rpc_build", function (inst, data)	--监听到四糸乃制作物品时发来的事件
 		inst.components.yoshinon_upgrade:Upexp()
@@ -280,6 +290,21 @@ local function fn()
 
     inst.yoshinonequip = onequip
     inst.yoshinonunequip = onunequip
+
+
+	inst.OnSave = function(inst, data)
+    	data.level = inst.components.yoshinon_upgrade:GetLevel()
+	end
+	inst.OnPreLoad = function(inst, data)
+    	if TheWorld.ismastersim and inst.components.container ~= nil then
+    	    if data ~= nil and data.level ~= nil then
+    			local prefab = data.level >= 5 and "yoshinon_container_5"
+    			    or data.level >= 2 and "yoshinon_container_2"
+    			    or "yoshinon_container_1"
+    			inst.components.container:WidgetSetup(prefab)
+			end
+    	end
+	end
 
     inst.OnLoad = function(inst, data)
         inst:DoTaskInTime(0.5, function()   --延迟半秒，确保能获取到玩家

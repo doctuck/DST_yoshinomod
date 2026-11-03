@@ -18,8 +18,9 @@ local skills = {
     		        items[i] = item
     		    end
     		end
-
-    		inst.components.container:WidgetSetup("yoshinon_container_2")	--正式注册新容器
+			if inst.components.container:GetNumSlots() < 6 then
+            	inst.components.container:WidgetSetup("yoshinon_container_2")	--正式注册新容器
+        	end
     		for i, item in pairs(items) do	--将原来的物品存入新容器
     		    inst.components.container:GiveItem(item, i)
     		end
@@ -61,7 +62,9 @@ local skills = {
     		        items[i] = item
     		    end
     		end
-    		inst.components.container:WidgetSetup("yoshinon_container_5")	--正式注册新容器
+			if inst.components.container:GetNumSlots() < 9 then	--防止preload之后执行容器大变小断言失败
+    			inst.components.container:WidgetSetup("yoshinon_container_5")	--正式注册新容器
+			end
     		for i, item in pairs(items) do	--将原来的物品存入新容器
     		    inst.components.container:GiveItem(item, i)
     		end

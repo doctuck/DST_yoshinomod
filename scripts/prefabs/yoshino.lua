@@ -20,18 +20,17 @@ local function common_postinit(inst)
 end
 
 --做一个周期任务
-local k1 = 0
 local function Docheck(inst)
-    if inst.components.health and inst.components.health:IsDead() then return end
-    --检查背包或身上有没有四糸奈
-    if not inst.components.inventory:HasItemWithTag("yoshinon", 1) and not inst.components.inventory:EquipHasTag("yoshinon") then
+    if inst.components.health == nil or inst.components.health:IsDead() then return end
+    --检查背包或身上有没有四糸奈(睡眠前如果装备在手上，似乎睡眠期间也会视为没有四糸奈，hook睡眠添加标签来判断)
+    if not inst.components.inventory:HasItemWithTag("yoshinon", 1) and not inst.components.inventory:EquipHasTag("yoshinon") and not inst:HasTag("yoshino_sleep") then
         if inst.components.sanity.current > 0 then
             inst.components.sanity:DoDelta(-100 / 60) --每分钟掉100点理智
         end
-        --四糸奈不在身上且理智首次归0时触发语音
-        if k1 == 0 or (inst.components.sanity.current == 0 and k1 == 1) then
+        --四糸奈不在身上以及不在身上且理智首次归0时触发语音
+        if (inst.k1 and inst.k1 == 0) or (inst.components.sanity.current == 0 and inst.k1 == 1) then
             inst.components.talker:Say(STRINGS.CHARACTERS.YOSHINO.ANNOUNCE_NO_YOSHINON_RAGDOLL)
-            k1 = k1 + 1
+            inst.k1 = inst.k1 + 1
         end
         --未装备四糸奈时， 若理智<=10% 同时 灵力>= 95% 则触发灵力紊乱
     elseif not inst.components.inventory:EquipHasTag("yoshinon") then
@@ -42,17 +41,18 @@ local function Docheck(inst)
         end
     else
         inst:PushEvent("reiryokuchaos", { hasbuff = false })
-        k1 = 0
+        inst.k1 = 0
     end
 
     --检查血量未满时每分钟扣除 2 理智
-    if inst.components.health:GetPercent() < 1 then
+    if inst.components.sanity and inst.components.health:GetPercent() < 1 then
         inst.components.sanity:DoDelta(-2 / 60)
     end
-    --检查周围一个地皮内是否有其他玩家
+
+    --检查周围一个地皮内是否有其他玩家，存在则每分钟降低2点理智
     local posx, posy, posz = inst.Transform:GetWorldPosition()
     local ents = TheSim:FindEntities(posx, posy or 0, posz, 4, nil, nil, { "player" })
-    if #ents > 1 then   --除自己以外还有别的玩家才会触发
+    if #ents > 1 then   --除自己以外还有别的玩家才会触发(等于1时说明仅自己)
         inst.components.sanity:DoDelta(-2 / 60)
     end
     --理智为 0 时, 1 个地皮内的玩家每分钟降低 20 点温度（含自己）
@@ -297,6 +297,17 @@ local function onhittarget(inst, data)
     end
 end
 
+local function onkillother(inst, data)
+	--combat组件中：attacker:PushEvent("killed", { victim = self.inst, attacker = attacker, from_doattack = from_doattack })
+	if inst.components.inventory then
+		local items = inst.components.inventory:FindItems(function(item) return item:HasTag("yoshinon") end)
+		for _, yoshinon in ipairs(items) do
+			yoshinon:PushEvent("yoshino_rpc_hitother", {player = inst, target = data.victim})
+		end
+	end
+end
+
+
 --监听灵力变化事件
 local function onspiritual_dalta(inst, data)
     if not data then return end
@@ -361,6 +372,7 @@ local function master_postinit(inst)
     inst.components.freezable:SetRedirectFn(onfreeze)            --重定向冻结函数，以此免疫冻结
     inst.components.temperature:SetFreezingHurtRate(0)           --免疫过冷伤害
 
+	inst.k1 = 0
     inst.checktask = inst:DoPeriodicTask(1,Docheck)
 
     --免疫猴子诅咒
@@ -372,9 +384,11 @@ local function master_postinit(inst)
         end
     end
 
+	
     inst:ListenForEvent("moisturedelta", onwetdelta)                --监听潮湿值变化事件，当值大于60时理智恢复 <--这玩意居然按帧频率发送！
     inst:ListenForEvent("onattackother", onattack)                  --监听击中事件（执行攻击时发送）
     inst:ListenForEvent("onhitother", onhittarget)                  --监听击中事件（目标被击中向攻击者发送）
+	inst:ListenForEvent("killed", onkillother)						--监听成功击杀其他生物事件
     inst:ListenForEvent("yoshino_reiryoku_delta", onspiritual_dalta)--监听灵力值变化事件
     inst:ListenForEvent("reiryokuchaos", chaosdebuff)               --执行灵力紊乱
     inst:ListenForEvent("oneat", oneatfood)                         --监听吃东西事件

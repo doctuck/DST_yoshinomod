@@ -76,6 +76,7 @@ local function fn()
     inst:AddComponent("inventoryitem")      --物品可放进背包
     inst.components.inventoryitem.imagename = "yoshino_luckbag"
     inst.components.inventoryitem.atlasname = "images/inventoryimages/yoshino_luckbag.xml"
+	inst.components.inventoryitem.cangoincontainer = true		--设置false则不可放入物品栏
     inst.components.inventoryitem:SetSinks(false)               --设置true可以落水，掉海里直接消失。
 
     inst:AddComponent("equippable")         --该预设物是可装备的物品
@@ -105,9 +106,6 @@ local function fn()
             local owner = inst.components.inventoryitem.owner
             if owner and inst.components.equippable:IsEquipped() then
                 onequip(inst, owner)
-                if inst.components.container ~= nil then       --关闭容器
-                    inst.components.container:Close(owner)
-                end
             end
         end)
     end

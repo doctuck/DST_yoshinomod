@@ -25,7 +25,7 @@ local function makecrystals(prefabname,animname)
         elseif eater.components[tostring(eater.prefab) .. "_reiryoku"] ~= nil then  --此写法是为了给之后的模组做兼容
             eater.components[tostring(eater.prefab) .. "_reiryoku"]:DoDelta(TUNING.MOD_MUKURO.CRYSTALS_DELTA)
         end
-		--[[	--仅在开发环境可以食用灵力结晶让四糸奈升级
+		--[[ --仅在开发环境可以食用灵力结晶让四糸奈升级
 		if inst:HasTag("yoshino_crystal") and eater:HasTag("yoshino") then
 			if eater.components.inventory and eater.components.inventory.equipslots then
 				local yoshinon = nil
@@ -36,9 +36,9 @@ local function makecrystals(prefabname,animname)
 					end
     			end
 				if yoshinon ~= nil and yoshinon.components.yoshinon_upgrade then
-					--local oldcur = yoshinon.components.yoshinon_upgrade:GetLevel()
-					--yoshinon.components.yoshinon_upgrade:SetCurrent(oldcur + 1)
-					yoshinon.components.yoshinon_upgrade:Upexp(50)
+					local oldcur = yoshinon.components.yoshinon_upgrade:GetLevel()
+					yoshinon.components.yoshinon_upgrade:SetCurrent(oldcur + 1)
+					--yoshinon.components.yoshinon_upgrade:Upexp(50)
 				end
 			end
 		end

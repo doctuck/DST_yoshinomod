@@ -15,7 +15,7 @@ version: 1.6
 ]]
 
 author = "doctuckos"
-version = "1.6.0"
+version = "1.6.3"
 version_compatible = version
 forumthread = "" --不在单机版使用所以不管
 server_filter_tags = { "yoshino", "hermit", "四糸乃", "约会大作战", "doctuckos" }

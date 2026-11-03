@@ -240,6 +240,7 @@ local function fn()
     inst:AddTag("companion") --是同伴
     --inst:AddTag("summonable")        --可召唤
 
+	inst.entity:SetCanSleep(false)      --从不休眠，持续计时
     inst.entity:SetPristine()        --同步初始化
     if not TheWorld.ismastersim then --主客机判断（在此行以上为主客机共有，这行之后，客机会在if中运行完并停下，只有主机和服务端才能往下走）
         return inst

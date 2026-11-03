@@ -136,8 +136,8 @@ end)
 
 --//////////////////////////////////////////////////////////////////////////////////////////////
 --四糸乃初始化后
-local last_time = 0
 AddPrefabPostInit("yoshino", function(inst)
+	local last_time = 0
     if TheNet:GetIsClient() or TheNet:GetServerIsClientHosted() then --以下仅是从客户端向服务端发送消息的部分
 		if inst.call_zadkilel ~= nil then
 			inst.call_zadkilel:Remove()
@@ -172,14 +172,14 @@ AddPrefabPostInit("yoshino", function(inst)
 
     if not inst.components.timer then inst:AddComponent("timer") end
     --免疫伤害
-    local OldGetAttacked = inst.components.combat.GetAttacked
-    inst.components.combat.GetAttacked = function(self, attacker, damage, weapon, stimuli, spdamage, ...)
+    local OldGetAttacked_Internal = inst.components.combat.GetAttacked_Internal
+    inst.components.combat.GetAttacked_Internal = function(self, attacker, damage, weapon, stimuli, spdamage, from_doattack, ...)
         if self.inst.components.health and self.inst.components.health:IsDead() then
-            return true
-        end
+        	return true
+    	end
         for k, v in pairs(inst.components.inventory.equipslots) do
             if v.prefab == "armorskeleton" then --有骨甲时用原来的，避免浪费计时
-                return OldGetAttacked(self, attacker, damage, weapon, stimuli, spdamage, ...)
+                return OldGetAttacked_Internal(self, attacker, damage, weapon, stimuli, spdamage, from_doattack, ...)
             end
         end
         --护盾冷却计时已经结束, 且当前灵力足够 ，则免疫本次伤害
@@ -203,7 +203,7 @@ AddPrefabPostInit("yoshino", function(inst)
             spdamage = nil
         end
 
-        return OldGetAttacked(self, attacker, damage, weapon, stimuli, spdamage, ...)
+        return OldGetAttacked_Internal(self, attacker, damage, weapon, stimuli, spdamage, from_doattack, ...)
     end
     --监听护盾冷却时间结束，如果还存在则设为空
     inst:ListenForEvent("timerdone",function (player, data)
@@ -246,6 +246,7 @@ AddPrefabPostInit("yoshino", function(inst)
 	--hook自身睡眠回调函数，用于发送事件给装备栏的四糸奈
 	local old_sleepin = inst.OnSleepIn or function (inst, ...) end
 	inst.OnSleepIn = function (inst, ...)
+		inst:AddTag("yoshino_sleep")
 		if inst.components.inventory and inst.components.inventory.equipslots then
 			local yoshinon = nil
 			for _, v in pairs(inst.components.inventory.equipslots) do
@@ -263,6 +264,7 @@ AddPrefabPostInit("yoshino", function(inst)
 	local old_wakeup = inst.OnWakeUp or function (inst, ...) end
 	inst.OnWakeUp = function (inst, ...)
 		old_wakeup(inst, ...)
+		inst:RemoveTag("yoshino_sleep")
 		if inst.components.inventory and inst.components.inventory.equipslots then
 			local yoshinon = nil
 			for _, v in pairs(inst.components.inventory.equipslots) do

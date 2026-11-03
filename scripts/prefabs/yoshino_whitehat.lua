@@ -98,7 +98,7 @@ local function MakeBluePrint()
     inst.components.fuel.fuelvalue = TUNING.SMALL_FUEL
 
     -- 绑定指定配方
-    local r = GetValidRecipe("recipe_"..prefabname)
+    local r = GetValidRecipe(prefabname)
     if r then
         inst.recipetouse = r.name
         inst.components.teacher:SetRecipe(r.name)
