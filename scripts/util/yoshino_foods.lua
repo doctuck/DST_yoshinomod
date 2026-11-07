@@ -23,6 +23,8 @@ local foods =
         oneatenfn = function(inst, eater)                    --吃下后触发的函数
             if eater.components.spiritual_energy ~= nil then --四糸乃食用回复灵力值
                 eater.components.spiritual_energy:DoDelta(5)
+			elseif eater.components[eater.prefab .. "_reiryoku"] then --适配未来其他精灵模组
+                eater.components[eater.prefab .. "_reiryoku"]:DoDelta(5)
             end
             if eater.components.sanity ~= nil and eater:HasTag("yoshino") then --四糸乃食用额外回复理智
                 eater.components.sanity:DoDelta(4)
@@ -51,6 +53,8 @@ local foods =
         oneatenfn = function(inst, eater)                    --吃下后触发的函数
             if eater.components.spiritual_energy ~= nil then --四糸乃食用回复灵力值
                 eater.components.spiritual_energy:DoDelta(5)
+			elseif eater.components[eater.prefab .. "_reiryoku"] then --适配未来其他精灵模组
+                eater.components[eater.prefab .. "_reiryoku"]:DoDelta(5)
             end
             if eater.components.sanity ~= nil and eater:HasTag("yoshino") then --四糸乃食用额外回复理智
                 eater.components.sanity:DoDelta(4)
@@ -86,7 +90,34 @@ local foods =
             end
         end,
         card_def = { ingredients = {{"ice", 2}, {"honey", 1}, {"watermelon", 1} } } --食谱配方（冰 x2， 蜂蜜 x1，西瓜x1）
-    }
+    },
+	yoshino_flowerpanfish =	--料理名字：花香煎鱼
+	{
+		test = function(cooker, names, tags)	--入锅测试
+			--鱼度>=1.5，干月树花或者干花瓣=1
+			return ((tags.fish or 0) >= 1.5)
+				and ((names.moon_tree_blossom_dried or names.petals_dried or names.petals_evil_dried or 0) >= 1)
+		end,
+		weight = 5,
+		priority = 10,
+		foodtype = FOODTYPE.GOODIES,
+		perishtime = 16 * TUNING.TOTAL_DAY_TIME,
+		hunger = 12.5,
+		sanity = 5,
+		health = 30,
+		cooktime = 1,
+		floater = {"small", 0.1, 0.55},
+		oneatenfn = function (inst, eater)
+			if eater:IsValid() and eater.components.debuffable ~= nil then
+				local buffname = "yoshino_buff_recoverhealth"
+				if eater.components.debuffable:HasDebuff(buffname) then
+					eater.components.debuffable:RemoveDebuff(buffname)
+				end
+				eater.components.debuffable:AddDebuff(buffname, buffname)
+			end
+		end,
+		card_def = { ingredients = {"moon_tree_blossom_dried", 1}, {"fishmeat", 3} }
+	}
 
 }
 

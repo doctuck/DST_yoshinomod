@@ -25,6 +25,7 @@ PrefabFiles = {                 --预制物（命名绝对不能大写）
     "yoshino_forgethairpin",    --必忘我发夹(浅忆)
 	"yoshino_icebomb",			--冰暴炸弹
 	"yoshinon_icebox",			--超级巨大四糸奈
+	"yoshino_buff",				--buff相关
 }
 
 Assets = {
@@ -131,6 +132,8 @@ Assets = {
     Asset("IMAGE", "images/inventoryimages/yoshino_oyakodon.tex"),
     Asset("ATLAS", "images/inventoryimages/yoshino_lemonslush.xml"), --柠檬冰沙
     Asset("IMAGE", "images/inventoryimages/yoshino_lemonslush.tex"),
+	Asset("ATLAS", "images/inventoryimages/yoshino_flowerpanfish.xml"), --花香煎鱼
+    Asset("IMAGE", "images/inventoryimages/yoshino_flowerpanfish.tex"),
 
     Asset("ATLAS", "images/inventoryimages/yoshino_dir.xml"), --辅助游玩的一个按钮图片，没什么用
     Asset("IMAGE", "images/inventoryimages/yoshino_dir.tex"),

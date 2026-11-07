@@ -3,7 +3,6 @@ local ImageButton = require "widgets/imagebutton"
 local Text = require "widgets/text"
 local containers = require("containers")
 local unique_id = "yoshino_"
---local ModLanguage = TUNING.MUKUROCONFIG.modlanguage --获取模组使用的语言
 
 --改槽位上限，否则会崩
 AddPrefabPostInit("container_classified", function(inst)

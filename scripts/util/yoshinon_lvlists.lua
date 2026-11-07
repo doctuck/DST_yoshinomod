@@ -2,12 +2,12 @@
 
 local skills = {
 	{	--1级
-		skillfn = function (inst, owner)
+		skillfn = function (inst)
 			--初始就是 1 级，此处仅占位
 		end
 	},
 	{	--2级
-		skillfn = function (inst, owner)
+		skillfn = function (inst)
 			if inst.components.container:IsOpen() then	--先关闭，不能开着修改
         		inst.components.container:Close()
     		end
@@ -28,7 +28,7 @@ local skills = {
 		end
 	},
 	{	--3级
-		skillfn = function (inst, owner)
+		skillfn = function (inst)
 			if inst.components.weapon == nil then
 				inst:AddComponent("weapon")
 			end
@@ -44,14 +44,14 @@ local skills = {
 		end
 	},
 	{	--4级
-		skillfn = function (inst, owner)
+		skillfn = function (inst)
 			if inst.components.preserver then
 				inst.components.preserver:SetPerishRateMultiplier(-TUNING.MOD_YOSHINO.YOSHINON.fanxian)		--返鲜
 			end
 		end
 	},
 	{	--5级
-		skillfn = function (inst, owner)
+		skillfn = function (inst)
 			if inst.components.container:IsOpen() then	--先关闭
         		inst.components.container:Close()
     		end
@@ -72,15 +72,14 @@ local skills = {
 		end
 	},
 	{ --6级
-		skillfn = function (inst, owner)
-			if inst.components.weapon == nil then
-				inst:AddComponent("weapon")
+		skillfn = function (inst)
+			if inst.components.equippable ~= nil then
+				inst.components.equippable.walkspeedmult = TUNING.MOD_YOSHINO.YOSHINON.speed
 			end
-			inst.components.weapon:SetDamage(TUNING.MOD_YOSHINO.YOSHINON.damage_6)
 		end
 	},
 	{	--7级
-		skillfn = function (inst, owner)
+		skillfn = function (inst)
 			--if owner and owner:IsValid() and owner.components.hunger ~= nil then
 			--	local rate = owner.components.hunger.hungerrate
 			--	owner.components.hunger:SetRate(rate * TUNING.MOD_YOSHINO.YOSHINON.hungerrate)
@@ -89,7 +88,7 @@ local skills = {
 		end
 	},
 	{	--8级
-		skillfn = function (inst, owner)
+		skillfn = function (inst)
 			if inst.recoverhealth ~= nil then
 				inst.recoverhealth:Cancel()
 				inst.recoverhealth = nil
@@ -98,21 +97,21 @@ local skills = {
 			inst.recoverhealth = inst:DoPeriodicTask(TUNING.MOD_YOSHINO.YOSHINON.hpfre, function ()
 				local equipowner = inst.components.inventoryitem and inst.components.inventoryitem:GetGrandOwner() or nil
 				local equiped = inst.components.equippable and inst.components.equippable:IsEquipped() or false
-				if equiped and equipowner and equipowner:IsValid() and equipowner:HasTag("yoshino") then
+				if equiped and equipowner ~= nil and equipowner:IsValid() and equipowner:HasTag("yoshino") then
 					equipowner.components.health:DoDelta(TUNING.MOD_YOSHINO.YOSHINON.delhp)
 				end
 			end)
 		end
 	},
 	{ --9级
-		skillfn = function (inst, owner)
+		skillfn = function (inst)
 			if inst.components.container then
 				inst.components.container:EnableInfiniteStackSize(true)	--无限堆叠
 			end
 		end
 	},
 	{	--10级
-		skillfn = function (inst, owner)
+		skillfn = function (inst)
 			--解锁技能
 			--在动作部分实现，此处仅占位
 		end

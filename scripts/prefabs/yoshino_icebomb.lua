@@ -40,13 +40,14 @@ local function OnHit(inst, attacker, target)
 	local BOMB_CANT_TAGS = {"FX", "companion", "wall", "INLIMBO"}
     local x, y, z = inst.Transform:GetWorldPosition()
 
+	--只有开启pvp时才会对玩家产生效果
     if not TheNet:GetPVPEnabled() and table.contains(BOMB_CANT_TAGS, "player") then
         table.insert(BOMB_CANT_TAGS, "player")
 	end
 
     local ents = TheSim:FindEntities(x, y, z, TUNING.MOD_YOSHINO.YOSHINO_ICEBOMB.radius, nil, BOMB_CANT_TAGS)
 
-    local aoefx = SpawnPrefab("deer_ice_charge")    --用巨鹿的冰阵特效
+    local aoefx = SpawnPrefab("deer_ice_charge")    --用巨鹿的冰爆特效
     aoefx.Transform:SetPosition(x, y, z)
     aoefx.AnimState:SetScale(1.5,1.5,1.5)          --放大倍率
     aoefx.AnimState:SetOrientation(ANIM_ORIENTATION.OnGround) --设置方向地面定向，将特效贴地
@@ -68,7 +69,7 @@ local function OnHit(inst, attacker, target)
 
 			-- 增加湿度
             if ent.components.moisture ~= nil then
-                ent.components.moisture:DoDelta(4)
+                ent.components.moisture:DoDelta(10)
             end
 
             -- 强制停止移动一段时间(冻结本身就自带禁锢，但部分生物有冻结抗性)

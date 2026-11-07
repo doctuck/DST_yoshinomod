@@ -77,8 +77,8 @@ function Yoshinon_Upgrade:Upexp(amount)
 
 	if self.lvexp >= self.needexp and self.current < self.maxlevel then
 		self.current = self.current + 1
+		self.lvexp = math.abs(self.lvexp - self.needexp)	--保留溢出的部分
 		self.needexp = self:KnowNeedEXP(self.current)
-		self.lvexp = 0		--将当前经验清空
 		self.inst:PushEvent("yoshinon_upgrade")		--升级时发送事件使四糸奈能力更新
 	end
 end
@@ -93,6 +93,8 @@ function Yoshinon_Upgrade:SetCurrent(amount, clear)
 	self.needexp = self:KnowNeedEXP(self.current)
 	if clear then
 		self.lvexp = 0
+	else
+		self.lvexp = math.max(0, math.min(self.lvexp, self.needexp))
 	end
 	self.inst:PushEvent("yoshinon_upgrade", true)
 end

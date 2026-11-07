@@ -186,7 +186,7 @@ local function fn()
     inst.components.equippable.restrictedtag = "yoshino"    --限制仅四糸乃可装备
 
     inst:AddComponent("waterproofer")                       --防水
-    inst.components.waterproofer.effectiveness = 2          --取值0~1（对于永不妥协雷暴雨，取值2强行抵挡）
+    inst.components.waterproofer.effectiveness = 2          --取值0~1（对于永不妥协雷暴雨，取值2提高抵挡能力）
 
     inst:AddComponent("armor")                              --护甲组件
     inst.components.armor:InitIndestructible(0.6)           --60%保护度，且无限耐久

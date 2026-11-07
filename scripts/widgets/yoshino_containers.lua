@@ -23,29 +23,7 @@ params.yoshinon_container_1 = {
     itemtestfn = function(inst, item, slot) -- 容器里可以装的物品的条件(inst是容器组件本身,item是放入容器的物品,slot是容器物品栏里的物品序号)
     --注：此函数内部属于服务器范围
         --Perishable
-        if not (item:HasTag("fresh") or item:HasTag("stale") or item:HasTag("spoiled")) then  --没有新鲜度的不能放入
-            return false
-        end
-        --Edible
-        for k, v in pairs(GLOBAL.FOODTYPE) do
-            if item:HasTag("edible_"..v) and not (item:HasTag("yoshino_crystal") or item:HasTag("yoshino_anticrystal")) then   --能吃的都可以放入
-                --if item.components.perishable then
-                --    item.components.perishable:StopPerishing()  --暂停腐烂
-                --end
-                --item:AddTag("inyoshinon")
-                return true
-            end
-        end
-        if item.prefab == "hambat" then		--火腿棒没有可使用标签，需要特殊判定
-            --if item.components.perishable then
-            --    item.components.perishable:StopPerishing()  --暂停腐烂
-            --end
-            --item:AddTag("inyoshinon")
-            return true
-        end
-
-
-        return false    --其他的都不能放入
+        return item:HasAnyTag("fresh","stale","spoiled")
     end,
     --excludefromcrafting = true, --从制作栏中排除(不可制作)
 }
@@ -72,21 +50,7 @@ params.yoshinon_container_2 = {
     itemtestfn = function(inst, item, slot) -- 容器里可以装的物品的条件(inst是容器组件本身,item是放入容器的物品,slot是容器物品栏里的物品序号)
     --注：此函数内部属于服务器范围
         --Perishable
-        if not (item:HasTag("fresh") or item:HasTag("stale") or item:HasTag("spoiled")) then  --没有新鲜度的不能放入
-            return false
-        end
-        --Edible
-        for k, v in pairs(GLOBAL.FOODTYPE) do
-            if item:HasTag("edible_"..v) and not (item:HasTag("yoshino_crystal") or item:HasTag("yoshino_anticrystal")) then   --能吃的都可以放入（灵结晶除外）
-                return true
-            end
-        end
-        if item.prefab == "hambat" then		--火腿棒没有可使用标签，需要特殊判定
-            return true
-        end
-
-
-        return false    --其他的都不能放入
+        return item:HasAnyTag("fresh","stale","spoiled")
     end,
     --excludefromcrafting = true, --从制作栏中排除(不可制作)
 }
@@ -105,20 +69,7 @@ params.yoshinon_container_5 = {	--这是四糸奈5级时开放的容器
     itemtestfn = function(inst, item, slot) -- 容器里可以装的物品的条件(inst是容器组件本身,item是放入容器的物品,slot是容器物品栏里的物品序号)
     --注：此函数内部属于服务器范围
         --Perishable
-        if not (item:HasTag("fresh") or item:HasTag("stale") or item:HasTag("spoiled")) then  --没有新鲜度的不能放入
-            return false
-        end
-        --Edible
-        for k, v in pairs(GLOBAL.FOODTYPE) do
-            if item:HasTag("edible_"..v) and not (item:HasTag("yoshino_crystal") or item:HasTag("yoshino_anticrystal")) then   --能吃的都可以放入（灵结晶除外）
-                return true
-            end
-        end
-        if item.prefab == "hambat" then		--火腿棒没有可使用标签，需要特殊判定
-            return true
-        end
-
-        return false    --其他的都不能放入
+		return item:HasAnyTag("fresh","stale","spoiled")
     end,
 }
 for y = 2, 0, -1 do

@@ -247,6 +247,8 @@ local function fn()
     end
 
     inst:AddComponent("planardamage")            --位面伤害
+	inst.components.planardamage:SetBaseDamage(TUNING.MOD_YOSHINO.YOSHINO_ZADKIEL.PLANAR_DEAFULT)
+
     inst:AddComponent("combat")                  --战斗组件
     inst.components.combat.hiteffectsymbol = "zadkiel_body"  --受击通道
     inst.components.combat:SetDefaultDamage(damage) --默认伤害

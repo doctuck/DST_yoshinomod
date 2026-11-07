@@ -178,7 +178,7 @@ AddRecipe2("yoshino_icebomb",
         builder_tag = "yoshino",		--只有四糸乃能做
         product = "yoshino_icebomb",
 		nounlock = true,		--必须在制造站旁制作
-		numtogive = 2,       --产出数量：2
+		numtogive = 3,       --产出数量：3
 		no_deconstruction = true,  --不可拆解
 	}
 )

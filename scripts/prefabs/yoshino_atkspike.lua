@@ -22,9 +22,6 @@ local function onhit(inst, attacker, target)
         target.components.combat:SuggestTarget(attacker)
     end]]
 
-    if target and target.components.health:IsDead() then
-        attacker:PushEvent("killed", { victim = target, attacker = attacker })
-    end
     inst:DoTaskInTime(2, inst.Remove)
 end
 

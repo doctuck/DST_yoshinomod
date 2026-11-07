@@ -59,11 +59,11 @@ TUNING.MOD_YOSHINO = {
     },
     YOSHINON = {            --四糸奈
 		maxlevel = 10,		--最大等级
-		damage_3 = 10,		--3级时开放攻击能力，设定的攻击力
+		damage_3 = 30,		--3级时开放攻击能力，设定的攻击力
+		range = 6,			--四糸奈的攻击范围
 		addcold = 0.4,		--抛出的雪球积累的寒冷点数
 		fanxian = 0.4,		--4级的回鲜效率
-		damage_6 = 32,		--6级时攻击力上升
-		range = 6,			--同上，但本行是攻击范围
+		speed = 1.2,		--6级时提供的移速百分比
 		hungerrate = 0.5,	--7级时使四糸乃饥饿速率降低的比例
 		hpfre = 30,			--回血频率
 		delhp = 5,			--使四糸乃恢复的生命值
@@ -112,7 +112,7 @@ TUNING.MOD_YOSHINO = {
     },
 	YOSHINO_ICEBOMB = {		--冰雹炸弹
 		radius = 3,		--爆炸半径
-		defaultdamage = 50,	--爆炸伤害
+		defaultdamage = 100,	--爆炸伤害
 		freezetime = 3,		--冻结时长
 		stoptime = 2.8,		--强制停止移动的时间
 	},

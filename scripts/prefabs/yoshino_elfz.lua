@@ -107,7 +107,7 @@ local function onequip(inst, owner)
     --如果有装备四糸奈，则替换四糸奈的皮肤（尚未实现）
     for k, v in pairs(owner.components.inventory.equipslots) do
         if v.prefab == "yoshinon" and v.yoshinonequip ~= nil then
-            v.yoshinonequip(v,owner)    --恢复四糸奈的贴图
+            v.yoshinonequip(v,owner)    --修改四糸奈的贴图（反转时四糸奈人格应为四糸乃，此方案不能通过皮肤实现，避免直接制作出来）
         end
     end
 

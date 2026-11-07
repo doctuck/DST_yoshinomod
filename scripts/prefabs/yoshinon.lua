@@ -15,32 +15,28 @@ local function check_upgrade(inst, data)
 	if inst.components.yoshinon_upgrade == nil then
 		return
 	end
-	local owner = inst.components.inventoryitem:GetGrandOwner()
 	local level = inst.components.yoshinon_upgrade:GetLevel()
-
-	if owner == nil then return end
 
 	--执行表中的函数进行附加升级效果
 	if type(data) ~= "table" and data == true then
 		for i = 1, level do
 			if skill_table[i].skillfn ~= nil then
-				skill_table[i].skillfn(inst, owner)
+				skill_table[i].skillfn(inst)
 			end
 		end
 	else
 		if skill_table[level].skillfn ~= nil then
-			skill_table[level].skillfn(inst, owner)
+			skill_table[level].skillfn(inst)
 		end
 	end
-
 end
 
 
 local function onownereat(inst, data)
 	if data ~= nil and data.food ~= nil and data.food.components.edible then
-		--如果吃的是好东西类料理则经验加一
+		--如果吃的是好东西类料理则经验加二
 		if data.food.components.edible.foodtype == FOODTYPE.GOODIES then
-			inst.components.yoshinon_upgrade:Upexp()
+			inst.components.yoshinon_upgrade:Upexp(2)
 		end
 	end
 end
@@ -50,22 +46,33 @@ local function onownersleep(inst, data)
 		inst.ownersleep_task:Cancel()
 		inst.ownersleep_task = nil
 	end
-	if data.state then	--只有睡眠才创建周期任务(每3秒+1经验)
-		inst.ownersleep_task = inst:DoPeriodicTask(3,function ()
+	if data.state then	--只有睡眠才创建周期任务(每3秒+2经验)
+		inst.ownersleep_task = inst:DoPeriodicTask(1.5,function ()
 			inst.components.yoshinon_upgrade:Upexp()
 		end)
 	end
 end
 
-local function onownerkill(inst, data)
+local function onkillother(inst, data)
 	if data ~= nil and data.target ~= nil then
-		--如果杀的是巨兽则经验加 5
+		--击杀的是巨兽则经验+20
 		if data.target:HasTag("epic") then
-			inst.components.yoshinon_upgrade:Upexp(5)
+			inst.components.yoshinon_upgrade:Upexp(20)
 		end
 	end
 end
 
+local function onownerfish(inst, data)
+	if data ~= nil and data.target ~= nil then
+		--钓到的鱼：小孔雀鱼、花朵金枪鱼、炽热太阳鱼、落叶比目鱼、冰鲷鱼、花锦鲤、金锦鲤、小饵鱼
+		local canup = {"oceanfish_small_1", "oceanfish_small_7", "oceanfish_small_8", "oceanfish_small_6", "oceanfish_medium_8", "oceanfish_medium_6", "oceanfish_medium_7", "oceanfish_small_3"}
+		if table.contains(canup, data.target.prefab) then
+			inst.components.yoshinon_upgrade:Upexp(10)
+		else
+			inst.components.yoshinon_upgrade:Upexp()
+		end
+	end
+end
 
 --装备时调用
 local function onequip(inst, owner)
@@ -111,7 +118,7 @@ local function onequip(inst, owner)
 	--四糸奈7级给四糸乃降低饥饿速度
 	if inst.components.yoshinon_upgrade and owner:HasTag("yoshino") then
 		local level = inst.components.yoshinon_upgrade:GetLevel()
-		if owner.components.hunger ~= nil and level == 7 then
+		if owner.components.hunger ~= nil and level >= 7 then
         	owner.components.hunger.burnratemodifiers:SetModifier(inst, TUNING.MOD_YOSHINO.YOSHINON.hungerrate, "yoshinon_skill")
     	end
 	end
@@ -265,10 +272,11 @@ local function fn()
 
 	inst:ListenForEvent("yoshinon_upgrade", check_upgrade)	--监听到升级事件
 	inst:ListenForEvent("yoshino_rpc_eat", onownereat)		--监听到四糸乃吃东西时发来的事件
-	inst:ListenForEvent("yoshino_rpc_killother", onownerkill)--监听四糸乃击杀生物事件
+	inst:ListenForEvent("yoshino_rpc_hitother", onkillother)--监听四糸乃击杀其他生物事件
 	inst:ListenForEvent("yoshino_rpc_sleep", onownersleep)	--监听到四糸乃进入睡眠时发来的事件
+	inst:ListenForEvent("yoshino_rpc_fishrod", onownerfish)	--监听四糸乃钓鱼事件
 	inst:ListenForEvent("yoshino_rpc_build", function (inst, data)	--监听到四糸乃制作物品时发来的事件
-		inst.components.yoshinon_upgrade:Upexp()
+		inst.components.yoshinon_upgrade:Upexp(2)
 	end)
 
     inst:AddComponent("container")                              --添加容器组件

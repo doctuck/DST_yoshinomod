@@ -268,16 +268,15 @@ local function onattack(inst,data)
                 (attacker.components.leader ~= nil and not attacker.components.leader:IsFollower(ent)) then --不是自己的随从
                 -- 推送事件给服务器来计算其它实体的血量以及通知其它玩家，当前多少实体正在被攻击
                 attacker:PushEvent("onareaattackother", { target = ent, weapon = nil, stimuli = nil })
-                -- 给予实体伤害，这里的伤害值传多少就是多少，如果玩家当前身上有一些攻击的buff，这里也要获取一下传进去
-                ent.components.combat:GetAttacked(attacker, TUNING.MOD_YOSHINO.YOSHINO_ZADKIEL.DAMAGE_DEAFULT, nil, nil, {planar = TUNING.MOD_YOSHINO.YOSHINO_ZADKIEL.PLANAR_DEAFULT } )
+                -- 给予实体伤害
+				local dmg, spdmg = attacker.components.combat:CalcDamage(ent, nil, 1)
+				ent.components.combat:GetAttacked(attacker, dmg, nil, nil, spdmg)
             end
         end
-        --结束后给主目标补上位面伤害
-        target.components.combat:GetAttacked(attacker, 0, nil, nil, {planar = TUNING.MOD_YOSHINO.YOSHINO_ZADKIEL.PLANAR_DEAFULT } )
     end
 end
 
---监听击中其他目标事件
+--监听击中目标事件
 local function onhittarget(inst, data)
     --data 包含 { target = self.inst, damage = damage, damageresolved = damageresolved, stimuli = stimuli, spdamage = spdamage, weapon = weapon, redirected = damageredirecttarget }
     local mount = inst.components.rider:GetMount() or nil
@@ -297,12 +296,23 @@ local function onhittarget(inst, data)
     end
 end
 
+--监听成功击杀其他生物事件
 local function onkillother(inst, data)
 	--combat组件中：attacker:PushEvent("killed", { victim = self.inst, attacker = attacker, from_doattack = from_doattack })
 	if inst.components.inventory then
 		local items = inst.components.inventory:FindItems(function(item) return item:HasTag("yoshinon") end)
-		for _, yoshinon in ipairs(items) do
+		for k, yoshinon in ipairs(items) do
 			yoshinon:PushEvent("yoshino_rpc_hitother", {player = inst, target = data.victim})
+		end
+	end
+end
+
+--监听自己的钓鱼事件
+local function onfishrod(inst, data)
+	if inst.components.inventory then
+		local items = inst.components.inventory:FindItems(function(item) return item:HasTag("yoshinon") end)
+		for _, yoshinon in ipairs(items) do
+			yoshinon:PushEvent("yoshino_rpc_fishrod", {player = inst, target = data.fish})
 		end
 	end
 end
@@ -340,7 +350,7 @@ local function onwetdelta(inst, data)
         return
     end
 
-    if inst.moisturetask == nil then    --每分钟恢复3.2
+    if inst.moisturetask == nil then    --每分钟恢复3.2(比扣的低，所以作用只是减缓理智下降不是恢复理智)
         inst.moisturetask = inst:DoPeriodicTask(1,function ()
             inst.components.sanity:DoDelta(3.2 / 60)
         end)
@@ -394,6 +404,8 @@ local function master_postinit(inst)
     inst:ListenForEvent("oneat", oneatfood)                         --监听吃东西事件
 	inst:ListenForEvent("builditem", onbuilt)						--监听建造物品事件
 	inst:ListenForEvent("buildstructure", onbuilt)					--监听建造建筑事件
+	--inst:ListenForEvent("fishingcollect", onfishrod)				--监听钓鱼成功事件（淡水钓竿）
+	inst:ListenForEvent("fishcaught", onfishrod)					--监听钓鱼成功事件（海钓竿）
     inst:ListenForEvent("remove_zadkiel", function ()               --移除冰结傀儡时会监听到该事件
         if inst.zakiel then inst.zadkiel = nil end
     end)
